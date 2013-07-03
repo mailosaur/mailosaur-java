@@ -46,6 +46,10 @@ public final class Clickity {
 				requestFactory.buildGetRequest(url);
 	}
 	
+	public Email[] GetEmails(String mailbox) throws IOException {
+		return GetEmails(mailbox, null);
+	}
+	
 	public Email[] GetEmails(String mailbox, EmailSearchCriteria criteria) throws IOException {
 		HttpRequest request = buildRequest("GET", BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailbox);
 		return request.execute().parseAs(Email[].class);
