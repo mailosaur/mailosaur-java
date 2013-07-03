@@ -1,6 +1,5 @@
 package com.clickity;
 
-import java.io.File;
 import java.io.IOException;
 
 import com.clickity.model.Email;
@@ -20,7 +19,6 @@ public class ClickitySample
         Email[] emails = clickity.GetEmails(mailbox, null);
         Email email = emails[0];
         
-        clickity.SaveAttachmentToFile(email.attachments[0].id, new File("/Users/jwm/Desktop/output.png"));
-        
+        clickity.SaveAttachmentToFile(email.attachments[0].id, "/Users/jwm/Desktop/outputdirect.png");
     }
 }

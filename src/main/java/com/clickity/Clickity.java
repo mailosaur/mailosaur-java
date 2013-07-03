@@ -87,6 +87,10 @@ public final class Clickity {
 		return DownloadFileAsStream("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY).toByteArray();
 	}
 	
+	public void SaveAttachmentToFile(String attachmentId, String filePath) throws IOException {
+		SaveAttachmentToFile(attachmentId, new File(filePath));
+	}
+	
 	public void SaveAttachmentToFile(String attachmentId, File file) throws IOException {
 		byte[] fileBytes = DownloadFileAsStream("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY).toByteArray();
 		FileUtils.writeByteArrayToFile(file, fileBytes);
@@ -98,6 +102,10 @@ public final class Clickity {
 		
 	public byte[] GetRawEmailAsBytes(String rawId) throws IOException {
 		return DownloadFileAsStream("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY).toByteArray();
+	}
+	
+	public void SaveRawEmailToFile(String rawId, String filePath) throws IOException {
+		SaveRawEmailToFile(rawId, new File(filePath));
 	}
 	
 	public void SaveRawEmailToFile(String rawId, File file) throws IOException {
