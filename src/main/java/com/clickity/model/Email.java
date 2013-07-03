@@ -3,13 +3,14 @@ package com.clickity.model;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Key;
 
 public class Email {
 	@Key
 	public String id;
 	@Key("creationdate")
-	public Date creationdate;
+	public DateTime creationdate;
 	@Key
 	public String senderHost;
 	@Key("from")
