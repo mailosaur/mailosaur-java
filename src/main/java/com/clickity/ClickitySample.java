@@ -19,6 +19,5 @@ public class ClickitySample
         Email[] emails = clickity.GetEmails(mailbox, null);
         Email email = emails[0];
         
-        clickity.DeleteEmail(email.id);
     }
 }

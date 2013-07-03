@@ -61,18 +61,27 @@ public final class Clickity {
 		DeleteResult result = request.execute().parseAs(DeleteResult.class);
 		return result.Ok;
 	}
-		
-	public byte[] GetAttachment(String attachmentId) throws IOException {
-		HttpRequest request = buildRequest("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY);
+	
+	private ByteArrayOutputStream DownloadFileAsStream(String method, String urlStr) throws IOException {
+		HttpRequest request = buildRequest(method, urlStr);
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		request.execute().download(stream);
-		return stream.toByteArray();
+		return stream;
 	}
 	
-	public byte[] GetRawEmail(String rawId) throws IOException {
-		HttpRequest request = buildRequest("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY);
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		request.execute().download(stream);
-		return stream.toByteArray();
+	public ByteArrayOutputStream GetAttachmentAsStream(String attachmentId) throws IOException {
+		return DownloadFileAsStream("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY);
+	}
+		
+	public byte[] GetAttachmentAsBytes(String attachmentId) throws IOException {
+		return GetAttachmentAsStream(attachmentId).toByteArray();
+	}
+	
+	public ByteArrayOutputStream GetRawEmailAsStream(String rawId) throws IOException {
+		return DownloadFileAsStream("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY);
+	}
+		
+	public byte[] GetRawEmailAsBytes(String rawId) throws IOException {
+		return GetRawEmailAsStream(rawId).toByteArray();
 	}
 }
