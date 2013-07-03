@@ -1,9 +1,10 @@
 package com.clickity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import com.clickity.model.*;
+
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -60,16 +61,18 @@ public final class Clickity {
 		DeleteResult result = request.execute().parseAs(DeleteResult.class);
 		return result.Ok;
 	}
-	
-	public OutputStream GetAttachment(String attachmentId) throws IOException {
+		
+	public byte[] GetAttachment(String attachmentId) throws IOException {
 		HttpRequest request = buildRequest("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY);
-		OutputStream stream = null;
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		request.execute().download(stream);
-		return stream;
+		return stream.toByteArray();
 	}
 	
-	public String GetRawEmail(String rawId) throws IOException {
+	public byte[] GetRawEmail(String rawId) throws IOException {
 		HttpRequest request = buildRequest("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY);
-		return request.execute().parseAsString();
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		request.execute().download(stream);
+		return stream.toByteArray();
 	}
 }
