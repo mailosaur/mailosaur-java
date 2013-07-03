@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import com.clickity.model.*;
-
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -34,8 +33,8 @@ public final class Clickity {
 		API_KEY = apiKey;
 	}
 	
-	public Email[] GetEmails(String mailboxId, EmailSearchCriteria criteria) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailboxId);
+	public Email[] GetEmails(String mailbox, EmailSearchCriteria criteria) throws IOException {
+		GenericUrl url = new GenericUrl(BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailbox);
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		return request.execute().parseAs(Email[].class);
 	}
@@ -46,18 +45,18 @@ public final class Clickity {
 		return request.execute().parseAs(Email.class);
 	}
 	
-	public Boolean DeleteAllEmail(String mailboxId) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailboxId);
+	public Boolean DeleteAllEmail(String mailbox) throws IOException {
+		GenericUrl url = new GenericUrl(BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailbox);
 		HttpRequest request = requestFactory.buildPostRequest(url, null);
-		String result = request.execute().parseAsString();
-		return true;
+		DeleteResult result = request.execute().parseAs(DeleteResult.class);
+		return result.Ok;
 	}
 	
 	public Boolean DeleteEmail(String emailId) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/email/" + emailId + "?key=" + API_KEY);
+		GenericUrl url = new GenericUrl(BASE_URI + "/email/" + emailId + "/delete?key=" + API_KEY);
 		HttpRequest request = requestFactory.buildPostRequest(url, null);
-		String result = request.execute().parseAsString();
-		return true;
+		DeleteResult result = request.execute().parseAs(DeleteResult.class);
+		return result.Ok;
 	}
 	
 	public OutputStream GetAttachment(String attachmentId) throws IOException {

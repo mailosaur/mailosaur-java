@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import com.clickity.model.Email;
 
-import com.google.api.client.util.DateTime;
-
 /**
  * Hello world!
  *
@@ -21,7 +19,6 @@ public class ClickitySample
         Email[] emails = clickity.GetEmails(mailbox, null);
         Email email = emails[0];
         
-        DateTime creationDate = email.creationdate;
-        System.out.print(creationDate);
+        clickity.DeleteEmail(email.id);
     }
 }
