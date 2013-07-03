@@ -33,42 +33,43 @@ public final class Clickity {
 		API_KEY = apiKey;
 	}
 	
+	private HttpRequest buildRequest(String method, String urlStr) throws IOException {
+		return method == "POST" ?
+				requestFactory.buildPostRequest(new GenericUrl(urlStr), null) :
+				requestFactory.buildGetRequest(new GenericUrl(urlStr));
+	}
+	
 	public Email[] GetEmails(String mailbox, EmailSearchCriteria criteria) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailbox);
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = buildRequest("GET", BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailbox);
 		return request.execute().parseAs(Email[].class);
 	}
 	
 	public Email GetEmail(String emailId) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/email/" + emailId + "?key=" + API_KEY);
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = buildRequest("GET", BASE_URI + "/email/" + emailId + "?key=" + API_KEY);
 		return request.execute().parseAs(Email.class);
 	}
 	
 	public Boolean DeleteAllEmail(String mailbox) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/emails?key=" + API_KEY + "&mailbox=" + mailbox);
-		HttpRequest request = requestFactory.buildPostRequest(url, null);
+		HttpRequest request = buildRequest("POST", BASE_URI + "/emails/deleteall?key=" + API_KEY + "&mailbox=" + mailbox);
 		DeleteResult result = request.execute().parseAs(DeleteResult.class);
 		return result.Ok;
 	}
 	
 	public Boolean DeleteEmail(String emailId) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/email/" + emailId + "/delete?key=" + API_KEY);
-		HttpRequest request = requestFactory.buildPostRequest(url, null);
+		HttpRequest request = buildRequest("POST", BASE_URI + "/email/" + emailId + "/delete?key=" + API_KEY);
 		DeleteResult result = request.execute().parseAs(DeleteResult.class);
 		return result.Ok;
 	}
 	
 	public OutputStream GetAttachment(String attachmentId) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY);
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = buildRequest("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY);
 		OutputStream stream = null;
 		request.execute().download(stream);
 		return stream;
 	}
 	
 	public String GetRawEmail(String rawId) throws IOException {
-		GenericUrl url = new GenericUrl(BASE_URI + "/raw/" + rawId + "?key=" + API_KEY);
+		HttpRequest request = buildRequest("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY);
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		return request.execute().parseAsString();
 	}
