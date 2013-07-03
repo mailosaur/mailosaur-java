@@ -1,10 +1,15 @@
 package com.clickity;
 
+import gumi.builders.UrlBuilder;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+
+import org.apache.commons.io.FileUtils;
 
 import com.clickity.model.*;
-
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -35,9 +40,10 @@ public final class Clickity {
 	}
 	
 	private HttpRequest buildRequest(String method, String urlStr) throws IOException {
+		GenericUrl url = new GenericUrl(UrlBuilder.fromString(urlStr).toString());
 		return method == "POST" ?
-				requestFactory.buildPostRequest(new GenericUrl(urlStr), null) :
-				requestFactory.buildGetRequest(new GenericUrl(urlStr));
+				requestFactory.buildPostRequest(url, null) :
+				requestFactory.buildGetRequest(url);
 	}
 	
 	public Email[] GetEmails(String mailbox, EmailSearchCriteria criteria) throws IOException {
@@ -69,19 +75,29 @@ public final class Clickity {
 		return stream;
 	}
 	
-	public ByteArrayOutputStream GetAttachmentAsStream(String attachmentId) throws IOException {
+	public OutputStream GetAttachmentAsStream(String attachmentId) throws IOException {
 		return DownloadFileAsStream("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY);
 	}
 		
 	public byte[] GetAttachmentAsBytes(String attachmentId) throws IOException {
-		return GetAttachmentAsStream(attachmentId).toByteArray();
+		return DownloadFileAsStream("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY).toByteArray();
 	}
 	
-	public ByteArrayOutputStream GetRawEmailAsStream(String rawId) throws IOException {
+	public void SaveAttachmentToFile(String attachmentId, File file) throws IOException {
+		byte[] fileBytes = DownloadFileAsStream("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY).toByteArray();
+		FileUtils.writeByteArrayToFile(file, fileBytes);
+	}
+	
+	public OutputStream GetRawEmailAsStream(String rawId) throws IOException {
 		return DownloadFileAsStream("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY);
 	}
 		
 	public byte[] GetRawEmailAsBytes(String rawId) throws IOException {
-		return GetRawEmailAsStream(rawId).toByteArray();
+		return DownloadFileAsStream("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY).toByteArray();
+	}
+	
+	public void SaveRawEmailToFile(String rawId, File file) throws IOException {
+		byte[] fileBytes = DownloadFileAsStream("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY).toByteArray();
+		FileUtils.writeByteArrayToFile(file, fileBytes);
 	}
 }
