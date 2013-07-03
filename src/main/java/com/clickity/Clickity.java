@@ -70,7 +70,6 @@ public final class Clickity {
 	
 	public String GetRawEmail(String rawId) throws IOException {
 		HttpRequest request = buildRequest("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY);
-		HttpRequest request = requestFactory.buildGetRequest(url);
 		return request.execute().parseAsString();
 	}
 }
