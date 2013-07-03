@@ -1,6 +1,5 @@
 package com.clickity.model;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import com.google.api.client.util.DateTime;
