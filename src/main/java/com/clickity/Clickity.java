@@ -13,17 +13,18 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.json.JsonHttpParser;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.json.jackson.JacksonFactory;
 
 public final class Clickity {
 	
 	 static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-	 static final JsonFactory JSON_FACTORY = new GsonFactory();
-	 
+	 static final JsonFactory JSON_FACTORY = new JacksonFactory();
+//	 static final JsonFactory JSON_FACTORY = new GsonFactory();
+	 	 
 	 static final HttpRequestFactory requestFactory =
 		        HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
 			          public void initialize(HttpRequest request) {
-			            request.addParser(new JsonHttpParser(JSON_FACTORY));
+			        	request.addParser(new JsonHttpParser(JSON_FACTORY));
 			          }
 			        });
 

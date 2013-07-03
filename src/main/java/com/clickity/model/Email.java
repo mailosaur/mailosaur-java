@@ -8,10 +8,14 @@ import com.google.api.client.util.Key;
 public class Email {
 	@Key
 	public String id;
-//	@Key
-//	public Date creationdate;
+	@Key("creationdate")
+	public Date creationdate;
 	@Key
 	public String senderHost;
+	@Key("from")
+	public EmailAddress[] from;
+	@Key("to")
+	public EmailAddress[] to;
 	@Key
 	public String mailbox;
 	@Key
@@ -20,8 +24,8 @@ public class Email {
 	public EmailData html;
 	@Key
 	public EmailData text;
-//	@Key
-//	public HashMap<String,String> headers;
+	@Key("headers")
+	public HashMap<String,Object> headers;
 	@Key
 	public String subject;
 	@Key
