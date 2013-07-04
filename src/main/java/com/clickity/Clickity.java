@@ -1,13 +1,10 @@
 package com.clickity;
 
-import gumi.builders.UrlBuilder;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.apache.commons.io.FileUtils;
+import java.net.URLEncoder;
 
 import com.clickity.model.*;
 import com.google.api.client.http.GenericUrl;
@@ -39,8 +36,17 @@ public final class Clickity {
 		API_KEY = apiKey;
 	}
 	
+	private void writeByteArrayToFile(final byte[] fileBytes, final String filePath) throws IOException {
+		FileOutputStream stream = new FileOutputStream(filePath);
+		try {
+		    stream.write(fileBytes);
+		} finally {
+		    stream.close();
+		}
+	}
+	
 	private HttpRequest buildRequest(String method, String urlStr) throws IOException {
-		GenericUrl url = new GenericUrl(UrlBuilder.fromString(urlStr).toString());
+		GenericUrl url = new GenericUrl(URLEncoder.encode(urlStr, "UTF-8"));
 		return method == "POST" ?
 				requestFactory.buildPostRequest(url, null) :
 				requestFactory.buildGetRequest(url);
@@ -88,12 +94,8 @@ public final class Clickity {
 	}
 	
 	public void SaveAttachmentToFile(String attachmentId, String filePath) throws IOException {
-		SaveAttachmentToFile(attachmentId, new File(filePath));
-	}
-	
-	public void SaveAttachmentToFile(String attachmentId, File file) throws IOException {
 		byte[] fileBytes = DownloadFileAsStream("GET", BASE_URI + "/attachment/" + attachmentId + "?key=" + API_KEY).toByteArray();
-		FileUtils.writeByteArrayToFile(file, fileBytes);
+		writeByteArrayToFile(fileBytes, filePath);
 	}
 	
 	public OutputStream GetRawEmailAsStream(String rawId) throws IOException {
@@ -105,11 +107,7 @@ public final class Clickity {
 	}
 	
 	public void SaveRawEmailToFile(String rawId, String filePath) throws IOException {
-		SaveRawEmailToFile(rawId, new File(filePath));
-	}
-	
-	public void SaveRawEmailToFile(String rawId, File file) throws IOException {
 		byte[] fileBytes = DownloadFileAsStream("GET", BASE_URI + "/raw/" + rawId + "?key=" + API_KEY).toByteArray();
-		FileUtils.writeByteArrayToFile(file, fileBytes);
+		writeByteArrayToFile(fileBytes, filePath);
 	}
 }
