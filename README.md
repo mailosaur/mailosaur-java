@@ -31,7 +31,7 @@ ClickitySample.java
     import com.clickity.exception.ClickityException;
     import com.clickity.model.Email;
 
-    public class StripeExample {
+    public class ClickitySample {
 
         public static void main(String[] args) {
             Mailbox mailbox = new Mailbox("b5c1d4be", "74bfc85b03c8425");
