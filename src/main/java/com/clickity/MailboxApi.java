@@ -24,7 +24,7 @@ import com.google.api.client.http.json.JsonHttpParser;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 
-public final class Clickity {
+public final class MailboxApi {
 	
 	 static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	 static final JsonFactory JSON_FACTORY = new GsonFactory();
@@ -40,7 +40,7 @@ public final class Clickity {
 	final String MAILBOX;
 	final String API_KEY;
 	
-	public Clickity(String mailbox, String apiKey) {
+	public MailboxApi(String mailbox, String apiKey) {
 		MAILBOX = mailbox;
 		API_KEY = apiKey;
 	}
