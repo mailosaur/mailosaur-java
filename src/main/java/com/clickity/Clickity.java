@@ -153,7 +153,7 @@ public final class Clickity {
 	
 	public Email getEmail(String emailId) throws ClickityException {
 		try {
-			HttpRequest request = buildRequest("GET",  "/email");
+			HttpRequest request = buildRequest("GET",  buildUrlPath("email", emailId));
 			return request.execute().parseAs(Email.class);
 		} catch (IOException e) {
 			throw new ClickityException("Unable to parse API response", e);
