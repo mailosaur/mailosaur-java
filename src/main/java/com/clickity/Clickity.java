@@ -100,7 +100,7 @@ public final class Clickity {
 		}
 	}
 	
-	ByteArrayOutputStream DownloadFileAsStream(String method, String urlStr) throws ClickityException {
+	ByteArrayOutputStream downloadFileAsStream(String method, String urlStr) throws ClickityException {
 		HttpRequest request = buildRequest(method, urlStr);
 		try {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -135,23 +135,23 @@ public final class Clickity {
 		}
 	}
 	
-	public Email[] GetEmails() throws ClickityException {
-		return getEmails(null);
+	public Email[] getEmails() throws ClickityException {
+		return getEmails(new HashMap<String, String>());
 	}
 		
-	public Email[] GetEmails(String searchPattern) throws ClickityException {
+	public Email[] getEmails(String searchPattern) throws ClickityException {
 		HashMap<String, String> searchCriteria = new HashMap<String, String>();
 		searchCriteria.put("search", searchPattern);
 		return getEmails(searchCriteria);
 	}
 	
-	public Email[] GetEmailsByRecipient(String recipientEmail) throws ClickityException {
+	public Email[] getEmailsByRecipient(String recipientEmail) throws ClickityException {
 		HashMap<String, String> searchCriteria = new HashMap<String, String>();
 		searchCriteria.put("recipient", recipientEmail);
 		return getEmails(searchCriteria);
 	}
 	
-	public Email GetEmail(String emailId) throws ClickityException {
+	public Email getEmail(String emailId) throws ClickityException {
 		try {
 			HttpRequest request = buildRequest("GET",  "/email");
 			return request.execute().parseAs(Email.class);
@@ -160,55 +160,55 @@ public final class Clickity {
 		}
 	}
 	
-	public Boolean DeleteAllEmail() throws ClickityException {
+	public Boolean deleteAllEmail() throws ClickityException {
 		try {
 			HashMap<String, String> queryParams = new HashMap<String, String>();
 			queryParams.put("mailbox", MAILBOX);
 			HttpRequest request = buildRequest("POST", "/emails/deleteall", queryParams);
 			DeleteResult result = request.execute().parseAs(DeleteResult.class);
-			return result.Ok;
+			return result.ok;
 		} catch (IOException e) {
 			throw new ClickityException("Unable to parse API response", e);
 		}
 	}
 	
-	public Boolean DeleteEmail(String emailId) throws ClickityException {
+	public Boolean deleteEmail(String emailId) throws ClickityException {
 		try {
 			HttpRequest request = buildRequest("POST", buildUrlPath("email", emailId, "delete"));
 			DeleteResult result = request.execute().parseAs(DeleteResult.class);
-			return result.Ok;
+			return result.ok;
 		} catch (IOException e) {
 			throw new ClickityException("Unable to parse API response", e);
 		}
 	}
 	
-	public OutputStream GetAttachmentAsStream(String attachmentId) throws ClickityException {
-		return DownloadFileAsStream("GET", buildUrlPath("attachment", attachmentId));
+	public OutputStream getAttachmentAsStream(String attachmentId) throws ClickityException {
+		return downloadFileAsStream("GET", buildUrlPath("attachment", attachmentId));
 	}
 		
-	public byte[] GetAttachmentAsBytes(String attachmentId) throws ClickityException {
-		return DownloadFileAsStream("GET", buildUrlPath("attachment", attachmentId)).toByteArray();
+	public byte[] getAttachmentAsBytes(String attachmentId) throws ClickityException {
+		return downloadFileAsStream("GET", buildUrlPath("attachment", attachmentId)).toByteArray();
 	}
 	
-	public void SaveAttachmentToFile(String attachmentId, String filePath) throws ClickityException {
-		byte[] fileBytes = GetAttachmentAsBytes(attachmentId);
+	public void saveAttachmentToFile(String attachmentId, String filePath) throws ClickityException {
+		byte[] fileBytes = getAttachmentAsBytes(attachmentId);
 		writeByteArrayToFile(fileBytes, filePath);
 	}
 	
-	public OutputStream GetRawEmailAsStream(String rawId) throws ClickityException {
-		return DownloadFileAsStream("GET", buildUrlPath("raw", rawId));
+	public OutputStream getRawEmailAsStream(String rawId) throws ClickityException {
+		return downloadFileAsStream("GET", buildUrlPath("raw", rawId));
 	}
 		
-	public byte[] GetRawEmailAsBytes(String rawId) throws ClickityException {
-		return DownloadFileAsStream("GET", buildUrlPath("raw", rawId)).toByteArray();
+	public byte[] getRawEmailAsBytes(String rawId) throws ClickityException {
+		return downloadFileAsStream("GET", buildUrlPath("raw", rawId)).toByteArray();
 	}
 	
-	public void SaveRawEmailToFile(String rawId, String filePath) throws ClickityException {
-		byte[] fileBytes = GetRawEmailAsBytes(rawId);
+	public void saveRawEmailToFile(String rawId, String filePath) throws ClickityException {
+		byte[] fileBytes = getRawEmailAsBytes(rawId);
 		writeByteArrayToFile(fileBytes, filePath);
 	}
 	
-	public String GenerateEmailAddress() {
+	public String generateEmailAddress() {
 		String uuid = UUID.randomUUID().toString();
 		return String.format("%s.%s@clickity.me", uuid, MAILBOX); 
 	}
