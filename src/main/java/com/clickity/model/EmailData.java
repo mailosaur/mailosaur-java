@@ -7,4 +7,8 @@ public class EmailData {
 	public Link[] links;
 	@Key
 	public String body;
+	
+	public String toString() {
+		return body;
+	}
 }

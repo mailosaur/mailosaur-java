@@ -11,4 +11,8 @@ public class Attachment {
 	public Long length;
 	@Key
 	public String id;
+	
+	public String toString() {
+		return id;
+	}
 }

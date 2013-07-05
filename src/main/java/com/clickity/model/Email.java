@@ -32,4 +32,8 @@ public class Email {
 	public String priority;
 	@Key
 	public Attachment[] attachments;
+	
+	public String toString() {
+		return id;
+	}
 }

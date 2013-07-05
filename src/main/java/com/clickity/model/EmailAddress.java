@@ -7,4 +7,10 @@ public class EmailAddress {
 	public String address;
 	@Key
 	public String name;
+	
+	public String toString() {
+		return (name == null || name.trim().isEmpty()) ?
+				address :
+				String.format("%s <%s>", name, address);
+	}
 }

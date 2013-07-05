@@ -7,4 +7,8 @@ public class Link {
 	public String href;
 	@Key
 	public String text;
+	
+	public String toString() {
+		return href;
+	}
 }
