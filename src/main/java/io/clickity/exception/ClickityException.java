@@ -1,4 +1,4 @@
-package com.clickity.exception;
+package io.clickity.exception;
 
 public class ClickityException extends Exception {
 

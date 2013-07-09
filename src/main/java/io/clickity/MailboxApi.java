@@ -1,4 +1,7 @@
-package com.clickity;
+package io.clickity;
+
+import io.clickity.exception.ClickityException;
+import io.clickity.model.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -12,8 +15,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import com.clickity.exception.ClickityException;
-import com.clickity.model.*;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;

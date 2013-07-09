@@ -1,4 +1,4 @@
-package com.clickity.model;
+package io.clickity.model;
 
 import java.util.HashMap;
 
