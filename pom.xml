@@ -8,7 +8,13 @@
   <packaging>jar</packaging>
 
   <name>clickity-java</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/clickityapp/clickity-java</url>
+  <description>Clickity Java Bindings for Email Test Automation</description>
+
+  <organization>
+  	<name>Clickity Ltd</name>
+  	<url>https://clickity.io</url>
+  </organization>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,8 +27,6 @@
     	<version>1.9.0-beta</version>
     </dependency>
   </dependencies>
-  <organization>
-  	<name>Clickity Ltd</name>
-  	<url>https://clickity.io</url>
-  </organization>
+  
+  
 </project>
