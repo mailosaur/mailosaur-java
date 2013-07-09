@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.clickity</groupId>
+  <groupId>io.clickity</groupId>
   <artifactId>clickity-java</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
@@ -15,6 +15,12 @@
   	<name>Clickity Ltd</name>
   	<url>https://clickity.io</url>
   </organization>
+
+  <scm>
+        <connection>scm:git:git@github.com:clickityapp/clickity-java.git</connection>
+        <developerConnection>scm:git:git@github.com:clickityapp/clickity-java.git</developerConnection>
+        <url>git@github.com:clickityapp/clickity-java.git</url>
+    </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
