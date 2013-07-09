@@ -44,3 +44,9 @@ ClickitySample.java
             }
         }
     }
+    
+License
+=======
+
+Copyright (c) 2013 Clickity Ltd
+Distributed under MIT license.
