@@ -58,7 +58,15 @@
   </parent>
   
   <build>
-  <plugins>
+        <resources>
+            <resource>
+                <directory>.</directory>
+                <includes>
+                    <include>VERSION</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -122,6 +130,6 @@
               </configuration>
             </plugin>
         </plugins>
-      </build>
+    </build>
   
 </project>
