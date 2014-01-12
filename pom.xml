@@ -2,23 +2,23 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.clickity</groupId>
-  <artifactId>clickity-java</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <artifactId>mailosaur-java</artifactId>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>clickity-java</name>
-  <url>https://github.com/clickityapp/clickity-java</url>
-  <description>Clickity Java Bindings for Email Test Automation</description>
+  <name>mailosaur-java</name>
+  <url>https://github.com/mailosaurapp/mailosaur-java</url>
+  <description>Mailosaur Java Bindings for Email Test Automation</description>
 
   <organization>
   	<name>Clickity Ltd</name>
-  	<url>https://clickity.io</url>
+  	<url>https://mailosaur.com</url>
   </organization>
 
   <scm>
-        <connection>scm:git:git@github.com:clickityapp/clickity-java.git</connection>
-        <developerConnection>scm:git:git@github.com:clickityapp/clickity-java.git</developerConnection>
-        <url>git@github.com:clickityapp/clickity-java.git</url>
+        <connection>scm:git:git@github.com:mailosaur/mailosaur-java.git</connection>
+        <developerConnection>scm:git:git@github.com:mailosaurapp/mailosaur-java.git</developerConnection>
+        <url>git@github.com:mailosaurapp/mailosaur-java.git</url>
     </scm>
     
   <licenses>
@@ -30,10 +30,10 @@
   
   <developers>
   	<developer>
-      <id>jwm</id>
-      <name>Jonathan Mahoney</name>
+      <id>clickity</id>
+      <name>Clickity</name>
       <organization>Clickity Ltd</organization>
-      <organizationUrl>https://clickity.io</organizationUrl>
+      <organizationUrl>https://mailosaur.com</organizationUrl>
       <timezone>0</timezone>
     </developer>
   </developers>

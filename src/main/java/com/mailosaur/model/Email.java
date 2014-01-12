@@ -1,4 +1,4 @@
-package io.clickity.model;
+package com.mailosaur.model;
 
 import java.util.HashMap;
 

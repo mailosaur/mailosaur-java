@@ -1,6 +1,6 @@
-# Clickity Java Bindings
+# Mailosaur Java Bindings
 
-You can sign up for a Clickity account at https://clickity.io.
+You can sign up for a Mailosaur account at https://mailosaur.com
 
 Installation
 ============
@@ -10,8 +10,8 @@ Installation
 Add this dependency to your project's POM:
 
     <dependency>
-      <groupId>com.clickity</groupId>
-      <artifactId>clickity-java</artifactId>
+      <groupId>com.mailosaur</groupId>
+      <artifactId>mailosaur-java</artifactId>
       <version>1.0.0</version>
     </dependency>
 
@@ -19,19 +19,19 @@ Add this dependency to your project's POM:
 
 You'll need to manually install the following JARs:
 
-* The Clickity JAR from https://code.clickity.io/clickity-java-latest.jar
+* The Mailosaur JAR from https://code.mailosaur.com/mailosaur-java-latest.jar
 * [google-http-client-1.9.0-beta.jar](https://code.google.com/p/google-http-java-client/) from <https://google-http-java-client.googlecode.com/files/google-http-java-client-1.9.0-beta.zip>.
 
 Usage
 =====
 
-ClickitySample.java
+MailosaurSample.java
 
-    import com.clickity.Mailbox;
-    import com.clickity.exception.ClickityException;
-    import com.clickity.model.Email;
+    import com.mailosaur.Mailbox;
+    import com.mailosaur.exception.MailosaurException;
+    import com.mailosaur.model.Email;
 
-    public class ClickitySample {
+    public class MailosaurSample {
 
         public static void main(String[] args) {
             Mailbox mailbox = new Mailbox("b5c1d4be", "74bfc85b03c8425");
@@ -39,7 +39,7 @@ ClickitySample.java
             try {
                 Email[] emails = mailbox.GetEmails();
 				System.out.print(emails[0].id);
-            } catch (ClickityException e) {
+            } catch (MailosaurException e) {
                 e.printStackTrace();
             }
         }

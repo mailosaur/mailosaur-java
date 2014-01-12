@@ -1,7 +1,6 @@
-package io.clickity;
+package com.mailosaur;
 
-import io.clickity.exception.ClickityException;
-import io.clickity.model.*;
+import com.mailosaur.model.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -46,18 +45,18 @@ public final class MailboxApi {
 		API_KEY = apiKey;
 	}
 	
-	void writeByteArrayToFile(final byte[] fileBytes, final String filePath) throws ClickityException {
+	void writeByteArrayToFile(final byte[] fileBytes, final String filePath) throws com.mailosaur.exception.MailosaurException {
 		FileOutputStream stream = null;
 		try {
 			stream = new FileOutputStream(filePath);			
 		} catch (FileNotFoundException e) {
-			throw new ClickityException("Unable to write to file: File not found " + filePath, e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to write to file: File not found " + filePath, e);
 		} finally {
 		    try {
 		    	stream.write(fileBytes);
 				stream.close();
 			} catch (IOException e) {
-				throw new ClickityException("Unable to write to file", e);
+				throw new com.mailosaur.exception.MailosaurException("Unable to write to file", e);
 			}
 		}
 	}
@@ -84,47 +83,47 @@ public final class MailboxApi {
 		return new GenericUrl(BASE_URI + path + "?" + buildQueryString(queryParams));
 	}
 	
-	HttpRequest buildRequest(String method, String path) throws ClickityException {
+	HttpRequest buildRequest(String method, String path) throws com.mailosaur.exception.MailosaurException {
 		return buildRequest(method, path, null);
 	}
 	
-	HttpRequest buildRequest(String method, String path, Map<String, String> queryParams) throws ClickityException {
+	HttpRequest buildRequest(String method, String path, Map<String, String> queryParams) throws com.mailosaur.exception.MailosaurException {
 		try {
 			GenericUrl url = buildUrl(path, queryParams);
 			return method == "POST" ?
 					requestFactory.buildPostRequest(url, null) :
 					requestFactory.buildGetRequest(url);
 		} catch (UnsupportedEncodingException e) {
-			throw new ClickityException("Unable to encode URL", e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to encode URL", e);
 		} catch (IOException e) {
-			throw new ClickityException("Unable to build web request", e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to build web request", e);
 		}
 	}
 	
-	ByteArrayOutputStream downloadFileAsStream(String method, String urlStr) throws ClickityException {
+	ByteArrayOutputStream downloadFileAsStream(String method, String urlStr) throws com.mailosaur.exception.MailosaurException {
 		HttpRequest request = buildRequest(method, urlStr);
 		try {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			request.execute().download(stream);
 			return stream;
 		} catch (IOException e) {
-			throw new ClickityException("Unable to download file", e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to download file", e);
 		}
 	}
 	
-	String buildUrlPath(String... args) throws ClickityException {
+	String buildUrlPath(String... args) throws com.mailosaur.exception.MailosaurException {
 		StringBuilder sb = new StringBuilder();
 		for (String arg : args) {
 			try {
 				sb.append("/" + URLEncoder.encode(arg, "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
-				throw new ClickityException("Unable to encode URL", e);
+				throw new com.mailosaur.exception.MailosaurException("Unable to encode URL", e);
 			}
 	    }
 		return sb.toString();
 	}
 	
-	Email[] getEmails(Map<String, String> searchCriteria) throws ClickityException {
+	Email[] getEmails(Map<String, String> searchCriteria) throws com.mailosaur.exception.MailosaurException {
 		try {
 			HashMap<String, String> queryParams = new HashMap<String, String>();
 			queryParams.put("mailbox", MAILBOX);
@@ -132,54 +131,54 @@ public final class MailboxApi {
 			HttpRequest request = buildRequest("GET", "/emails", queryParams);
 			return request.execute().parseAs(Email[].class);
 		} catch (IOException e) {
-			throw new ClickityException("Unable to parse API response", e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
 		}
 	}
 
-    OutputStream getAttachmentAsStream(String attachmentId) throws ClickityException {
+    OutputStream getAttachmentAsStream(String attachmentId) throws com.mailosaur.exception.MailosaurException {
         return downloadFileAsStream("GET", buildUrlPath("attachment", attachmentId));
     }
 
-    void saveAttachmentToFile(String attachmentId, String filePath) throws ClickityException {
+    void saveAttachmentToFile(String attachmentId, String filePath) throws com.mailosaur.exception.MailosaurException {
         byte[] fileBytes = getAttachment(attachmentId);
         writeByteArrayToFile(fileBytes, filePath);
     }
 
-    OutputStream getRawEmailAsStream(String rawId) throws ClickityException {
+    OutputStream getRawEmailAsStream(String rawId) throws com.mailosaur.exception.MailosaurException {
         return downloadFileAsStream("GET", buildUrlPath("raw", rawId));
     }
 
-    void saveRawEmailToFile(String rawId, String filePath) throws ClickityException {
+    void saveRawEmailToFile(String rawId, String filePath) throws com.mailosaur.exception.MailosaurException {
         byte[] fileBytes = getRawEmail(rawId);
         writeByteArrayToFile(fileBytes, filePath);
     }
 
-    public Email[] getEmails() throws ClickityException {
+    public Email[] getEmails() throws com.mailosaur.exception.MailosaurException {
 		return getEmails(new HashMap<String, String>());
 	}
 		
-	public Email[] getEmails(String searchPattern) throws ClickityException {
+	public Email[] getEmails(String searchPattern) throws com.mailosaur.exception.MailosaurException {
 		HashMap<String, String> searchCriteria = new HashMap<String, String>();
 		searchCriteria.put("search", searchPattern);
 		return getEmails(searchCriteria);
 	}
 	
-	public Email[] getEmailsByRecipient(String recipientEmail) throws ClickityException {
+	public Email[] getEmailsByRecipient(String recipientEmail) throws com.mailosaur.exception.MailosaurException {
 		HashMap<String, String> searchCriteria = new HashMap<String, String>();
 		searchCriteria.put("recipient", recipientEmail);
 		return getEmails(searchCriteria);
 	}
 	
-	public Email getEmail(String emailId) throws ClickityException {
+	public Email getEmail(String emailId) throws com.mailosaur.exception.MailosaurException {
 		try {
 			HttpRequest request = buildRequest("GET",  buildUrlPath("email", emailId));
 			return request.execute().parseAs(Email.class);
 		} catch (IOException e) {
-			throw new ClickityException("Unable to parse API response", e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
 		}
 	}
 	
-	public Boolean deleteAllEmail() throws ClickityException {
+	public Boolean deleteAllEmail() throws com.mailosaur.exception.MailosaurException {
 		try {
 			HashMap<String, String> queryParams = new HashMap<String, String>();
 			queryParams.put("mailbox", MAILBOX);
@@ -187,31 +186,31 @@ public final class MailboxApi {
 			DeleteResult result = request.execute().parseAs(DeleteResult.class);
 			return result.ok;
 		} catch (IOException e) {
-			throw new ClickityException("Unable to parse API response", e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
 		}
 	}
 	
-	public Boolean deleteEmail(String emailId) throws ClickityException {
+	public Boolean deleteEmail(String emailId) throws com.mailosaur.exception.MailosaurException {
 		try {
 			HttpRequest request = buildRequest("POST", buildUrlPath("email", emailId, "delete"));
 			DeleteResult result = request.execute().parseAs(DeleteResult.class);
 			return result.ok;
 		} catch (IOException e) {
-			throw new ClickityException("Unable to parse API response", e);
+			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
 		}
 	}
 
-	public byte[] getAttachment(String attachmentId) throws ClickityException {
+	public byte[] getAttachment(String attachmentId) throws com.mailosaur.exception.MailosaurException {
 		return downloadFileAsStream("GET", buildUrlPath("attachment", attachmentId)).toByteArray();
 	}
 
-	public byte[] getRawEmail(String rawId) throws ClickityException {
+	public byte[] getRawEmail(String rawId) throws com.mailosaur.exception.MailosaurException {
 		return downloadFileAsStream("GET", buildUrlPath("raw", rawId)).toByteArray();
 	}
 
 	public String generateEmailAddress() {
 		String uuid = UUID.randomUUID().toString();
-		return String.format("%s.%s@clickity.me", uuid, MAILBOX); 
+		return String.format("%s.%s@mailosaur.in", uuid, MAILBOX);
 	}
 
 }
