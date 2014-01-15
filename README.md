@@ -1,6 +1,8 @@
-# Mailosaur Java Bindings
+# Mailosaur Java bindings
 
-You can sign up for a Mailosaur account at https://mailosaur.com
+Mailosaur allows you to automate tests that require email. You can also use it for manual testing as it gives you unlimited test email addresses or use it as a fake/dummy SMTP service.
+
+For more info go to [mailosaur.com](https://mailosaur.com/)
 
 Installation
 ============
@@ -12,38 +14,74 @@ Add this dependency to your project's POM:
     <dependency>
       <groupId>com.mailosaur</groupId>
       <artifactId>mailosaur-java</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.6</version>
     </dependency>
 
-### Others
 
-You'll need to manually install the following JARs:
+## Usage
+```java
+MailboxApi mailbox = new MailboxApi(mailbox, apikey);
 
-* The Mailosaur JAR from https://code.mailosaur.com/mailosaur-java-latest.jar
-* [google-http-client-1.9.0-beta.jar](https://code.google.com/p/google-http-java-client/) from <https://google-http-java-client.googlecode.com/files/google-http-java-client-1.9.0-beta.zip>.
+Email[] emails = mailbox.getEmailsByRecipient("anything.1eaaeef6@mailosaur.in");
 
-Usage
-=====
+assertEquals("The subject should be something", "something", emails[0].Subject);
+```
+##Api
 
-MailosaurSample.java
+*functions:*
 
-    import com.mailosaur.Mailbox;
-    import com.mailosaur.exception.MailosaurException;
-    import com.mailosaur.model.Email;
+- **Email[] GetEmails(String searchPattern)** - Retrieves all emails which have the searchPattern text in their body or subject.
 
-    public class MailosaurSample {
+- **Email[] GetEmailsByRecipient(String recipientEmail)** - 
+Retrieves all emails sent to the given recipient.
 
-        public static void main(String[] args) {
-            Mailbox mailbox = new Mailbox("b5c1d4be", "74bfc85b03c8425");
-			
-            try {
-                Email[] emails = mailbox.GetEmails();
-				System.out.print(emails[0].id);
-            } catch (MailosaurException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+- **Email GetEmail(String emailId)** - 
+Retrieves the email with the given id.
+
+- **Void DeleteAllEmail()** - 
+Deletes all emails in a mailbox.
+
+- **Void DeleteEmail(String emailId)** - 
+Deletes the email with the given id.
+
+- **Byte[] GetAttachment(String attachmentId)** - 
+Retrieves the attachment with specified id.
+
+- **Byte[] GetRawEmail(String rawId)** - 
+Retrieves the complete raw EML file for the rawId given. RawId is a property on the email object.
+
+- **String GenerateEmailAddress()** - 
+Generates a random email address which can be used to send emails into the mailbox.
+
+*structures*
+
+- **Email** - The core object returned by the Mailosaur API
+  - **id** - The email identifier
+  - **creationdate** - The date your email was received by Mailosaur
+  - **senderHost** - The host name of the machine that sent the email
+  - **rawId** - Reference for raw email data
+  - **html** - The HTML content of the email
+    - **links** - All links found within the HTML content of the email
+    - **images** - All images found within the HTML content of the email
+    - **body** - Unescaped HTML body of the email
+  - **text** - The text content of the email
+    - **links** - All links found within the text content of the email
+    - **body** - Text body of the email
+  - **headers** - Contains all email headers as object properties
+  - **subject** - Email subject
+  - **priority** - Email priority
+  - **from** - Details of email sender(s)
+    - **address** - Email address
+    - **name** - Email sender name
+  - **to** - Details of email recipient(s)
+    - **address** - Email address
+    - **name** - Email recipient name
+  - **attachments** - Details of any attachments found within the email
+    - **id** - Attachment identifier
+    - **fileName** - Attachment file name
+    - **length** - Attachment file size (in bytes)
+    - **contentType** - Attachment mime type (e.g. "image/png")
+
     
 License
 =======
