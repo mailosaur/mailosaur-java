@@ -36,7 +36,7 @@ public final class MailboxApi {
 			          }
 			        });
 
-	final String BASE_URI = "https://api.clickity.io/v2";
+	final String BASE_URI = "https://api.mailosaur.com/v2";
 	final String MAILBOX;
 	final String API_KEY;
 	
