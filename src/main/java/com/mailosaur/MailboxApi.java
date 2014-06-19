@@ -64,7 +64,8 @@ public final class MailboxApi {
 	String buildQueryString(final Map<String, String> map) throws UnsupportedEncodingException {
 		Map<String, String> queryParams = new HashMap<String, String>();
 		queryParams.put("key", API_KEY);
-		queryParams.putAll(map);
+        if(map!=null)
+		    queryParams.putAll(map);
 		
 		StringBuilder sb = new StringBuilder();
 		  for(Entry<String, String> entry : queryParams.entrySet()){
