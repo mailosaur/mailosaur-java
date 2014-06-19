@@ -86,5 +86,5 @@ Generates a random email address which can be used to send emails into the mailb
 License
 =======
 
-Copyright (c) 2013 Clickity Ltd
+Copyright (c) 2014 Clickity Ltd
 Distributed under MIT license.
