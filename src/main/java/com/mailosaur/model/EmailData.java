@@ -7,6 +7,9 @@ public class EmailData {
 	public Link[] links;
 	@Key
 	public String body;
+
+    @Key
+    public Image[] images;
 	
 	public String toString() {
 		return body;

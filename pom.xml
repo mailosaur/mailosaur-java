@@ -1,59 +1,70 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.mailosaur</groupId>
-  <artifactId>mailosaur-java</artifactId>
-  <version>1.0.9-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>com.mailosaur</groupId>
+    <artifactId>mailosaur-java</artifactId>
+    <version>1.0.9-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>mailosaur-java</name>
-  <url>https://github.com/mailosaurapp/mailosaur-java</url>
-  <description>Mailosaur Java Bindings for Email Test Automation</description>
+    <name>mailosaur-java</name>
+    <url>https://github.com/mailosaurapp/mailosaur-java</url>
+    <description>Mailosaur Java Bindings for Email Test Automation</description>
 
-  <organization>
-  	<name>Clickity Ltd</name>
-  	<url>https://mailosaur.com</url>
-  </organization>
+    <organization>
+        <name>Clickity Ltd</name>
+        <url>https://mailosaur.com</url>
+    </organization>
 
-  <scm>
+    <scm>
         <connection>scm:git:git@github.com:mailosaur/mailosaur-java.git</connection>
         <developerConnection>scm:git:git@github.com:mailosaurapp/mailosaur-java.git</developerConnection>
         <url>git@github.com:mailosaurapp/mailosaur-java.git</url>
     </scm>
-    
-  <licenses>
-    <license>
-      <name>MIT license</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
-    </license>
-  </licenses>
-  
-  <developers>
-  	<developer>
-      <id>clickity</id>
-      <name>Clickity</name>
-      <organization>Clickity Ltd</organization>
-      <organizationUrl>https://mailosaur.com</organizationUrl>
-      <timezone>0</timezone>
-    </developer>
-  </developers>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <licenses>
+        <license>
+            <name>MIT license</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
 
-  <dependencies>
-    <dependency>
-    	<groupId>com.google.http-client</groupId>
-    	<artifactId>google-http-client</artifactId>
-    	<version>1.9.0-beta</version>
-    </dependency>
-  </dependencies>
-  
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
-    
+    <developers>
+        <developer>
+            <id>clickity</id>
+            <name>Clickity</name>
+            <organization>Clickity Ltd</organization>
+            <organizationUrl>https://mailosaur.com</organizationUrl>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>1.9.0-beta</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+    </dependencies>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
 </project>

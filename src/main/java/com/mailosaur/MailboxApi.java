@@ -102,8 +102,9 @@ public final class MailboxApi {
 	}
 	
 	ByteArrayOutputStream downloadFileAsStream(String method, String urlStr) throws com.mailosaur.exception.MailosaurException {
-		HttpRequest request = buildRequest(method, urlStr);
-		try {
+        try {
+            String decoded = java.net.URLDecoder.decode(urlStr, "UTF-8");
+		    HttpRequest request = buildRequest(method, decoded);
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			request.execute().download(stream);
 			return stream;
@@ -149,7 +150,7 @@ public final class MailboxApi {
         return downloadFileAsStream("GET", buildUrlPath("raw", rawId));
     }
 
-    void saveRawEmailToFile(String rawId, String filePath) throws com.mailosaur.exception.MailosaurException {
+    void saveRawEmailToFile(String rawId, String filePath) throws com.mailosaur.exception.MailosaurException, UnsupportedEncodingException {
         byte[] fileBytes = getRawEmail(rawId);
         writeByteArrayToFile(fileBytes, filePath);
     }
