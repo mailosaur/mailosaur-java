@@ -203,9 +203,11 @@ public class ApiTests {
         alternative.addBodyPart(htmlPart);
 
         BodyPart imagePart = new MimeBodyPart();
-        DataSource fds = new FileDataSource("logo-m.png");
+        String linkedImageFileName = "logo-m.png";
+        DataSource fds = new FileDataSource(linkedImageFileName);
         imagePart.setDataHandler(new DataHandler(fds));
         imagePart.setHeader("Content-ID", "ii_1435fadb31d523f6");
+        imagePart.setFileName(linkedImageFileName);
         alternative.addBodyPart(imagePart);
 
 
