@@ -1,9 +1,11 @@
 package com.mailosaur.model;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Key;
+import com.mailosaur.exception.MailosaurException;
 
 public class Email {
 	@Key
@@ -36,4 +38,12 @@ public class Email {
 	public String toString() {
 		return id;
 	}
+
+    public void open() throws IOException, MailosaurException {
+        // retrieve all images in the email:
+        for(Image img : html.images){
+            if(!img.src.startsWith("/"))
+                img.download();
+        }
+    }
 }

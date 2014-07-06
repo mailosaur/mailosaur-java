@@ -34,24 +34,24 @@ public class ApiTests {
     private static String RecipientAddressLong;
 
     @org.junit.Test
-    public void GetEmailsTest() throws MailosaurException, UnsupportedEncodingException {
+    public void GetEmailsTest() throws MailosaurException, IOException {
         Email[] emails = mailbox.getEmails();
         AssertEmail(emails[0]);
     }
 
     @org.junit.Test
-    public void GetEmailsSearchTest() throws MailosaurException, UnsupportedEncodingException {
+    public void GetEmailsSearchTest() throws MailosaurException, IOException {
         Email[] emails = mailbox.getEmails("test");
         AssertEmail(emails[0]);
     }
 
     @org.junit.Test
-    public void GetEmailsByRecipientTest() throws MailosaurException, UnsupportedEncodingException {
+    public void GetEmailsByRecipientTest() throws MailosaurException, IOException {
         Email[] emails = mailbox.getEmailsByRecipient(RecipientAddressShort);
         AssertEmail(emails[0]);
     }
 
-    public void AssertEmail(Email email) throws MailosaurException, UnsupportedEncodingException {
+    public void AssertEmail(Email email) throws MailosaurException, IOException {
         // html links:
         assertEquals(3, email.html.links.length);
         assertEquals("https://mailosaur.com/", email.html.links[0].href);
@@ -61,12 +61,23 @@ public class ApiTests {
         assertEquals("http://invalid/", email.html.links[2].href);
         assertEquals("invalid", email.html.links[2].text);
 
+        // link click:
+        String mailosaur = email.html.links[0].Click();
+        assertTrue(mailosaur.startsWith("<!DOCTYPE html>"));
+
         // html images:
-        assertTrue(email.html.images[0].src.endsWith(".png"));
-        assertEquals("Inline image 1", email.html.images[0].alt);
+        assertTrue(email.html.images[1].src.endsWith(".png"));
+        assertEquals("Inline image 1", email.html.images[1].alt);
+
+        // image download:
+        byte[] image = email.html.images[0].download();
+        assertEquals(34494,image.length);
+
+        // email open:
+        email.open();
 
         // html body:
-        String body = "<div dir=\"ltr\"><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\">this is a test.</div><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><br>this is a link: <a href=\"https://mailosaur.com/\" target=\"_blank\">mailosaur</a><br>\n</div><div class=\"gmail_quote\" style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><div dir=\"ltr\"><div><br></div><div>this is an image:<a href=\"https://mailosaur.com/\" target=\"_blank\"><img src=\"cid:ii_1435fadb31d523f6\" alt=\"Inline image 1\"></a></div>\n<div><br></div><div>this is an invalid link: <a href=\"http://invalid/\" target=\"_blank\">invalid</a></div></div></div>\n</div>";
+        String body = "<div dir=\"ltr\"><img src=\"https://mailosaur.com/favicon.ico\" /><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\">this is a test.</div><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><br>this is a link: <a href=\"https://mailosaur.com/\" target=\"_blank\">mailosaur</a><br>\n</div><div class=\"gmail_quote\" style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><div dir=\"ltr\"><div><br></div><div>this is an image:<a href=\"https://mailosaur.com/\" target=\"_blank\"><img src=\"cid:ii_1435fadb31d523f6\" alt=\"Inline image 1\"></a></div>\n<div><br></div><div>this is an invalid link: <a href=\"http://invalid/\" target=\"_blank\">invalid</a></div></div></div>\n</div>";
         body = body.replace((char) 32, (char) 160);
         email.html.body = email.html.body.replace((char) 32, (char) 160);
         assertEquals(body, email.html.body);
@@ -77,6 +88,10 @@ public class ApiTests {
         assertEquals("https://mailosaur.com/", email.text.links[0].text);
         assertEquals("https://mailosaur.com/", email.text.links[1].href);
         assertEquals("https://mailosaur.com/", email.text.links[1].text);
+
+        // link click:
+        mailosaur = email.html.links[0].Click();
+        assertTrue(mailosaur.startsWith("<!DOCTYPE html>"));
 
         // text body:
         String text = "this is a test.\n\nthis is a link: mailosaur <https://mailosaur.com/>\n\nthis is an image:[image: Inline image 1] <https://mailosaur.com/>\n\nthis is an invalid link: invalid";
@@ -169,12 +184,14 @@ public class ApiTests {
         String server = "mailosaur.in",
                 from = "anyone<anyone@example.com>",
                 subject = "test subject",
-                html = "<div dir=\"ltr\"><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\">this is a test.</div><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><br>this is a link: <a href=\"https://mailosaur.com/\" target=\"_blank\">mailosaur</a><br>\n</div><div class=\"gmail_quote\" style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><div dir=\"ltr\"><div><br></div><div>this is an image:<a href=\"https://mailosaur.com/\" target=\"_blank\"><img src=\"cid:ii_1435fadb31d523f6\" alt=\"Inline image 1\"></a></div>\n<div><br></div><div>this is an invalid link: <a href=\"http://invalid/\" target=\"_blank\">invalid</a></div></div></div>\n</div>",
+                html = "<div dir=\"ltr\"><img src=\"https://mailosaur.com/favicon.ico\" /><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\">this is a test.</div><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><br>this is a link: <a href=\"https://mailosaur.com/\" target=\"_blank\">mailosaur</a><br>\n</div><div class=\"gmail_quote\" style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><div dir=\"ltr\"><div><br></div><div>this is an image:<a href=\"https://mailosaur.com/\" target=\"_blank\"><img src=\"cid:ii_1435fadb31d523f6\" alt=\"Inline image 1\"></a></div>\n<div><br></div><div>this is an invalid link: <a href=\"http://invalid/\" target=\"_blank\">invalid</a></div></div></div>\n</div>",
                 text = "this is a test.\n\nthis is a link: mailosaur <https://mailosaur.com/>\n\nthis is an image:[image: Inline image 1] <https://mailosaur.com/>\n\nthis is an invalid link: invalid";
 
-        RecipientAddressShort = UUID.randomUUID() + "." + mailboxid + "@mailosaur.in";
-        RecipientAddressLong = "anybody<" + RecipientAddressShort + ">";
         mailbox = new MailboxApi(mailboxid, apikey);
+
+        RecipientAddressShort = mailbox.generateEmailAddress();
+        RecipientAddressLong = "anybody<" + RecipientAddressShort + ">";
+
 
 
         // send an email:
