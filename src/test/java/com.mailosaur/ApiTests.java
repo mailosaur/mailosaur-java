@@ -34,24 +34,24 @@ public class ApiTests {
     private static String RecipientAddressLong;
 
     @org.junit.Test
-    public void GetEmailsTest() throws MailosaurException, IOException {
+    public void getEmailsTest() throws MailosaurException, IOException {
         Email[] emails = mailbox.getEmails();
-        AssertEmail(emails[0]);
+        assertEmail(emails[0]);
     }
 
     @org.junit.Test
-    public void GetEmailsSearchTest() throws MailosaurException, IOException {
+    public void getEmailsSearchTest() throws MailosaurException, IOException {
         Email[] emails = mailbox.getEmails("test");
-        AssertEmail(emails[0]);
+        assertEmail(emails[0]);
     }
 
     @org.junit.Test
-    public void GetEmailsByRecipientTest() throws MailosaurException, IOException {
+    public void getEmailsByRecipientTest() throws MailosaurException, IOException {
         Email[] emails = mailbox.getEmailsByRecipient(RecipientAddressShort);
-        AssertEmail(emails[0]);
+        assertEmail(emails[0]);
     }
 
-    public void AssertEmail(Email email) throws MailosaurException, IOException {
+    public void assertEmail(Email email) throws MailosaurException, IOException {
         // html links:
         assertEquals(3, email.html.links.length);
         assertEquals("https://mailosaur.com/", email.html.links[0].href);
@@ -173,12 +173,24 @@ public class ApiTests {
         assertEquals(attachment2.length, new Long(data2.length));
     }
 
+    static public void deleteAllEmailTest() throws MailosaurException, IOException {
+        mailbox.deleteAllEmail();
+        Email[] emails = mailbox.getEmails();
+        assertEquals(0, emails.length);
+    }
+
     @BeforeClass
-    static public void Setup() throws IOException, MessagingException {
+    static public void setup() throws IOException, MessagingException, MailosaurException, InterruptedException {
         File file = new File("mailbox.settings");
         List<String> config = Files.readLines(file, Charsets.UTF_8);
         String mailboxid = config.get(0);
         String apikey = config.get(1);
+
+        mailbox = new MailboxApi(mailboxid, apikey);
+
+        // clear mailbox:
+        deleteAllEmailTest();
+
 
         // send test email:
         String server = "mailosaur.in",
@@ -187,12 +199,8 @@ public class ApiTests {
                 html = "<div dir=\"ltr\"><img src=\"https://mailosaur.com/favicon.ico\" /><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\">this is a test.</div><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><br>this is a link: <a href=\"https://mailosaur.com/\" target=\"_blank\">mailosaur</a><br>\n</div><div class=\"gmail_quote\" style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><div dir=\"ltr\"><div><br></div><div>this is an image:<a href=\"https://mailosaur.com/\" target=\"_blank\"><img src=\"cid:ii_1435fadb31d523f6\" alt=\"Inline image 1\"></a></div>\n<div><br></div><div>this is an invalid link: <a href=\"http://invalid/\" target=\"_blank\">invalid</a></div></div></div>\n</div>",
                 text = "this is a test.\n\nthis is a link: mailosaur <https://mailosaur.com/>\n\nthis is an image:[image: Inline image 1] <https://mailosaur.com/>\n\nthis is an invalid link: invalid";
 
-        mailbox = new MailboxApi(mailboxid, apikey);
-
         RecipientAddressShort = mailbox.generateEmailAddress();
         RecipientAddressLong = "anybody<" + RecipientAddressShort + ">";
-
-
 
         // send an email:
         Properties props = new Properties();
@@ -240,5 +248,9 @@ public class ApiTests {
 
         Transport transport = session.getTransport("smtp");
         transport.send(msg);
+
+        // allow for service to process email:
+        Thread.sleep(3000);
+
     }
 }

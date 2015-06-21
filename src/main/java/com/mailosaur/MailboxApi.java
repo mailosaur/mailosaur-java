@@ -40,24 +40,8 @@ public final class MailboxApi {
 		MAILBOX = mailbox;
 		API_KEY = apiKey;
 	}
-	
-	void writeByteArrayToFile(final byte[] fileBytes, final String filePath) throws com.mailosaur.exception.MailosaurException {
-		FileOutputStream stream = null;
-		try {
-			stream = new FileOutputStream(filePath);			
-		} catch (FileNotFoundException e) {
-			throw new com.mailosaur.exception.MailosaurException("Unable to write to file: File not found " + filePath, e);
-		} finally {
-		    try {
-		    	stream.write(fileBytes);
-				stream.close();
-			} catch (IOException e) {
-				throw new com.mailosaur.exception.MailosaurException("Unable to write to file", e);
-			}
-		}
-	}
-	
-	String buildQueryString(final Map<String, String> map) throws UnsupportedEncodingException {
+
+	private String buildQueryString(final Map<String, String> map) throws UnsupportedEncodingException {
 		Map<String, String> queryParams = new HashMap<String, String>();
 		queryParams.put("key", API_KEY);
         if(map!=null)
@@ -76,15 +60,15 @@ public final class MailboxApi {
 		  return sb.toString();
 	}
 	
-	GenericUrl buildUrl(final String path, Map<String, String> queryParams) throws UnsupportedEncodingException {
+	private GenericUrl buildUrl(final String path, Map<String, String> queryParams) throws UnsupportedEncodingException {
 		return new GenericUrl(BASE_URI + path + "?" + buildQueryString(queryParams));
 	}
 	
-	HttpRequest buildRequest(String method, String path) throws com.mailosaur.exception.MailosaurException {
+	private HttpRequest buildRequest(String method, String path) throws com.mailosaur.exception.MailosaurException {
 		return buildRequest(method, path, null);
 	}
 	
-	HttpRequest buildRequest(String method, String path, Map<String, String> queryParams) throws com.mailosaur.exception.MailosaurException {
+	private HttpRequest buildRequest(String method, String path, Map<String, String> queryParams) throws com.mailosaur.exception.MailosaurException {
 		try {
 			GenericUrl url = buildUrl(path, queryParams);
 			return method == "POST" ?
@@ -96,20 +80,17 @@ public final class MailboxApi {
 			throw new com.mailosaur.exception.MailosaurException("Unable to build web request", e);
 		}
 	}
+
+	private ByteArrayOutputStream downloadFileAsStream(String method, String urlStr) throws com.mailosaur.exception.MailosaurException, IOException {
+
+        String decoded = java.net.URLDecoder.decode(urlStr, "UTF-8");
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        executeRequest(method, decoded, null).download(stream);
+        return stream;
+    }
 	
-	ByteArrayOutputStream downloadFileAsStream(String method, String urlStr) throws com.mailosaur.exception.MailosaurException {
-        try {
-            String decoded = java.net.URLDecoder.decode(urlStr, "UTF-8");
-		    HttpRequest request = buildRequest(method, decoded);
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			request.execute().download(stream);
-			return stream;
-		} catch (IOException e) {
-			throw new com.mailosaur.exception.MailosaurException("Unable to download file", e);
-		}
-	}
-	
-	String buildUrlPath(String... args) throws com.mailosaur.exception.MailosaurException {
+	private String buildUrlPath(String... args) throws com.mailosaur.exception.MailosaurException {
 		StringBuilder sb = new StringBuilder();
 		for (String arg : args) {
 			try {
@@ -120,89 +101,68 @@ public final class MailboxApi {
 	    }
 		return sb.toString();
 	}
+
+    private HttpResponse executeRequest(String method, String url, HashMap<String, String> queryParams) throws MailosaurException {
+        IOException ex = null;
+        // retry 3 times:
+        for (int i = 0; i < 3; i++) {
+            try {
+                HttpRequest request = buildRequest(method, url, queryParams);
+                return request.execute();
+            } catch (IOException ioException) {
+                ex = ioException;
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ie) {
+                }
+            }
+        }
+        throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", ex);
+    }
 	
-	Email[] getEmails(Map<String, String> searchCriteria) throws com.mailosaur.exception.MailosaurException {
-		try {
-			HashMap<String, String> queryParams = new HashMap<String, String>();
-			queryParams.put("mailbox", MAILBOX);
-			queryParams.putAll(searchCriteria);
-			HttpRequest request = buildRequest("GET", "/emails", queryParams);
-			return request.execute().parseAs(Email[].class);
-		} catch (IOException e) {
-			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
-		}
-	}
+	private Email[] getEmails(Map<String, String> searchCriteria) throws com.mailosaur.exception.MailosaurException, IOException {
+        HashMap<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("mailbox", MAILBOX);
+        queryParams.putAll(searchCriteria);
 
-    OutputStream getAttachmentAsStream(String attachmentId) throws com.mailosaur.exception.MailosaurException {
-        return downloadFileAsStream("GET", buildUrlPath("attachment", attachmentId));
+        return executeRequest("GET", "/emails", queryParams).parseAs(Email[].class);
     }
 
-    void saveAttachmentToFile(String attachmentId, String filePath) throws com.mailosaur.exception.MailosaurException {
-        byte[] fileBytes = getAttachment(attachmentId);
-        writeByteArrayToFile(fileBytes, filePath);
-    }
-
-    OutputStream getRawEmailAsStream(String rawId) throws com.mailosaur.exception.MailosaurException {
-        return downloadFileAsStream("GET", buildUrlPath("raw", rawId));
-    }
-
-    void saveRawEmailToFile(String rawId, String filePath) throws com.mailosaur.exception.MailosaurException, UnsupportedEncodingException {
-        byte[] fileBytes = getRawEmail(rawId);
-        writeByteArrayToFile(fileBytes, filePath);
-    }
-
-    public Email[] getEmails() throws com.mailosaur.exception.MailosaurException {
+    public Email[] getEmails() throws com.mailosaur.exception.MailosaurException, IOException {
 		return getEmails(new HashMap<String, String>());
 	}
 		
-	public Email[] getEmails(String searchPattern) throws com.mailosaur.exception.MailosaurException {
+	public Email[] getEmails(String searchPattern) throws com.mailosaur.exception.MailosaurException, IOException {
 		HashMap<String, String> searchCriteria = new HashMap<String, String>();
 		searchCriteria.put("search", searchPattern);
 		return getEmails(searchCriteria);
 	}
 	
-	public Email[] getEmailsByRecipient(String recipientEmail) throws com.mailosaur.exception.MailosaurException {
+	public Email[] getEmailsByRecipient(String recipientEmail) throws com.mailosaur.exception.MailosaurException, IOException {
 		HashMap<String, String> searchCriteria = new HashMap<String, String>();
 		searchCriteria.put("recipient", recipientEmail);
 		return getEmails(searchCriteria);
 	}
 	
-	public Email getEmail(String emailId) throws com.mailosaur.exception.MailosaurException {
-		try {
-			HttpRequest request = buildRequest("GET",  buildUrlPath("email", emailId));
-			return request.execute().parseAs(Email.class);
-		} catch (IOException e) {
-			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
-		}
-	}
+	public Email getEmail(String emailId) throws com.mailosaur.exception.MailosaurException, IOException {
+        return executeRequest("GET", buildUrlPath("email", emailId), null).parseAs(Email.class);
+    }
 	
-	public Boolean deleteAllEmail() throws com.mailosaur.exception.MailosaurException {
-		try {
-			HashMap<String, String> queryParams = new HashMap<String, String>();
-			queryParams.put("mailbox", MAILBOX);
-			HttpRequest request = buildRequest("POST", "/emails/deleteall", queryParams);
-			DeleteResult result = request.execute().parseAs(DeleteResult.class);
-			return result.ok;
-		} catch (IOException e) {
-			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
-		}
-	}
+	public void deleteAllEmail() throws com.mailosaur.exception.MailosaurException, IOException {
+        HashMap<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("mailbox", MAILBOX);
+        executeRequest("POST", "/emails/deleteall", queryParams);
+    }
 	
-	public Boolean deleteEmail(String emailId) throws com.mailosaur.exception.MailosaurException {
-		try {
-			HttpRequest request = buildRequest("POST", buildUrlPath("email", emailId, "delete"));
-			DeleteResult result = request.execute().parseAs(DeleteResult.class);
-			return result.ok;
-		} catch (IOException e) {
-			throw new com.mailosaur.exception.MailosaurException("Unable to parse API response", e);
-		}
-	}
+	public void deleteEmail(String emailId) throws com.mailosaur.exception.MailosaurException, IOException {
+        executeRequest("POST", buildUrlPath("email", emailId, "delete"), null).parseAs(DeleteResult.class);
+    }
 
-	public byte[] getAttachment(String attachmentId) throws com.mailosaur.exception.MailosaurException {
+	public byte[] getAttachment(String attachmentId) throws com.mailosaur.exception.MailosaurException, IOException {
 		return downloadFileAsStream("GET", buildUrlPath("attachment", attachmentId)).toByteArray();
 	}
 
-	public byte[] getRawEmail(String rawId) throws com.mailosaur.exception.MailosaurException {
+	public byte[] getRawEmail(String rawId) throws com.mailosaur.exception.MailosaurException, IOException {
 		return downloadFileAsStream("GET", buildUrlPath("raw", rawId)).toByteArray();
 	}
 
