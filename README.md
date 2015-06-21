@@ -14,7 +14,7 @@ Add this dependency to your project's POM:
     <dependency>
       <groupId>com.mailosaur</groupId>
       <artifactId>mailosaur-java</artifactId>
-      <version>1.0.12</version>
+      <version>1.0.13</version>
     </dependency>
 
 
