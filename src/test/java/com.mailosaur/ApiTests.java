@@ -44,6 +44,20 @@ public class ApiTests {
         Email[] emails = mailbox.getEmails("test");
         assertEmail(emails[0]);
     }
+    @org.junit.Test
+    public void generateEmailsTest() throws MailosaurException, IOException {
+        List<String> addresses = new ArrayList<String>();
+
+        // generate 1000 addresses, check that there are no duplicates:
+        for (int i = 0; i < 1000; i++) {
+            String address = mailbox.generateEmailAddress();
+            if (!addresses.contains(address))
+            {
+                addresses.add(address);
+            }
+        }
+        assertEquals(1000, addresses.size());
+    }
 
     @org.junit.Test
     public void getEmailsByRecipientTest() throws MailosaurException, IOException {

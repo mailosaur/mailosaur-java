@@ -16,6 +16,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.UUID;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -166,8 +167,10 @@ public final class MailboxApi {
 		return downloadFileAsStream("GET", buildUrlPath("raw", rawId)).toByteArray();
 	}
 
+    private Random m_Random = new Random();
+
 	public String generateEmailAddress() {
-		String uuid = UUID.randomUUID().toString();
-		return String.format("%s.%s@mailosaur.in", uuid, MAILBOX);
+		String random = String.valueOf(m_Random.nextInt(10000000));
+		return String.format("%s.%s@mailosaur.in", random, MAILBOX);
 	}
 }
