@@ -14,6 +14,8 @@ public class Email {
 	public DateTime creationdate;
 	@Key
 	public String senderHost;
+	@Key
+	public String senderhost;
 	@Key("from")
 	public EmailAddress[] from;
 	@Key("to")
@@ -22,6 +24,8 @@ public class Email {
 	public String mailbox;
 	@Key
 	public String rawId;
+	@Key
+	public String rawid;
 	@Key
 	public EmailData html;
 	@Key
@@ -42,7 +46,7 @@ public class Email {
     public void open() throws IOException, MailosaurException {
         // retrieve all images in the email:
         for(Image img : html.images){
-            if(!img.src.startsWith("/"))
+            if(!img.src.startsWith("/") && !img.src.startsWith("cid:"))
                 img.download();
         }
     }
