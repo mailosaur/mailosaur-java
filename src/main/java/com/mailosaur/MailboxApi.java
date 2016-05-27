@@ -109,10 +109,6 @@ public final class MailboxApi {
                 return request.execute();
             } catch (IOException ioException) {
                 ex = ioException;
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ie) {
-                }
             }
         }
         throw new com.mailosaur.exception.MailosaurException("Unable to parse API response: " + ex.getMessage(), ex);

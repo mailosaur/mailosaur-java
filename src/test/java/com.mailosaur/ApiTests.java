@@ -273,9 +273,7 @@ public class ApiTests {
 
         Transport transport = session.getTransport("smtp");
         transport.send(msg);
-
-        // allow for service to process email:
-        Thread.sleep(3000);
+       // transport.send(msg);
 
     }
 }
