@@ -26,7 +26,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 
-public class ApiTests {
+public class ApiTestCase {
 
 
     private static MailboxApi mailbox;
