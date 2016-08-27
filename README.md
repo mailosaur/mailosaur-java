@@ -11,7 +11,7 @@ Add this dependency to your project's POM:
     <dependency>
       <groupId>com.mailosaur</groupId>
       <artifactId>mailosaur-java</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.2</version>
     </dependency>
 
 
@@ -25,5 +25,5 @@ You can get us at [support@mailosaur.com](mailto:support@mailosaur.com)
 
 ## License
 
-Copyright (c) 2014 Clickity Ltd
+Copyright (c) 2016 Mailosaur Ltd
 Distributed under MIT license.
