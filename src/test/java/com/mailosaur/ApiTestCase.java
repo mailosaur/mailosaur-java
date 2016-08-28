@@ -21,6 +21,7 @@ import javax.mail.internet.MimeMultipart;
 
 
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -161,15 +162,8 @@ public class ApiTestCase {
 
         assertNotNull(attachment1.id);
         assertNotEquals("", attachment1.id);
-
-        //Assert.IsTrue(attachment1.Id.EndsWith(".png"));
         assertEquals((Long) 4819L, attachment1.length);
-        //assertEquals("logo-m.png", attachment1.FileName);
-
         assertEquals("image/png", attachment1.contentType);
-
-        //var data1 = Mailbox.GetAttachment(attachment1.Id);
-        //Assert.IsNotNull(data1);
 
         // attachment 2:
         Attachment attachment2 = email.attachments[1];
@@ -199,22 +193,25 @@ public class ApiTestCase {
 
     @BeforeClass
     static public void setup() throws IOException, MessagingException, MailosaurException, InterruptedException {
+        String baseUrl = System.getenv("MAILOSAUR_BASE_URL");
         String mailboxId = System.getenv("MAILOSAUR_MAILBOX_ID");
-        String apiKey = System.getenv("MAILOSAUR_API_KEY");
+        String apiKey = System.getenv("MAILOSAUR_API_KEY");        
         String host = System.getenv("MAILOSAUR_SMTP_HOST");
         String port = System.getenv("MAILOSAUR_SMTP_PORT");
-        if(port==null)
-          port = "25";
 
-        String baseUrl = System.getenv ("MAILOSAUR_BASE_URL");
-        if(baseUrl!=null)
+        if (baseUrl != null)
             MailboxApi.BaseUri = baseUrl;
+
+        if (host == null || host.trim().isEmpty())
+            host = "mailosaur.io";
+
+        if (port == null || port.trim().isEmpty())
+            port = "25";
 
         mailbox = new MailboxApi(mailboxId, apiKey);
 
         // clear mailbox:
         deleteAllEmailTest();
-
 
         // send test email:
         String server = host,
@@ -232,7 +229,6 @@ public class ApiTestCase {
         props.put("mail.smtp.port", port);
         props.put("mail.smtp.auth", "false");
         props.put("mail.smtp.starttls.enable", "false");
-
 
         Session session = Session.getInstance(props);
 
@@ -253,19 +249,24 @@ public class ApiTestCase {
         alternative.addBodyPart(htmlPart);
 
         BodyPart imagePart = new MimeBodyPart();
-        String linkedImageFileName = "logo-m.png";
-        DataSource fds = new FileDataSource(linkedImageFileName);
+
+        String linkedImageFilePath = ApiTestCase.class.getResource("/logo-m.png").getPath();
+        DataSource fds = new FileDataSource(linkedImageFilePath);  
+        String linkedImageFileName = linkedImageFilePath.substring( linkedImageFilePath.lastIndexOf('/')+1, linkedImageFilePath.length() );
         imagePart.setDataHandler(new DataHandler(fds));
+        imagePart.setHeader("content-type", "image/png");
         imagePart.setHeader("Content-ID", "ii_1435fadb31d523f6");
         imagePart.setFileName(linkedImageFileName);
         alternative.addBodyPart(imagePart);
 
 
         BodyPart attachmentPart = new MimeBodyPart();
-        String filename = "logo-m-circle-sm.png";
-        DataSource attachmentFile = new FileDataSource(filename);
+        String attachedFilePath = ApiTestCase.class.getResource("/logo-m-circle-sm.png").getPath();
+        DataSource attachmentFile = new FileDataSource(attachedFilePath);     
+        String attachedFileName = attachedFilePath.substring( attachedFilePath.lastIndexOf('/')+1, attachedFilePath.length() );     
         attachmentPart.setDataHandler(new DataHandler(attachmentFile));
-        attachmentPart.setFileName(filename);
+        attachmentPart.setHeader("content-type", "image/png");
+        attachmentPart.setFileName(attachedFileName);
         alternative.addBodyPart(attachmentPart);
 
         msg.setContent(alternative);
@@ -273,7 +274,5 @@ public class ApiTestCase {
 
         Transport transport = session.getTransport("smtp");
         transport.send(msg);
-       // transport.send(msg);
-
     }
 }
