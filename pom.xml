@@ -11,7 +11,7 @@
     <description>Mailosaur Java Bindings for Email Test Automation</description>
 
     <organization>
-        <name>Clickity Ltd</name>
+        <name>Mailosaur Ltd</name>
         <url>https://mailosaur.com</url>
     </organization>
 
@@ -30,9 +30,9 @@
 
     <developers>
         <developer>
-            <id>clickity</id>
-            <name>Clickity</name>
-            <organization>Clickity Ltd</organization>
+            <id>mailosaur</id>
+            <name>Mailosaur</name>
+            <organization>Mailosaur Ltd</organization>
             <organizationUrl>https://mailosaur.com</organizationUrl>
             <timezone>0</timezone>
         </developer>
