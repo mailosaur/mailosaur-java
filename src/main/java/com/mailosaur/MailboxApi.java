@@ -162,7 +162,7 @@ public final class MailboxApi {
 
     public String generateEmailAddress() {
         String random = String.valueOf(m_Random.nextInt(10000000));
-        return String.format("%s.%s@mailosaur.in", random, MAILBOX);
+        return String.format("%s.%s@mailosaur.io", random, MAILBOX);
     }
 
 }
