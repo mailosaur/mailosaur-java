@@ -7,7 +7,7 @@
     <packaging>jar</packaging>
 
     <name>mailosaur-java</name>
-    <url>https://github.com/mailosaurapp/mailosaur-java</url>
+    <url>https://github.com/mailosaur/mailosaur-java</url>
     <description>Mailosaur Java Bindings for Email Test Automation</description>
 
     <organization>
@@ -17,8 +17,8 @@
 
     <scm>
         <connection>scm:git:git@github.com:mailosaur/mailosaur-java.git</connection>
-        <developerConnection>scm:git:git@github.com:mailosaurapp/mailosaur-java.git</developerConnection>
-        <url>git@github.com:mailosaurapp/mailosaur-java.git</url>
+        <developerConnection>scm:git:git@github.com:mailosaur/mailosaur-java.git</developerConnection>
+        <url>git@github.com:mailosaur/mailosaur-java.git</url>
     </scm>
 
     <licenses>
