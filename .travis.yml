@@ -1,4 +1,7 @@
 language: java
 env:
+  global:
+    - secure: HXjDFufZN79u7P7WNWgWhSSFFcXidUh/kscRGEgI+wkmsRJshETs6o6XlL0ndLIdMlXy7AhGjrTJRZ0ZXjUg82sX+GeKJ5qMHuHCCZFguG/91L73pI7j/AusH2hNFjFZKrTUzBLSW1vjUZBpDA7T1TF+nwQdg5L3cPmEh0uVnMw=
   matrix:
-    secure: HXjDFufZN79u7P7WNWgWhSSFFcXidUh/kscRGEgI+wkmsRJshETs6o6XlL0ndLIdMlXy7AhGjrTJRZ0ZXjUg82sX+GeKJ5qMHuHCCZFguG/91L73pI7j/AusH2hNFjFZKrTUzBLSW1vjUZBpDA7T1TF+nwQdg5L3cPmEh0uVnMw=
+    - MAILOSAUR_BASE_URL=https://mailosaur.com/api/ MAILOSAUR_SMTP_HOST=mailosaur.io
+    - MAILOSAUR_BASE_URL=https://next.mailosaur.com/api/ MAILOSAUR_SMTP_HOST=ms-smtp.uk
