@@ -1,7 +1,10 @@
 language: java
 env:
   global:
-    - secure: HXjDFufZN79u7P7WNWgWhSSFFcXidUh/kscRGEgI+wkmsRJshETs6o6XlL0ndLIdMlXy7AhGjrTJRZ0ZXjUg82sX+GeKJ5qMHuHCCZFguG/91L73pI7j/AusH2hNFjFZKrTUzBLSW1vjUZBpDA7T1TF+nwQdg5L3cPmEh0uVnMw=
+  - secure: HXjDFufZN79u7P7WNWgWhSSFFcXidUh/kscRGEgI+wkmsRJshETs6o6XlL0ndLIdMlXy7AhGjrTJRZ0ZXjUg82sX+GeKJ5qMHuHCCZFguG/91L73pI7j/AusH2hNFjFZKrTUzBLSW1vjUZBpDA7T1TF+nwQdg5L3cPmEh0uVnMw=
   matrix:
-    - MAILOSAUR_BASE_URL=https://mailosaur.com/api/ MAILOSAUR_SMTP_HOST=mailosaur.io
-    - MAILOSAUR_BASE_URL=https://next.mailosaur.com/api/ MAILOSAUR_SMTP_HOST=ms-smtp.uk
+  - MAILOSAUR_BASE_URL=https://mailosaur.com/api/ MAILOSAUR_SMTP_HOST=mailosaur.io
+  - MAILOSAUR_BASE_URL=https://next.mailosaur.com/api/ MAILOSAUR_SMTP_HOST=ms-smtp.uk
+notifications:
+  slack:
+    secure: YlqApAcdbXrK/YUCEa0lL3euRqWlfXE6EaP8lggsMst13VEPrKTV5CmWWLzDrDk7VRMRem5JsgZhwzTXWK0XQdp0qryPUlUfIaqz/BsUoFMrpPjarisTngGjMLsKbNmh9D3e8Fojk1vBRuVHbNWzdJU9lwv1auSoAfIilZ+kTZY=
