@@ -4,6 +4,6 @@ env:
   - secure: HXjDFufZN79u7P7WNWgWhSSFFcXidUh/kscRGEgI+wkmsRJshETs6o6XlL0ndLIdMlXy7AhGjrTJRZ0ZXjUg82sX+GeKJ5qMHuHCCZFguG/91L73pI7j/AusH2hNFjFZKrTUzBLSW1vjUZBpDA7T1TF+nwQdg5L3cPmEh0uVnMw=
   matrix:
   - MAILOSAUR_BASE_URL=https://mailosaur.com/api/ MAILOSAUR_SMTP_HOST=mailosaur.io
-  - MAILOSAUR_BASE_URL=https://next.mailosaur.com/api/ MAILOSAUR_SMTP_HOST=ms-smtp.uk
+  - MAILOSAUR_BASE_URL=https://next.mailosaur.com/api/ MAILOSAUR_SMTP_HOST=ms-smtp.uk MAILOSAUR_SMTP_PORT=12525
 notifications:
   webhooks: https://outlook.office365.com/webhook/15b4ba90-3687-4f64-9426-614ddf100184@d49da0b1-9141-48b1-b00d-58ac067d4cf4/TravisCI/cf68bf17b0484bfe8df7b29e98b26abc/f414b2da-0704-4552-a65a-2116b8b3d218
