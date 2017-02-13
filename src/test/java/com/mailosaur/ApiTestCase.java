@@ -78,7 +78,7 @@ public class ApiTestCase {
 
         // link click:
         String mailosaur = email.html.links[0].Click();
-        assertTrue(mailosaur.startsWith("<!DOCTYPE html>"));
+        assertTrue(mailosaur.contains("<!DOCTYPE html>"));
 
         // html images:
         assertTrue(email.html.images[1].src.endsWith(".png") || email.html.images[1].src.startsWith("cid"));
