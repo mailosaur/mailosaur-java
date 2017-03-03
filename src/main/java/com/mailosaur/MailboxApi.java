@@ -102,16 +102,17 @@ public final class MailboxApi {
 
     private HttpResponse executeRequest(String method, String url, HashMap<String, String> queryParams) throws MailosaurException {
         IOException ex = null;
+        HttpRequest request = null;
         // retry 3 times:
         for (int i = 0; i < 3; i++) {
             try {
-                HttpRequest request = buildRequest(method, url, queryParams);
+                request = buildRequest(method, url, queryParams);
                 return request.execute();
             } catch (IOException ioException) {
                 ex = ioException;
             }
         }
-        throw new com.mailosaur.exception.MailosaurException("Unable to parse API response: " + ex.getMessage(), ex);
+        throw new com.mailosaur.exception.MailosaurException("Unable to parse API response from " + request.getUrl() + " : " + ex.getMessage(), ex);
     }
 
     private Email[] getEmails(Map<String, String> searchCriteria) throws com.mailosaur.exception.MailosaurException, IOException {
