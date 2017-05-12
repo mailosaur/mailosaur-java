@@ -87,7 +87,7 @@ public class ApiTestCase {
         // image download:
         byte[] image = email.html.images[0].download();
         assertEquals("https://mailosaur.com/wp-content/themes/mailosaur/images/logo.svg", email.html.images[0].src);
-        assertEquals(5400,image.length);
+        assertEquals(3253,image.length);
 
         // email open:
         email.open();
