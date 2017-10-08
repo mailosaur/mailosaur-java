@@ -159,6 +159,10 @@ public final class MailboxApi {
         return downloadFileAsStream("GET", buildUrlPath("raw", rawId)).toByteArray();
     }
 
+    public int getEmailCount() throws com.mailosaur.exception.MailosaurException, IOException {
+        return executeRequest("GET", "/mailboxes/" + MAILBOX, null).parseAs(Mailbox.class).Count;
+    }
+
     private Random m_Random = new Random();
 
     public String generateEmailAddress() {

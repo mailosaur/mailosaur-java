@@ -182,6 +182,7 @@ public class ApiTestCase {
         mailbox.deleteAllEmail();
         Email[] emails = mailbox.getEmails();
         assertEquals(0, emails.length);
+        assertEquals(0, mailbox.getEmailCount());
     }
 
     static public void deleteEmailTest() throws MailosaurException, IOException {
@@ -190,6 +191,8 @@ public class ApiTestCase {
         mailbox.deleteEmail(email.id);
 
         assertEquals(emails.length, mailbox.getEmails().length+1);
+        assertEquals(emails.length, mailbox.getEmailCount() + 1);
+
     }
 
     @BeforeClass
