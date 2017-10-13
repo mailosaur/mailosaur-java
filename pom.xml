@@ -3,7 +3,7 @@
 
     <groupId>com.mailosaur</groupId>
     <artifactId>mailosaur-java</artifactId>
-    <version>3.0.5-SNAPSHOT</version>
+    <version>3.0.5</version>
     <packaging>jar</packaging>
 
     <name>mailosaur-java</name>
