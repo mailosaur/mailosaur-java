@@ -27,7 +27,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 
-public class ApiTestCase {
+public class ApiTest {
 
 
     private static MailboxApi mailbox;
@@ -254,7 +254,7 @@ public class ApiTestCase {
 
         BodyPart imagePart = new MimeBodyPart();
 
-        String linkedImageFilePath = ApiTestCase.class.getResource("/logo-m.png").getPath();
+        String linkedImageFilePath = ApiTest.class.getResource("/logo-m.png").getPath();
         DataSource fds = new FileDataSource(linkedImageFilePath);  
         String linkedImageFileName = linkedImageFilePath.substring( linkedImageFilePath.lastIndexOf('/')+1, linkedImageFilePath.length() );
         imagePart.setDataHandler(new DataHandler(fds));
@@ -265,7 +265,7 @@ public class ApiTestCase {
 
 
         BodyPart attachmentPart = new MimeBodyPart();
-        String attachedFilePath = ApiTestCase.class.getResource("/logo-m-circle-sm.png").getPath();
+        String attachedFilePath = ApiTest.class.getResource("/logo-m-circle-sm.png").getPath();
         DataSource attachmentFile = new FileDataSource(attachedFilePath);     
         String attachedFileName = attachedFilePath.substring( attachedFilePath.lastIndexOf('/')+1, attachedFilePath.length() );     
         attachmentPart.setDataHandler(new DataHandler(attachmentFile));

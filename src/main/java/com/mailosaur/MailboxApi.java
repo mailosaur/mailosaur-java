@@ -70,7 +70,7 @@ public final class MailboxApi {
         try {
             GenericUrl url = buildUrl(path, queryParams);
             return method == "POST" ?
-                    requestFactory.buildPostRequest(url, null) :
+                    requestFactory.buildPostRequest(url, new EmptyContent()) :
                     requestFactory.buildGetRequest(url);
         } catch (UnsupportedEncodingException e) {
             throw new com.mailosaur.exception.MailosaurException("Unable to encode URL", e);
