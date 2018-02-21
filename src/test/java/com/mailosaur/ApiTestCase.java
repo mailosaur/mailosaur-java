@@ -27,7 +27,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 
-public class ApiTest {
+public class ApiTestCase {
 
 
     private static MailboxApi mailbox;
@@ -86,7 +86,7 @@ public class ApiTest {
 
         // image download:
         byte[] image = email.html.images[0].download();
-        assertEquals("https://mailosaur.com/wp-content/themes/mailosaur/images/logo.svg", email.html.images[0].src);
+        assertEquals("https://mailosaur.com/humans.txt", email.html.images[0].src);
         assertEquals(3253,image.length);
 
         // email open:
@@ -221,7 +221,7 @@ public class ApiTest {
         String server = host,
                 from = "anyone<anyone@example.com>",
                 subject = "test subject",
-                html = "<div dir=\"ltr\"><img src=\"https://mailosaur.com/wp-content/themes/mailosaur/images/logo.svg\" /><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\">this is a test.</div><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><br>this is a link: <a href=\"https://mailosaur.com/\" target=\"_blank\">mailosaur</a><br>\n</div><div class=\"gmail_quote\" style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><div dir=\"ltr\"><div><br></div><div>this is an image:<a href=\"https://mailosaur.com/\" target=\"_blank\"><img src=\"cid:ii_1435fadb31d523f6\" alt=\"Inline image 1\"></a></div>\n<div><br></div><div>this is an invalid link: <a href=\"http://invalid/\" target=\"_blank\">invalid</a></div></div></div>\n</div>",
+                html = "<div dir=\"ltr\"><img src=\"https://mailosaur.com/humans.txt\" /><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\">this is a test.</div><div style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><br>this is a link: <a href=\"https://mailosaur.com/\" target=\"_blank\">mailosaur</a><br>\n</div><div class=\"gmail_quote\" style=\"font-family:arial,sans-serif;font-size:13px;color:rgb(80,0,80)\"><div dir=\"ltr\"><div><br></div><div>this is an image:<a href=\"https://mailosaur.com/\" target=\"_blank\"><img src=\"cid:ii_1435fadb31d523f6\" alt=\"Inline image 1\"></a></div>\n<div><br></div><div>this is an invalid link: <a href=\"http://invalid/\" target=\"_blank\">invalid</a></div></div></div>\n</div>",
                 text = "this is a test.\n\nthis is a link: mailosaur <https://mailosaur.com/>\n\nthis is an image:[image: Inline image 1] <https://mailosaur.com/>\n\nthis is an invalid link: invalid";
 
         RecipientAddressShort = mailbox.generateEmailAddress();
@@ -254,7 +254,7 @@ public class ApiTest {
 
         BodyPart imagePart = new MimeBodyPart();
 
-        String linkedImageFilePath = ApiTest.class.getResource("/logo-m.png").getPath();
+        String linkedImageFilePath = ApiTestCase.class.getResource("/logo-m.png").getPath();
         DataSource fds = new FileDataSource(linkedImageFilePath);  
         String linkedImageFileName = linkedImageFilePath.substring( linkedImageFilePath.lastIndexOf('/')+1, linkedImageFilePath.length() );
         imagePart.setDataHandler(new DataHandler(fds));
@@ -265,7 +265,7 @@ public class ApiTest {
 
 
         BodyPart attachmentPart = new MimeBodyPart();
-        String attachedFilePath = ApiTest.class.getResource("/logo-m-circle-sm.png").getPath();
+        String attachedFilePath = ApiTestCase.class.getResource("/logo-m-circle-sm.png").getPath();
         DataSource attachmentFile = new FileDataSource(attachedFilePath);     
         String attachedFileName = attachedFilePath.substring( attachedFilePath.lastIndexOf('/')+1, attachedFilePath.length() );     
         attachmentPart.setDataHandler(new DataHandler(attachmentFile));
