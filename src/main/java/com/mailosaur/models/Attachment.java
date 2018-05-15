@@ -1,6 +1,5 @@
 package com.mailosaur.models;
 
-import java.util.UUID;
 import com.google.api.client.util.Key;
 
 /**
@@ -42,8 +41,8 @@ public class Attachment {
      *
      * @return the id value
      */
-    public UUID id() {
-        return UUID.fromString(this.id);
+    public String id() {
+        return this.id;
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.mailosaur.models;
 
-import java.util.UUID;
 import java.util.List;
 
 import com.google.api.client.util.DateTime;
@@ -75,8 +74,8 @@ public class MessageSummary {
      *
      * @return the id value
      */
-    public UUID id() {
-        return UUID.fromString(this.id);
+    public String id() {
+        return this.id;
     }
 
     /**

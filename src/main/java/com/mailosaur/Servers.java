@@ -83,7 +83,6 @@ public class Servers {
      * @param id The identifier of the server to be deleted.
      * @throws IllegalArgumentException thrown if parameters fail the validation
      * @throws MailosaurException thrown if the request is rejected by server
-     * @throws IOException
      */
     public void delete(String id) throws MailosaurException {
     	client.request("DELETE", "api/servers/" + id);

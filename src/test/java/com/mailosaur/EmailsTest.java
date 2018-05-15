@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Stream;
 import javax.mail.MessagingException;
 
@@ -66,7 +65,7 @@ public class EmailsTest {
     
     @Test(expected = MailosaurException.class)
     public void testGetNotFound() throws IOException, MailosaurException {
-    	client.messages().get(UUID.randomUUID());
+    	client.messages().get("efe907e9-74ed-4113-a3e0-a3d41d914765");
 	}
 	
 	@Test
@@ -140,7 +139,7 @@ public class EmailsTest {
     
     @Test
     public void testSpamAnalysis() throws IOException, MailosaurException {
-    	UUID targetId = emails.get(0).id();
+    	String targetId = emails.get(0).id();
     	SpamAnalysisResult result = client.analysis().spam(targetId);
     	
     	for (SpamAssassinRule rule : result.spamFilterResults().spamAssassin()) {
@@ -151,7 +150,7 @@ public class EmailsTest {
     
     @Test
 	public void testDelete() throws IOException, MailosaurException {
-		UUID targetEmailId = emails.get(4).id();
+		String targetEmailId = emails.get(4).id();
 		
 		client.messages().delete(targetEmailId);
 		

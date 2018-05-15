@@ -1,7 +1,6 @@
 package com.mailosaur;
 
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * An instance of this class provides access to all the operations defined
@@ -29,7 +28,7 @@ public class Files {
      * @throws IOException
      * @return the byte array if successful.
      */
-    public byte[] getAttachment(UUID id) throws MailosaurException, IOException {
+    public byte[] getAttachment(String id) throws MailosaurException, IOException {
     	return client.requestFile("GET", "api/files/attachments/" + id).toByteArray();
     }
 
@@ -42,7 +41,7 @@ public class Files {
      * @throws IOException
      * @return the byte array if successful.
      */
-    public byte[] getEmail(UUID id) throws MailosaurException, IOException {
+    public byte[] getEmail(String id) throws MailosaurException, IOException {
     	return client.requestFile("GET", "api/files/email/" + id).toByteArray();
     }
 

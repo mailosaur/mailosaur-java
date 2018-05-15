@@ -2,7 +2,6 @@ package com.mailosaur;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.UUID;
 
 import com.mailosaur.models.Message;
 import com.mailosaur.models.MessageListResult;
@@ -34,7 +33,7 @@ public class Messages {
      * @throws IOException
      * @return the Message object if successful.
      */
-    public Message get(UUID id) throws IOException, MailosaurException {
+    public Message get(String id) throws IOException, MailosaurException {
     	return client.request("GET", "api/messages/" + id).parseAs(Message.class);
     }
 
@@ -46,7 +45,7 @@ public class Messages {
      * @throws IllegalArgumentException thrown if parameters fail the validation
      * @throws MailosaurException thrown if the request is rejected by server
      */
-    public void delete(UUID id) throws MailosaurException {
+    public void delete(String id) throws MailosaurException {
     	client.request("DELETE", "api/messages/" + id);
     }
     

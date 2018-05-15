@@ -1,7 +1,6 @@
 package com.mailosaur;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import com.mailosaur.models.SpamAnalysisResult;
 
@@ -30,7 +29,7 @@ public class Analysis {
      * @throws IOException
      * @return the SpamCheckResult object if successful.
      */
-    public SpamAnalysisResult spam(UUID email) throws IOException, MailosaurException {
+    public SpamAnalysisResult spam(String email) throws IOException, MailosaurException {
     	return client.request("GET", "api/analysis/spam/" + email).parseAs(SpamAnalysisResult.class);
     }
 

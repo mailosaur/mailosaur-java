@@ -1,7 +1,6 @@
 package com.mailosaur.models;
 
 import java.util.List;
-import java.util.UUID;
 import com.google.api.client.util.Key;
 
 /**
@@ -30,7 +29,7 @@ public class Server {
      * The users property.
      */
     @Key
-    private List<UUID> users;
+    private List<String> users;
 
     /**
      * The current count of messages held within the server.
@@ -87,7 +86,7 @@ public class Server {
      *
      * @return the users value
      */
-    public List<UUID> users() {
+    public List<String> users() {
         return this.users;
     }
 
