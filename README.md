@@ -10,12 +10,19 @@
 
 Add this dependency to your project's POM:
 
-    <dependency>
-      <groupId>com.mailosaur</groupId>
-      <artifactId>mailosaur-java</artifactId>
-      <version>3.0.5</version>
-    </dependency>
+```
+<dependency>
+  <groupId>com.mailosaur</groupId>
+  <artifactId>mailosaur-java</artifactId>
+  <version>5.0.0</version>
+</dependency>
+```
 
+### Others
+
+You'll need to manually install the following JARs:
+
+* The Mailosaur JAR from https://github.com/mailosaur/mailosaur-java/releases/latest
 
 ## Documentation and usage examples
 
@@ -26,8 +33,8 @@ Add this dependency to your project's POM:
 Once you've cloned this repository locally, you can simply run:
 
 ```
-export MAILOSAUR_MAILBOX_ID=yourmailbox
-export MAILOSAUR_API_KEY=yourapikey
+export MAILOSAUR_API_KEY=your_api_key
+export MAILOSAUR_SERVER=server_id
 
 mvn test
 ```
@@ -35,8 +42,3 @@ mvn test
 ## Contacting us
 
 You can get us at [support@mailosaur.com](mailto:support@mailosaur.com)
-
-## License
-
-Copyright (c) 2016 Mailosaur Ltd
-Distributed under MIT license.

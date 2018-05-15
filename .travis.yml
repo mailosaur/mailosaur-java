@@ -1,9 +1,9 @@
 language: java
 env:
   global:
-  - secure: "QIa7mMhkYhv5KK5OkLO1kfv6PvsFIDe8UJWnKl99GKDRZxGbSZ6gvS9965gjHksbDDrX51jq/s8jWSRn/WD76vuZeOq46YK0FV5LleXctkiREUWDMJOy343vhhZrKgSH1bxhypW4lwNFQLz1U5jNKUoTPYbK6vVtGOtpVslhyf8="
+  - secure: "LpcQ9attbY5AM742C0t20uyAUsCroByAQPsesMPITAnhAYj/sGMtnWFWyqTjTtAtptJFKFxihG7H218uJbHgqnit1c9brFWsbwCvxeLOmMmryAq4JfYEBZtno5oiMqIJtRKNuFPxlKrw6eOZk/zop1alDGzDmjH/oXqWlPCbjxI="
   matrix:
-  - MAILOSAUR_BASE_URL=https://mailosaur.com/api MAILOSAUR_SMTP_HOST=mailosaur.io
-  - MAILOSAUR_BASE_URL=https://next.mailosaur.com/api MAILOSAUR_SMTP_HOST=ms-smtp.uk
+  - MAILOSAUR_BASE_URL=https://mailosaur.com/ MAILOSAUR_SMTP_HOST=mailosaur.io
+  - MAILOSAUR_BASE_URL=https://next.mailosaur.com/ MAILOSAUR_SMTP_HOST=ms-smtp.uk
 notifications:
   slack: mailosaur:CsJ9RruwjqHPKr1Iugk8GDtX
