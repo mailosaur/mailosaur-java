@@ -93,6 +93,11 @@ public class Messages {
     	return client.request("POST", "api/messages/search", criteria, query).parseAs(MessageListResult.class);
     }
 
+
+
+    public Message waitFor(String server, SearchCriteria criteria) throws IOException, InterruptedException, MailosaurException {
+        return waitFor(server, criteria, 15);
+    }
     /**
      * Wait for a specific message.
      * Returns as soon as an message matching the specified search criteria is found.
@@ -103,10 +108,19 @@ public class Messages {
      * @throws IOException
      * @return the Message object if successful.
      */
-    public Message waitFor(String server, SearchCriteria criteria) throws IOException, MailosaurException {
-    	HashMap<String, String> query = new HashMap<String, String>();
-    	query.put("server", server);
-    	return client.request("POST", "api/messages/await", criteria, query).parseAs(Message.class);
+    public Message waitFor(String server, SearchCriteria criteria, int timeout) throws IOException, InterruptedException, MailosaurException {
+        long timeoutTime = System.currentTimeMillis() + timeout * 1000;
+
+        while (System.currentTimeMillis() < timeoutTime) {
+            MessageListResult messages = this.search(server, criteria);
+            if(messages.items().size() > 0) {
+                return this.get(messages.items().get(0).id());
+            }
+
+            Thread.sleep(2000);
+        }
+
+        throw new MailosaurException("waitFor timeout elapsed");
     }
 
 }
