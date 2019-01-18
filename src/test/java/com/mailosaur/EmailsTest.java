@@ -89,7 +89,7 @@ public class EmailsTest {
 		String host = System.getenv("MAILOSAUR_SMTP_HOST");
 		host = (host == null) ? "mailosaur.io" : host;
 			
-		String testEmailAddress = String.format("wait_for_test.%s@%s", server, host);
+		String testEmailAddress = String.format("wait_for_test_late_send.%s@%s", server, host);
 		
 		new Thread(() -> {
 			try {
