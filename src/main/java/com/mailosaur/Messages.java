@@ -95,7 +95,7 @@ public class Messages {
 
     /**
      * Wait for a specific message.
-     * Returns as soon as an message matching the specified search criteria is found.
+     * Returns as soon as an message matching the specified search criteria is found or 15s timeout has elapsed.
      *
      * @param server The identifier of the server hosting the message.
      * @param criteria The search criteria to use in order to find a match.
@@ -103,10 +103,34 @@ public class Messages {
      * @throws IOException
      * @return the Message object if successful.
      */
-    public Message waitFor(String server, SearchCriteria criteria) throws IOException, MailosaurException {
-    	HashMap<String, String> query = new HashMap<String, String>();
-    	query.put("server", server);
-    	return client.request("POST", "api/messages/await", criteria, query).parseAs(Message.class);
+    public Message waitFor(String server, SearchCriteria criteria) throws IOException, InterruptedException, MailosaurException {
+        return waitFor(server, criteria, 15);
+    }
+
+    /**
+     * Wait for a specific message.
+     * Returns as soon as an message matching the specified search criteria is found or timeout has elapsed.
+     *
+     * @param server The identifier of the server hosting the message.
+     * @param criteria The search criteria to use in order to find a match.
+     * @param timeout Timeout to wait for message (in seconds).
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the Message object if successful.
+     */
+    public Message waitFor(String server, SearchCriteria criteria, int timeout) throws IOException, InterruptedException, MailosaurException {
+        long timeoutTime = System.currentTimeMillis() + timeout * 1000;
+
+        while (System.currentTimeMillis() < timeoutTime) {
+            MessageListResult messages = this.search(server, criteria);
+            if(messages.items().size() > 0) {
+                return this.get(messages.items().get(0).id());
+            }
+
+            Thread.sleep(2000);
+        }
+
+        throw new MailosaurException("waitFor timeout elapsed");
     }
 
 }

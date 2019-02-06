@@ -69,7 +69,7 @@ public class EmailsTest {
 	}
 	
 	@Test
-	public void testWaitFor() throws IOException, MessagingException, MailosaurException {
+	public void testWaitFor() throws IOException, MessagingException, InterruptedException, MailosaurException {
 		String host = System.getenv("MAILOSAUR_SMTP_HOST");
 		host = (host == null) ? "mailosaur.io" : host;
 		
@@ -82,8 +82,45 @@ public class EmailsTest {
 		Message email = client.messages().waitFor(server, criteria);
 		
 		validateEmail(email);
-	}
-    
+	}    
+
+	@Test
+	public void testWaitForLateSend() throws IOException, MessagingException, InterruptedException, MailosaurException {
+		String host = System.getenv("MAILOSAUR_SMTP_HOST");
+		host = (host == null) ? "mailosaur.io" : host;
+			
+		String testEmailAddress = String.format("wait_for_test_late_send.%s@%s", server, host);
+		
+		new Thread(() -> {
+			try {
+				Thread.sleep(5000);
+				Mailer.sendEmail(client,  server, testEmailAddress);
+			}
+			catch (Exception e){
+				System.err.println(e);
+			}
+		}).start();
+		
+		SearchCriteria criteria = new SearchCriteria();
+    	criteria.withSentTo(testEmailAddress);		
+		Message email = client.messages().waitFor(server, criteria);
+		
+		validateEmail(email);
+	}   
+
+	@Test
+	public void testWaitForTimeout() throws IOException, MessagingException, InterruptedException, MailosaurException {
+		String testEmailAddress = "non_existing@email_address.com";
+		
+		SearchCriteria criteria = new SearchCriteria();
+    	criteria.withSentTo(testEmailAddress);		
+
+		try {
+			Message email = client.messages().waitFor(server, criteria, 5);
+			throw new IOException("Should have thrown MailosaurException");
+    	} catch (MailosaurException e) { }
+	}	
+
     @Test
     public void testSearchNoCriteria() throws IOException {
     	try {
