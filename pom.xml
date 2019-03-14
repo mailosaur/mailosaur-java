@@ -3,7 +3,7 @@
 
     <groupId>com.mailosaur</groupId>
     <artifactId>mailosaur-java</artifactId>
-    <version>5.0.4-SNAPSHOT</version>
+    <version>5.0.4</version>
     <packaging>jar</packaging>
 
     <name>mailosaur-java</name>
@@ -38,12 +38,6 @@
         </developer>
     </developers>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
     <build>
         <plugins>
             <plugin>
