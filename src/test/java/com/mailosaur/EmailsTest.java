@@ -54,34 +54,34 @@ public class EmailsTest {
     		validateEmailSummary(email);
     	}
     }
+
+	@Test
+	public void testGet() throws IOException, MessagingException, MailosaurException {
+		String host = System.getenv("MAILOSAUR_SMTP_HOST");
+		host = (host == null) ? "mailosaur.io" : host;
+
+		String testEmailAddress = String.format("wait_for_test.%s@%s", server, host);
+
+		Mailer.sendEmail(client,  server, testEmailAddress);
+
+		SearchCriteria criteria = new SearchCriteria();
+		criteria.withSentTo(testEmailAddress);
+		Message email = client.messages().get(server, criteria);
+
+		validateEmail(email);
+	}
     
     @Test
-    public void testGet() throws IOException, MailosaurException {
+    public void testGetById() throws IOException, MailosaurException {
     	MessageSummary emailToRetrieve = emails.get(0);
-    	Message email = client.messages().get(emailToRetrieve.id());
+    	Message email = client.messages().getById(emailToRetrieve.id());
     	validateEmail(email);
     	validateHeaders(email);
     }
     
     @Test(expected = MailosaurException.class)
-    public void testGetNotFound() throws IOException, MailosaurException {
-    	client.messages().get("efe907e9-74ed-4113-a3e0-a3d41d914765");
-	}
-	
-	@Test
-	public void testWaitFor() throws IOException, MessagingException, MailosaurException {
-		String host = System.getenv("MAILOSAUR_SMTP_HOST");
-		host = (host == null) ? "mailosaur.io" : host;
-		
-		String testEmailAddress = String.format("wait_for_test.%s@%s", server, host);
-		
-		Mailer.sendEmail(client,  server, testEmailAddress);
-		
-		SearchCriteria criteria = new SearchCriteria();
-    	criteria.withSentTo(testEmailAddress);		
-		Message email = client.messages().waitFor(server, criteria);
-		
-		validateEmail(email);
+    public void testGetByIdNotFound() throws IOException, MailosaurException {
+    	client.messages().getById("efe907e9-74ed-4113-a3e0-a3d41d914765");
 	}
     
     @Test
