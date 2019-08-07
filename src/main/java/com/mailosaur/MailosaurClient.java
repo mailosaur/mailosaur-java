@@ -8,14 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.google.api.client.http.BasicAuthentication;
-import com.google.api.client.http.EmptyContent;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
@@ -24,6 +17,7 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.mailosaur.models.MailosaurError;
 
 public class MailosaurClient {
+    final String VERSION = "6.0.0";
 	final String API_KEY;
 	final String BASE_URL;
 	final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -181,7 +175,10 @@ public class MailosaurClient {
     	}
 
         request.setInterceptor(new BasicAuthentication(API_KEY, ""));
-        
+
+        HttpHeaders headers = request.getHeaders();
+        headers.setUserAgent("mailosaur-java/" + VERSION);
+
         return request;
     }
 	

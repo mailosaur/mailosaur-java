@@ -42,7 +42,7 @@ public class FilesTest {
 		
 		SearchCriteria criteria = new SearchCriteria();
     	criteria.withSentTo(testEmailAddress);
-		email = client.messages().waitFor(server, criteria);
+		email = client.messages().get(server, criteria);
 	}
 
     @Test
