@@ -153,6 +153,27 @@ public class Messages {
     }
 
     /**
+     * List all messages.
+     * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
+     *
+     * @param server The identifier of the server hosting the messages.
+     * @param receivedAfter Limits results to only messages received after this date/time.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the MessageListResult object if successful. 
+     */
+    public MessageListResult list(String server, Date receivedAfter) throws IOException, MailosaurException {
+    	HashMap<String, String> query = new HashMap<String, String>();
+    	query.put("server", server);
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        query.put("receivedAfter", dateFormat.format(receivedAfter));
+
+    	return client.request("GET", "api/messages", query).parseAs(MessageListResult.class);
+    }
+
+    /**
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
