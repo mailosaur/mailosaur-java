@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.mail.MessagingException;
@@ -53,6 +54,12 @@ public class EmailsTest {
     	for (MessageSummary email : emails) {
     		validateEmailSummary(email);
     	}
+    }
+
+	@Test
+	public void testListReceivedAfter() throws IOException, MailosaurException {
+    	List<MessageSummary> futureEmails = client.messages().list(server, new Date()).items();
+    	assertEquals(0, futureEmails.size());
     }
 
 	@Test
