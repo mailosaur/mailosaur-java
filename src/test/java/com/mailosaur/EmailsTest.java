@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.mail.MessagingException;
@@ -58,7 +59,10 @@ public class EmailsTest {
 
 	@Test
 	public void testListReceivedAfter() throws IOException, MailosaurException {
-    	List<MessageSummary> futureEmails = client.messages().list(server, new Date()).items();
+    	List<MessageSummary> pastEmails = client.messages().list(server, new GregorianCalendar(2000, Calendar.JANUARY, 1).getTime()).items();
+    	assertTrue(pastEmails.size() > 0);
+
+		List<MessageSummary> futureEmails = client.messages().list(server, new Date()).items();
     	assertEquals(0, futureEmails.size());
     }
 
