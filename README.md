@@ -2,7 +2,7 @@
 
 [Mailosaur](https://mailosaur.com) allows you to automate tests involving email. Allowing you to perform end-to-end automated and functional email testing.
 
-![](https://github.com/actions/mailosaur-java/workflows/build/badge.svg)
+![](https://github.com/mailosaur/mailosaur-java/workflows/CI/badge.svg)
 
 ## Installation
 
