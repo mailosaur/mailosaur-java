@@ -38,6 +38,9 @@ public final class Mailer {
 	public static void sendEmails(MailosaurClient client, String server, int quantity) throws IOException, InterruptedException, MessagingException {
 		for (int i = 0; i < quantity; i++)
 			sendEmail(client, server);
+
+		// Allow 2 seconds for any SMTP processing
+		Thread.sleep(2000);
 	}
 	
 	public static void sendEmail(MailosaurClient client, String server) throws UnsupportedEncodingException, MessagingException
