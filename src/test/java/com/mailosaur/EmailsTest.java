@@ -59,7 +59,7 @@ public class EmailsTest {
 	@Test
 	public void testListReceivedAfter() throws IOException, MailosaurException {
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE, -5);
+		calendar.add(Calendar.MINUTE, -10);
 		Date pastDate = calendar.getTime();
     	List<MessageSummary> pastEmails = client.messages().list(server, pastDate).items();
     	assertTrue(pastEmails.size() > 0);
