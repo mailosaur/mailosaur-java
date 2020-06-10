@@ -7,6 +7,14 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+
+    env:
+      MAILOSAUR_BASE_URL: https://mailosaur.com/
+      MAILOSAUR_SMTP_HOST: mailosaur.io
+      MAILOSAUR_SMTP_PORT: 2525
+      MAILOSAUR_API_KEY: ${{ secrets.MAILOSAUR_API_KEY }}
+      MAILOSAUR_SERVER: ${{ secrets.MAILOSAUR_SERVER }}
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Java
