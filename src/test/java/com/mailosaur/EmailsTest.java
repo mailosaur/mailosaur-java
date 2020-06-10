@@ -183,6 +183,7 @@ public class EmailsTest {
     
     private void validateEmailSummary(MessageSummary email) {
 		validateMetadata(email);
+		assertNotNull(email.summary());
 		assertEquals(2, (int)email.attachments());
     }
     
