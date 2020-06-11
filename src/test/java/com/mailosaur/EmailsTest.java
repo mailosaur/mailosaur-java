@@ -3,7 +3,7 @@ package com.mailosaur;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +25,7 @@ public class EmailsTest {
 	private static MailosaurClient client;
 	private static String server;
 	private static List<MessageSummary> emails;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private String isoDateString = dateFormat.format(Calendar.getInstance().getTime());
+	private String isoDateString = Instant.now().toString().substring(0, 10);
 	
 	@BeforeClass
     public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException, MailosaurException {
@@ -50,7 +49,6 @@ public class EmailsTest {
     @Test
 	public void testList() throws IOException {
     	assertEquals(5, emails.size());
-    	
     	for (MessageSummary email : emails) {
     		validateEmailSummary(email);
     	}
