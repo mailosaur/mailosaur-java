@@ -32,7 +32,9 @@ jobs:
           sed -i s/\[0-9]\.\[0-9]\.\[0-9]/$version/ src/main/java/com/mailosaur/MailosaurClient.java && 
           mvn versions:set -DnewVersion=$version
       - name: Publish
-        run: mvn -B deploy
+        run: |
+          export GPG_TTY=$(tty) && 
+          mvn -B deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
