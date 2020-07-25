@@ -6,7 +6,7 @@ import com.google.api.client.util.Key;
 /**
  * The MessageContent model.
  */
-public class MessageContent {
+public class MessageContent extends BaseModel {
     /**
      * The links property.
      */
@@ -49,7 +49,7 @@ public class MessageContent {
      * @return the body value
      */
     public String body() {
-        return this.body;
+        return nullableString(this.body);
     }
 
 }

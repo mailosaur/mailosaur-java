@@ -8,7 +8,7 @@ import com.google.api.client.util.Key;
 /**
  * The Message model.
  */
-public class Message {
+public class Message extends BaseModel {
     /**
      * The id property.
      */
@@ -150,7 +150,7 @@ public class Message {
      * @return the subject value
      */
     public String subject() {
-        return this.subject;
+        return nullableString(this.subject);
     }
 
     /**

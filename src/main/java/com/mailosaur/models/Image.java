@@ -5,7 +5,7 @@ import com.google.api.client.util.Key;
 /**
  * The Image model.
  */
-public class Image {
+public class Image extends BaseModel {
     /**
      * The src property.
      */
@@ -24,7 +24,7 @@ public class Image {
      * @return the src value
      */
     public String src() {
-        return this.src;
+        return nullableString(this.src);
     }
 
     /**
@@ -44,7 +44,7 @@ public class Image {
      * @return the alt value
      */
     public String alt() {
-        return this.alt;
+        return nullableString(this.alt);
     }
 
     /**

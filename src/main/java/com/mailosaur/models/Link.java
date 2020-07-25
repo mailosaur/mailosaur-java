@@ -5,7 +5,7 @@ import com.google.api.client.util.Key;
 /**
  * The Link model.
  */
-public class Link {
+public class Link extends BaseModel {
     /**
      * The href property.
      */
@@ -24,7 +24,7 @@ public class Link {
      * @return the href value
      */
     public String href() {
-        return this.href;
+        return nullableString(this.href);
     }
 
     /**
@@ -33,7 +33,7 @@ public class Link {
      * @return the text value
      */
     public String text() {
-        return this.text;
+        return nullableString(this.text);
     }
 
 }

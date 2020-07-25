@@ -5,7 +5,7 @@ import com.google.api.client.util.Key;
 /**
  * The MessageHeader model.
  */
-public class MessageHeader {
+public class MessageHeader extends BaseModel {
     /**
      * The field property.
      */
@@ -24,7 +24,7 @@ public class MessageHeader {
      * @return the field value
      */
     public String field() {
-        return this.field;
+        return nullableString(this.field);
     }
 
     /**
@@ -33,7 +33,7 @@ public class MessageHeader {
      * @return the value value
      */
     public String value() {
-        return this.value;
+        return nullableString(this.value);
     }
 
 }

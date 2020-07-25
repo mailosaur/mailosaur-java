@@ -5,7 +5,7 @@ import com.google.api.client.util.Key;
 /**
  * The MessageAddress model.
  */
-public class MessageAddress {
+public class MessageAddress extends BaseModel {
     /**
      * The name property.
      */
@@ -30,7 +30,7 @@ public class MessageAddress {
      * @return the name value
      */
     public String name() {
-        return this.name;
+        return nullableString(this.name);
     }
 
     /**
@@ -39,7 +39,7 @@ public class MessageAddress {
      * @return the email value
      */
     public String email() {
-        return this.email;
+        return nullableString(this.email);
     }
 
     /**
@@ -48,7 +48,7 @@ public class MessageAddress {
      * @return the phone value
      */
     public String phone() {
-        return this.phone;
+        return nullableString(this.phone);
     }
 
 }

@@ -8,7 +8,7 @@ import com.google.api.client.util.Key;
 /**
  * The MessageSummary model.
  */
-public class MessageSummary {
+public class MessageSummary extends BaseModel {
     /**
      * The id property.
      */
@@ -138,7 +138,7 @@ public class MessageSummary {
      * @return the subject value
      */
     public String subject() {
-        return this.subject;
+        return nullableString(this.subject);
     }
 
     /**
@@ -147,7 +147,7 @@ public class MessageSummary {
      * @return the summary value
      */
     public String summary() {
-        return this.summary;
+        return nullableString(this.summary);
     }
 
     /**

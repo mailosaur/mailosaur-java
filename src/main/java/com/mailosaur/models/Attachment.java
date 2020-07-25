@@ -5,7 +5,7 @@ import com.google.api.client.util.Key;
 /**
  * The Attachment model.
  */
-public class Attachment {
+public class Attachment extends BaseModel {
     /**
      * The id property.
      */
@@ -51,7 +51,7 @@ public class Attachment {
      * @return the contentType value
      */
     public String contentType() {
-        return this.contentType;
+        return nullableString(this.contentType);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Attachment {
      * @return the fileName value
      */
     public String fileName() {
-        return this.fileName;
+        return nullableString(this.fileName);
     }
 
     /**
@@ -69,7 +69,7 @@ public class Attachment {
      * @return the contentId value
      */
     public String contentId() {
-        return this.contentId;
+        return nullableString(this.contentId);
     }
 
     /**
