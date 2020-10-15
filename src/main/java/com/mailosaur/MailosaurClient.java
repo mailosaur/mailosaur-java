@@ -14,10 +14,9 @@ import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.gson.GsonFactory;
-import com.mailosaur.models.MailosaurError;
 
 public class MailosaurClient {
-    final String VERSION = "6.0.0";
+    final String VERSION = "7.0.0";
 	final String API_KEY;
 	final String BASE_URL;
 	final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -120,32 +119,44 @@ public class MailosaurClient {
     }
     
     public HttpResponse request(String method, String url, Object content, HashMap<String, String> query) throws MailosaurException {
-        IOException ex = null;
-        HttpRequest request = null;
-        HttpResponse response = null;
-        
+        IOException ioException = null;
+        HttpRequest request;
+
         // retry 3 times:
         for (int i = 0; i < 3; i++) {
             try {
                 request = buildRequest(method, url, content, query);
-                response = request.execute();
-                
-                if (response.getStatusCode() != 200 &&
-            		response.getStatusCode() != 204) {
-                	String message = String.format("Operation returned an invalid status code '%s'", response.getStatusCode());
-                	MailosaurException mailosaurException = new MailosaurException(message);
-                	MailosaurError mailosaurError = response.parseAs(MailosaurError.class);
-            		mailosaurException.withMailosaurError(mailosaurError);
-            		throw mailosaurException;
+                return request.execute();
+            } catch (HttpResponseException ex) {
+                Integer httpStatusCode = ex.getStatusCode();
+                String httpResponseBody = ex.getContent();
+
+                switch (httpStatusCode) {
+                    case 400:
+                        throw new MailosaurException("Request had one or more invalid parameters.", "invalid_request", httpStatusCode, httpResponseBody);
+                    case 401:
+                        throw new MailosaurException("Authentication failed, check your API key.", "authentication_error", httpStatusCode, httpResponseBody);
+                    case 403:
+                        throw new MailosaurException("Insufficient permission to perform that task.", "permission_error", httpStatusCode, httpResponseBody);
+                    case 404:
+                        throw new MailosaurException("Request did not find any matching resources.", "invalid_request", httpStatusCode, httpResponseBody);
+                    default:
+                        throw new MailosaurException("An API error occurred, see httpResponse for further information.", "api_error", httpStatusCode, httpResponseBody);
                 }
-                
-                return response;
-            } catch (IOException ioException) {
-                ex = ioException;
+            } catch (IOException ex) {
+                ioException = ex;
+            }
+
+            // Give a 500ms pause before retrying
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new MailosaurException(e);
             }
         }
-        
-        throw new MailosaurException(ex.getMessage());
+
+        // If we get here it means all our attempts failed
+        throw new MailosaurException(ioException);
     }
     
     public ByteArrayOutputStream requestFile(String method, String path) throws MailosaurException, IOException {
@@ -154,7 +165,7 @@ public class MailosaurClient {
         return stream;
     }
 	
-	private HttpRequest buildRequest(String method, String path, Object content, Map<String, String> query) throws MailosaurException, IOException {
+	private HttpRequest buildRequest(String method, String path, Object content, Map<String, String> query) throws IOException {
 		HttpRequest request;
     	GenericUrl url = buildUrl(path, query);
     	

@@ -19,7 +19,7 @@ import com.mailosaur.models.SearchCriteria;
  */
 public class Messages {
 	/** The service client containing this operation class. */
-    private MailosaurClient client;
+    private final MailosaurClient client;
     
     /**
      * Initializes an instance of Messages.
@@ -91,8 +91,8 @@ public class Messages {
         timeout = timeout != null ? timeout : 10000;
         receivedAfter = receivedAfter != null ? receivedAfter : new Date(System.currentTimeMillis() - 3600 * 1000);
 
-        if (server.length() > 8) {
-            throw new IOException("Use getById to retrieve a message using its identifier");
+        if (server.length() != 8) {
+            throw new MailosaurException("Must provide a valid Server ID.", "invalid_request");
         }
 
         MessageListResult result = search(server, criteria, timeout, receivedAfter);
@@ -108,7 +108,7 @@ public class Messages {
      * @throws IOException
      * @return the Message object if successful.
      */
-    public Message getById(String id) throws IOException, MailosaurException {
+    public Message getById(String id) throws MailosaurException, IOException {
     	return client.request("GET", "api/messages/" + id).parseAs(Message.class);
     }
 
@@ -147,9 +147,7 @@ public class Messages {
      * @return the MessageListResult object if successful. 
      */
     public MessageListResult list(String server) throws IOException, MailosaurException {
-    	HashMap<String, String> query = new HashMap<String, String>();
-    	query.put("server", server);
-    	return client.request("GET", "api/messages", query).parseAs(MessageListResult.class);
+        return list(server, null, null, null);
     }
 
     /**
@@ -163,14 +161,48 @@ public class Messages {
      * @return the MessageListResult object if successful. 
      */
     public MessageListResult list(String server, Date receivedAfter) throws IOException, MailosaurException {
-    	HashMap<String, String> query = new HashMap<String, String>();
-    	query.put("server", server);
-        
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        query.put("receivedAfter", dateFormat.format(receivedAfter));
+        return list(server, null, null, receivedAfter);
+    }
 
-    	return client.request("GET", "api/messages", query).parseAs(MessageListResult.class);
+    /**
+     * List all messages.
+     * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
+     *
+     * @param server The identifier of the server hosting the messages.
+     * @param page Used in conjunction with `itemsPerPage` to support pagination.
+     * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the MessageListResult object if successful.
+     */
+    public MessageListResult list(String server, int page, int itemsPerPage) throws IOException, MailosaurException {
+        return list(server, page, itemsPerPage, null);
+    }
+
+    /**
+     * List all messages.
+     * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
+     *
+     * @param server The identifier of the server hosting the messages.
+     * @param page Used in conjunction with `itemsPerPage` to support pagination.
+     * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
+     * @param receivedAfter Limits results to only messages received after this date/time.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the MessageListResult object if successful.
+     */
+    public MessageListResult list(String server, Integer page, Integer itemsPerPage, Date receivedAfter) throws IOException, MailosaurException {
+        HashMap<String, String> query = new HashMap<String, String>();
+        query.put("server", server);
+        if (page != null) { query.put("page", page.toString()); }
+        if (itemsPerPage != null) { query.put("itemsPerPage", itemsPerPage.toString()); }
+        if (receivedAfter != null) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            query.put("receivedAfter", dateFormat.format(receivedAfter));
+        }
+
+        return client.request("GET", "api/messages", query).parseAs(MessageListResult.class);
     }
 
     /**
@@ -300,7 +332,7 @@ public class Messages {
 
             // Stop if timeout will be exceeded
             if ((new Date().getTime() - startTime) + delay > timeout)
-                throw new IOException("No matching messages were found in time");
+                throw new MailosaurException("No matching messages found in time. By default, only messages received in the last hour are checked (use receivedAfter to override this).", "search_timeout");
 
             try {
                 Thread.sleep(delay);
