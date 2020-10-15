@@ -88,10 +88,10 @@ public class ServersTest {
     		client.servers().create(options);
     		throw new IOException("Should have thrown MailosaurException");
     	} catch (MailosaurException e) {
-    		assertTrue(e.getMessage().startsWith("400 Bad Request"));
-//    		assertEquals("ValidationError", e.mailosaurError().type());
-//    		assertEquals(1, e.mailosaurError().messages().size());
-//    		assertNotNull(e.mailosaurError().messages().get("name"));
+			assertEquals("Request had one or more invalid parameters.", e.getMessage());
+			assertEquals("invalid_request", e.errorType());
+			assertEquals(Integer.valueOf(400), e.httpStatusCode());
+			assertEquals("{\"type\":\"ValidationError\",\"messages\":{\"name\":\"Please provide a name for your server\"}}", e.httpResponseBody());
     	}
     }
 }

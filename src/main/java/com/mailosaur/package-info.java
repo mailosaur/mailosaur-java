@@ -36,7 +36,7 @@
  Note that our client libraries convert responses to appropriate language-specific objects.
  | Property | Description |
  |---|---|
- | `type` | The type of error returned. Can be: api_connection_error, api_error, authentication_error, card_error, idempotency_error invalid_request_error, or rate_limit_error. |
+ | `type` | The type of error returned. Can be: api_connection_error, w, authentication_error, card_error, idempotency_error invalid_request_error, or rate_limit_error. |
  | `message` | A human-readable message providing more details about the error. |
  | `parameters` | A JSON object containing a key for each property name at fault, with a human-readable message per field |
  | `model` | The request model that we sent and failed to be processed |.

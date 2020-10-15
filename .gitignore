@@ -1,6 +1,7 @@
 *.class
 .settings
 .classpath
+*.iml
 
 # Package Files #
 *.jar
