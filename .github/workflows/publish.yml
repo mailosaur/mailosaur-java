@@ -22,10 +22,10 @@ jobs:
         with:
           java-version: 1.8
           server-id: ossrh
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_CENTRAL_TOKEN
-          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE # env variable for GPG private key passphrase
       - name: Version
         run: |
           version=`git describe --abbrev=0 --tags` &&	
@@ -33,8 +33,7 @@ jobs:
           mvn versions:set -DnewVersion=$version
       - name: Publish
         run: |
-          export GPG_TTY=$(tty) && 
-          mvn -B deploy
+          mvn deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
