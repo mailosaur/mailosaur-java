@@ -6,13 +6,13 @@
     <version>7.0.0</version>
     <packaging>jar</packaging>
 
-    <name>mailosaur-java</name>
-    <url>https://github.com/mailosaur/mailosaur-java</url>
-    <description>Mailosaur Java Bindings for Email Test Automation</description>
+    <name>Mailosaur Java library</name>
+    <url>https://mailosaur.com/docs/email-testing/java/</url>
+    <description>The Mailosaur Java library lets you integrate email and SMS testing into your continuous integration process.</description>
 
     <organization>
         <name>Mailosaur Ltd</name>
-        <url>https://mailosaur.com</url>
+        <url>https://mailosaur.com/</url>
     </organization>
 
     <scm>
@@ -24,16 +24,22 @@
     <licenses>
         <license>
             <name>MIT license</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <url>https://github.com/mailosaur/mailosaur-java/blob/master/LICENSE</url>
         </license>
     </licenses>
+
+    <issueManagement>
+      <system>GitHub Issues</system>
+      <url>https://github.com/mailosaur/mailosaur-java/issues</url>
+    </issueManagement>
 
     <developers>
         <developer>
             <id>mailosaur</id>
             <name>Mailosaur</name>
+            <email>code@mailosaur.com</email>
             <organization>Mailosaur Ltd</organization>
-            <organizationUrl>https://mailosaur.com</organizationUrl>
+            <organizationUrl>https://mailosaur.com/</organizationUrl>
             <timezone>0</timezone>
         </developer>
     </developers>
