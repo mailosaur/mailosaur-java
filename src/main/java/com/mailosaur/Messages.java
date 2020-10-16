@@ -95,7 +95,7 @@ public class Messages {
             throw new MailosaurException("Must provide a valid Server ID.", "invalid_request");
         }
 
-        MessageListResult result = search(server, criteria, timeout, receivedAfter);
+        MessageListResult result = search(server, criteria, 0, 1, timeout, receivedAfter);
         return getById(result.items().get(0).id());
     }
     

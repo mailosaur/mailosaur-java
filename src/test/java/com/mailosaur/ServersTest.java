@@ -62,7 +62,7 @@ public class ServersTest {
 		assertNotNull(retrievedServer.forwardingRules());
     	
     	// Update a server and confirm it has changed
-    	retrievedServer.withName(serverName += " EDITED");
+    	retrievedServer.withName(serverName += " updated with ellipsis … and emoji 👨🏿‍🚒");
     	Server updatedServer = client.servers().update(retrievedServer.id(), retrievedServer);
     	assertEquals(retrievedServer.id(), updatedServer.id());
 		assertEquals(retrievedServer.name(), updatedServer.name());

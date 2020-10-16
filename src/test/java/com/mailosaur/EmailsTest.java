@@ -146,6 +146,14 @@ public class EmailsTest {
     	assertEquals(1, results.size());
     	assertEquals(targetEmail.to().get(0).email(), results.get(0).to().get(0).email());
     	assertEquals(targetEmail.subject(), results.get(0).subject());
+	}
+	
+	@Test
+    public void testSearchWithSpecialCharacters() throws IOException, MailosaurException {
+    	SearchCriteria criteria = new SearchCriteria();
+    	criteria.withSubject("Search with ellipsis … and emoji 👨🏿‍🚒");
+    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+    	assertEquals(0, results.size());
     }
     
     @Test
