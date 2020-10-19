@@ -104,7 +104,7 @@ public class SearchCriteria {
     /**
      * Set the match value.
      *
-     * @param body the match value to set
+     * @param match the match value to set
      * @return the SearchCriteria object itself.
      */
     public SearchCriteria withMatch(String match) {
