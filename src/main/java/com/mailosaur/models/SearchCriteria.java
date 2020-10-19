@@ -7,6 +7,12 @@ import com.google.api.client.util.Key;
  */
 public class SearchCriteria {
     /**
+     * The full email address from which the target email was sent.
+     */
+	@Key
+    private String sentFrom;
+    
+    /**
      * The full email address to which the target email was sent.
      */
 	@Key
@@ -31,6 +37,26 @@ public class SearchCriteria {
      */
 	@Key
     private SearchMatchOperator match;
+
+    /**
+     * Get the sentFrom value.
+     *
+     * @return the sentFrom value
+     */
+    public String sentFrom() {
+        return this.sentFrom;
+    }
+
+    /**
+     * Set the sentFrom value.
+     *
+     * @param sentFrom the sentFrom value to set
+     * @return the SearchCriteria object itself.
+     */
+    public SearchCriteria withSentFrom(String sentFrom) {
+        this.sentFrom = sentFrom;
+        return this;
+    }
 
     /**
      * Get the sentTo value.
