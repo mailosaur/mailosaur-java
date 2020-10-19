@@ -147,6 +147,29 @@ public class EmailsTest {
     	assertEquals(targetEmail.to().get(0).email(), results.get(0).to().get(0).email());
     	assertEquals(targetEmail.subject(), results.get(0).subject());
 	}
+
+	@Test
+    public void testSearchWithMatchAll() throws IOException, MailosaurException {
+    	MessageSummary targetEmail = emails.get(1);
+    	String uniqueString = targetEmail.subject().substring(0, targetEmail.subject().indexOf(" subject"));
+    	SearchCriteria criteria = new SearchCriteria();
+		criteria.withSubject(uniqueString)
+			.withBody("this is a link")
+			.withMatch("ALL");
+    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+    	assertEquals(1, results.size());
+	}
+
+	public void testSearchWithMatchAny() throws IOException, MailosaurException {
+    	MessageSummary targetEmail = emails.get(1);
+    	String uniqueString = targetEmail.subject().substring(0, targetEmail.subject().indexOf(" subject"));
+    	SearchCriteria criteria = new SearchCriteria();
+		criteria.withSubject(uniqueString)
+			.withBody("this is a link")
+			.withMatch("ANY");
+    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+    	assertEquals(5, results.size());
+	}
 	
 	@Test
     public void testSearchWithSpecialCharacters() throws IOException, MailosaurException {
