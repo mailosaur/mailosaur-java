@@ -11,7 +11,7 @@
 Add this dependency to your project's build file:
 
 ```
-implementation "com.mailosaur:mailosaur-java:7.0.6"
+implementation "com.mailosaur:mailosaur-java:7.X.X"
 ```
 
 ### Maven users
