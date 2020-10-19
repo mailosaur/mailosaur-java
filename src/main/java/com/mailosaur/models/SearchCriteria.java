@@ -30,7 +30,7 @@ public class SearchCriteria {
      * specified criteria will be returned.
      */
 	@Key
-    private String match;
+    private SearchMatchOperator match;
 
     /**
      * Get the sentTo value.
@@ -97,7 +97,7 @@ public class SearchCriteria {
      *
      * @return the match value
      */
-    public String match() {
+    public SearchMatchOperator match() {
         return this.match;
     }
 
@@ -107,7 +107,7 @@ public class SearchCriteria {
      * @param match the match value to set
      * @return the SearchCriteria object itself.
      */
-    public SearchCriteria withMatch(String match) {
+    public SearchCriteria withMatch(SearchMatchOperator match) {
         this.match = match;
         return this;
     }

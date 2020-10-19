@@ -18,6 +18,7 @@ import com.mailosaur.models.MessageHeader;
 import com.mailosaur.models.Message;
 import com.mailosaur.models.MessageSummary;
 import com.mailosaur.models.SearchCriteria;
+import com.mailosaur.models.SearchMatchOperator;
 import com.mailosaur.models.SpamAssassinRule;
 import com.mailosaur.models.SpamAnalysisResult;
 
@@ -25,7 +26,7 @@ public class EmailsTest {
 	private static MailosaurClient client;
 	private static String server;
 	private static List<MessageSummary> emails;
-	private String isoDateString = Instant.now().toString().substring(0, 10);
+	private final String isoDateString = Instant.now().toString().substring(0, 10);
 	
 	@BeforeClass
     public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException, MailosaurException {
@@ -47,7 +48,7 @@ public class EmailsTest {
 	}
 
     @Test
-	public void testList() throws IOException {
+	public void testList() {
     	assertEquals(5, emails.size());
     	for (MessageSummary email : emails) {
     		validateEmailSummary(email);
@@ -155,20 +156,21 @@ public class EmailsTest {
     	SearchCriteria criteria = new SearchCriteria();
 		criteria.withSubject(uniqueString)
 			.withBody("this is a link")
-			.withMatch("ALL");
+			.withMatch(SearchMatchOperator.ALL);
     	List<MessageSummary> results = client.messages().search(server, criteria).items();
     	assertEquals(1, results.size());
 	}
 
+	@Test
 	public void testSearchWithMatchAny() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
     	String uniqueString = targetEmail.subject().substring(0, targetEmail.subject().indexOf(" subject"));
     	SearchCriteria criteria = new SearchCriteria();
 		criteria.withSubject(uniqueString)
 			.withBody("this is a link")
-			.withMatch("ANY");
+			.withMatch(SearchMatchOperator.ANY);
     	List<MessageSummary> results = client.messages().search(server, criteria).items();
-    	assertEquals(5, results.size());
+    	assertEquals(6, results.size());
 	}
 	
 	@Test
