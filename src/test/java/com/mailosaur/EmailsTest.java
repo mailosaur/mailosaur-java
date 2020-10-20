@@ -103,6 +103,14 @@ public class EmailsTest {
     		throw new IOException("Should have thrown MailosaurException");
     	} catch (MailosaurException e) { }
 	}
+
+	@Test
+    public void testSearchTimeoutErrorSuppressed() throws IOException, MailosaurException {
+    	SearchCriteria criteria = new SearchCriteria();
+    	criteria.withSentFrom("neverfound@example.com");
+    	List<MessageSummary> results = client.messages().search(server, criteria, 1, false).items();
+    	assertEquals(0, results.size());
+	}
 	
 	public void testSearchBySentFrom() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);

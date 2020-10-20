@@ -95,7 +95,7 @@ public class Messages {
             throw new MailosaurException("Must provide a valid Server ID.", "invalid_request");
         }
 
-        MessageListResult result = search(server, criteria, 0, 1, timeout, receivedAfter);
+        MessageListResult result = search(server, criteria, 0, 1, timeout, receivedAfter, true);
         return getById(result.items().get(0).id());
     }
     
@@ -216,7 +216,7 @@ public class Messages {
      * @return the MessageListResult object if successful.
      */
     public MessageListResult search(String server, SearchCriteria criteria) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, null, null);
+        return search(server, criteria, null, null, null, null, true);
     }
 
     /**
@@ -232,7 +232,7 @@ public class Messages {
      * @return the MessageListResult object if successful.
      */
     public MessageListResult search(String server, SearchCriteria criteria, int page, int itemsPerPage) throws IOException, MailosaurException {
-        return search(server, criteria, page, itemsPerPage, null, null);
+        return search(server, criteria, page, itemsPerPage, null, null, true);
     }
 
     /**
@@ -247,7 +247,23 @@ public class Messages {
      * @return the MessageListResult object if successful.
      */
     public MessageListResult search(String server, SearchCriteria criteria, int timeout) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, timeout, null);
+        return search(server, criteria, null, null, timeout, null, true);
+    }
+
+    /**
+     * Search for messages.
+     * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
+     *
+     * @param server The identifier of the server hosting the messages.
+     * @param criteria The search criteria to match results against.
+     * @param timeout Specify how long to wait for a matching result (in milliseconds).
+     * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the MessageListResult object if successful.
+     */
+    public MessageListResult search(String server, SearchCriteria criteria, int timeout, boolean errorOnTimeout) throws IOException, MailosaurException {
+        return search(server, criteria, null, null, timeout, null, errorOnTimeout);
     }
 
     /**
@@ -262,7 +278,7 @@ public class Messages {
      * @return the MessageListResult object if successful.
      */
     public MessageListResult search(String server, SearchCriteria criteria, Date receivedAfter) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, null, receivedAfter);
+        return search(server, criteria, null, null, null, receivedAfter, true);
     }
 
     /**
@@ -278,7 +294,24 @@ public class Messages {
      * @return the MessageListResult object if successful.
      */
     public MessageListResult search(String server, SearchCriteria criteria, int timeout, Date receivedAfter) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, timeout, receivedAfter);
+        return search(server, criteria, null, null, timeout, receivedAfter, true);
+    }
+
+    /**
+     * Search for messages.
+     * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
+     *
+     * @param server The identifier of the server hosting the messages.
+     * @param criteria The search criteria to match results against.
+     * @param timeout Specify how long to wait for a matching result (in milliseconds).
+     * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
+     * @param receivedAfter Limits results to only messages received after this date/time.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the MessageListResult object if successful.
+     */
+    public MessageListResult search(String server, SearchCriteria criteria, int timeout, boolean errorOnTimeout, Date receivedAfter) throws IOException, MailosaurException {
+        return search(server, criteria, null, null, timeout, receivedAfter, errorOnTimeout);
     }
 
     /**
@@ -291,11 +324,12 @@ public class Messages {
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this date/time.
+     * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
      * @throws MailosaurException thrown if the request is rejected by server
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, Integer page, Integer itemsPerPage, Integer timeout, Date receivedAfter) throws IOException, MailosaurException {
+    public MessageListResult search(String server, SearchCriteria criteria, Integer page, Integer itemsPerPage, Integer timeout, Date receivedAfter, boolean errorOnTimeout) throws IOException, MailosaurException {
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("server", server);
         if (page != null) { query.put("page", page.toString()); }
@@ -331,8 +365,12 @@ public class Messages {
             pollCount++;
 
             // Stop if timeout will be exceeded
-            if ((new Date().getTime() - startTime) + delay > timeout)
+            if ((new Date().getTime() - startTime) + delay > timeout) {
+                if (errorOnTimeout == false) {
+                    return result;
+                }
                 throw new MailosaurException("No matching messages found in time. By default, only messages received in the last hour are checked (use receivedAfter to override this).", "search_timeout");
+            }
 
             try {
                 Thread.sleep(delay);
