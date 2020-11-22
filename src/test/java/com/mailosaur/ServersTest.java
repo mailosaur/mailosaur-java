@@ -58,7 +58,6 @@ public class ServersTest {
 		assertNotNull(retrievedServer.password());
 		assertNotNull(retrievedServer.users());
 		assertEquals(0, (int)retrievedServer.messages());
-		assertNotNull(retrievedServer.forwardingRules());
     	
     	// Update a server and confirm it has changed
     	retrievedServer.withName(serverName += " updated with ellipsis … and emoji 👨🏿‍🚒");
