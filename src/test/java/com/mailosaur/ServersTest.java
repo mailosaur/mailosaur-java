@@ -50,7 +50,6 @@ public class ServersTest {
 		assertNotNull(createdServer.password());
 		assertNotNull(createdServer.users());
 		assertEquals(0, (int)createdServer.messages());
-		assertNotNull(createdServer.forwardingRules());
     	
     	// Retrieve a server and confirm it has expected content
     	Server retrievedServer = client.servers().get(createdServer.id());
