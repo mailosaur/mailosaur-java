@@ -69,7 +69,6 @@ public class ServersTest {
 		assertEquals(retrievedServer.password(), updatedServer.password());
 		assertEquals(retrievedServer.users(), updatedServer.users());
 		assertEquals(retrievedServer.messages(), updatedServer.messages());
-		assertEquals(retrievedServer.forwardingRules(), updatedServer.forwardingRules());
     	
     	client.servers().delete(retrievedServer.id());
     	
