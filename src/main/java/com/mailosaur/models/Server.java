@@ -38,12 +38,6 @@ public class Server {
     private Integer messages;
 
     /**
-     * The forwardingRules property.
-     */
-    @Key
-    private List<ForwardingRule> forwardingRules;
-
-    /**
      * Get the id value.
      *
      * @return the id value
@@ -97,15 +91,6 @@ public class Server {
      */
     public Integer messages() {
         return this.messages;
-    }
-
-    /**
-     * Get the forwardingRules value.
-     *
-     * @return the forwardingRules value
-     */
-    public List<ForwardingRule> forwardingRules() {
-        return this.forwardingRules;
     }
 
 }
