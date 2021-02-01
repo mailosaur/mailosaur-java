@@ -38,9 +38,6 @@ public final class Mailer {
 	public static void sendEmails(MailosaurClient client, String server, int quantity) throws IOException, InterruptedException, MessagingException {
 		for (int i = 0; i < quantity; i++)
 			sendEmail(client, server);
-
-		// Allow 2 seconds for any SMTP processing
-		Thread.sleep(2000);
 	}
 	
 	public static void sendEmail(MailosaurClient client, String server) throws UnsupportedEncodingException, MessagingException
@@ -53,7 +50,7 @@ public final class Mailer {
 		String port = System.getenv("MAILOSAUR_SMTP_PORT");
 		
 		Properties props = new Properties();
-		props.put("mail.smtp.host", (host == null) ? "mailosaur.io" : host);
+		props.put("mail.smtp.host", (host == null) ? "mailosaur.net" : host);
 		props.put("mail.smtp.port", (port == null) ? "25" : port);
 		props.put("mail.smtp.auth", "false");
 		props.put("mail.smtp.starttls.enable", "false");

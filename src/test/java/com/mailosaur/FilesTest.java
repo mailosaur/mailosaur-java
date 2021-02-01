@@ -35,8 +35,8 @@ public class FilesTest {
         client.messages().deleteAll(server);
 		
 		String host = System.getenv("MAILOSAUR_SMTP_HOST");
-		host = (host == null) ? "mailosaur.io" : host;
-		String testEmailAddress = String.format("files_test.%s@%s", server, host);
+		host = (host == null) ? "mailosaur.net" : host;
+		String testEmailAddress = String.format("files_test@%s.%s", server, host);
 		
 		Mailer.sendEmail(client,  server, testEmailAddress);
 		

@@ -92,8 +92,8 @@ public class Servers {
 
     public String generateEmailAddress(String server) {
         String host = System.getenv("MAILOSAUR_SMTP_HOST");
-        host = (host != null) ? host : "mailosaur.io";
+        host = (host != null) ? host : "mailosaur.net";
         String randomString = String.valueOf(random.nextInt(10000000));
-        return String.format("%s.%s@%s", randomString, server, host);    	
+        return String.format("%s@%s.%s", randomString, server, host);    	
     }
 }

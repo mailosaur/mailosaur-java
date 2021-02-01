@@ -70,9 +70,9 @@ public class EmailsTest {
 	@Test
 	public void testGet() throws IOException, MessagingException, MailosaurException {
 		String host = System.getenv("MAILOSAUR_SMTP_HOST");
-		host = (host == null) ? "mailosaur.io" : host;
+		host = (host == null) ? "mailosaur.net" : host;
 
-		String testEmailAddress = String.format("wait_for_test.%s@%s", server, host);
+		String testEmailAddress = String.format("wait_for_test@%s.%s", server, host);
 
 		Mailer.sendEmail(client,  server, testEmailAddress);
 
