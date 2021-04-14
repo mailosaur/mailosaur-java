@@ -47,7 +47,6 @@ public class ServersTest {
     	ServerCreateOptions options = new ServerCreateOptions().withName(serverName);
     	Server createdServer = client.servers().create(options);
 		assertNotNull(createdServer.id());
-		assertNotNull(createdServer.password());
 		assertNotNull(createdServer.users());
 		assertEquals(0, (int)createdServer.messages());
     	
@@ -55,7 +54,6 @@ public class ServersTest {
     	Server retrievedServer = client.servers().get(createdServer.id());
     	assertEquals(createdServer.id(), retrievedServer.id());
 		assertEquals(createdServer.name(), retrievedServer.name());
-		assertNotNull(retrievedServer.password());
 		assertNotNull(retrievedServer.users());
 		assertEquals(0, (int)retrievedServer.messages());
     	
@@ -64,7 +62,6 @@ public class ServersTest {
     	Server updatedServer = client.servers().update(retrievedServer.id(), retrievedServer);
     	assertEquals(retrievedServer.id(), updatedServer.id());
 		assertEquals(retrievedServer.name(), updatedServer.name());
-		assertEquals(retrievedServer.password(), updatedServer.password());
 		assertEquals(retrievedServer.users(), updatedServer.users());
 		assertEquals(retrievedServer.messages(), updatedServer.messages());
     	

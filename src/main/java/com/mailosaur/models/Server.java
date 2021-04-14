@@ -14,12 +14,6 @@ public class Server {
     private String id;
 
     /**
-     * The password used for SMTP authentication.
-     */
-    @Key
-    private String password;
-
-    /**
      * A name used to identify the server.
      */
     @Key
@@ -44,15 +38,6 @@ public class Server {
      */
     public String id() {
         return this.id;
-    }
-
-    /**
-     * Get the password value.
-     *
-     * @return the password value
-     */
-    public String password() {
-        return this.password;
     }
 
     /**
