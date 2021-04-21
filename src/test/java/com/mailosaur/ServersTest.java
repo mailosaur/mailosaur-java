@@ -56,6 +56,10 @@ public class ServersTest {
 		assertEquals(createdServer.name(), retrievedServer.name());
 		assertNotNull(retrievedServer.users());
 		assertEquals(0, (int)retrievedServer.messages());
+
+		// Retrieve server password
+    	String password = client.servers().getPassword(createdServer.id());
+    	assertTrue(password.length() >= 8);
     	
     	// Update a server and confirm it has changed
     	retrievedServer.withName(serverName += " updated with ellipsis … and emoji 👨🏿‍🚒");

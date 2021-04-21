@@ -3,6 +3,8 @@ package com.mailosaur;
 import java.io.IOException;
 import java.util.Random;
 
+import com.google.api.client.json.GenericJson;
+
 import com.mailosaur.models.Server;
 import com.mailosaur.models.ServerCreateOptions;
 import com.mailosaur.models.ServerListResult;
@@ -60,6 +62,21 @@ public class Servers {
      */
     public Server get(String id) throws IOException, MailosaurException {
     	return client.request("GET", "api/servers/" + id).parseAs(Server.class);
+    }
+
+    /**
+     * Retrieve server password.
+     * Retrieves the password for use with SMTP and POP3 for a single server. 
+     * Simply supply the unique identifier for the required server.
+     *
+     * @param id The identifier of the server.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the server password if successful.
+     */
+    public String getPassword(String id) throws IOException, MailosaurException {
+    	GenericJson json = client.request("GET", "api/servers/" + id + "/password").parseAs(GenericJson.class);
+        return json.get("value").toString();
     }
 
     /**
