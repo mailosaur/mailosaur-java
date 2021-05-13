@@ -52,6 +52,7 @@ public class MailosaurClient {
         this.files = new Files(this);
         this.messages = new Messages(this);
         this.servers = new Servers(this);
+        this.usage = new Usage(this);
     }
 	
 	/**
@@ -104,6 +105,19 @@ public class MailosaurClient {
      */
     public Servers servers() {
         return this.servers;
+    }
+
+    /**
+     * The Usage object to access its operations.
+     */
+    private Usage usage;
+
+    /**
+     * Gets the Usage object to access its operations.
+     * @return the Usage object.
+     */
+    public Usage usage() {
+        return this.usage;
     }
     
     public HttpResponse request(String method, String url) throws MailosaurException {
