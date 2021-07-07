@@ -8,12 +8,12 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-  repository_dispatch:
-    types: [ build ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     env:
       MAILOSAUR_BASE_URL: https://mailosaur.com/
@@ -34,6 +34,7 @@ jobs:
   build-next:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     env:
       MAILOSAUR_BASE_URL: https://next.mailosaur.com/
