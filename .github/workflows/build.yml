@@ -30,6 +30,14 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Notify on Failure
+      uses: skitionek/notify-microsoft-teams@master
+      if: ${{ failure() }}
+      with:
+        webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
+        needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        steps: ${{ toJson(steps) }}
 
   build-next:
     needs: build
@@ -51,3 +59,11 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Notify on Failure
+      uses: skitionek/notify-microsoft-teams@master
+      if: ${{ failure() }}
+      with:
+        webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
+        needs: ${{ toJson(needs) }}
+        job: ${{ toJson(job) }}
+        steps: ${{ toJson(steps) }}
