@@ -39,7 +39,7 @@ public class EmailsTest {
 		String apiKey = System.getenv("MAILOSAUR_API_KEY");
 		String baseUrl = System.getenv("MAILOSAUR_BASE_URL");
 		
-		if (apiKey == null || server == null || verifiedDomain == null) {
+		if (apiKey == null || server == null) {
 			throw new IOException("Missing necessary environment variables - refer to README.md");
 		}
         
@@ -240,6 +240,8 @@ public class EmailsTest {
 
 	@Test
 	public void testCreateSendText() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
 		String subject = "New message";
 
 		MessageCreateOptions options = new MessageCreateOptions();
@@ -256,6 +258,8 @@ public class EmailsTest {
 
 	@Test
 	public void testCreateSendHtml() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
 		String subject = "New HTML message";
 
 		MessageCreateOptions options = new MessageCreateOptions();
@@ -272,6 +276,8 @@ public class EmailsTest {
 
 	@Test
 	public void testForwardText() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
 		String body = "Forwarded message";
 		String targetId = emails.get(0).id();
 
@@ -287,6 +293,8 @@ public class EmailsTest {
 
 	@Test
 	public void testForwardHtml() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+		
 		String body = "<p>Forwarded <strong>HTML</strong> message.</p>";
 		String targetId = emails.get(0).id();
 
@@ -302,6 +310,8 @@ public class EmailsTest {
 
 	@Test
 	public void testReplyText() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
 		String body = "Reply message";
 		String targetId = emails.get(0).id();
 
@@ -316,6 +326,8 @@ public class EmailsTest {
 
 	@Test
 	public void testReplyHtml() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
 		String body = "<p>Reply <strong>HTML</strong> message.</p>";
 		String targetId = emails.get(0).id();
 

@@ -32,6 +32,7 @@ public final class Mailer {
 			html = new String(Files.readAllBytes(getResourceFilePath("testEmail.html")), "utf-8");
 			text = new String(Files.readAllBytes(getResourceFilePath("testEmail.txt")), "utf-8");
 			verifiedDomain = System.getenv("MAILOSAUR_VERIFIED_DOMAIN");
+			verifiedDomain = (verifiedDomain == null || verifiedDomain.length() == 0) ? "mailosaur.net" : verifiedDomain;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
