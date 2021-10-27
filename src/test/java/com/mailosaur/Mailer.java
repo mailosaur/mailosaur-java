@@ -23,6 +23,7 @@ import com.mailosaur.MailosaurClient;
 
 public final class Mailer {
 	private static Random random = new Random();
+	private static String verifiedDomain;
 	private static String html;
 	private static String text;
 	
@@ -30,6 +31,7 @@ public final class Mailer {
 		try {
 			html = new String(Files.readAllBytes(getResourceFilePath("testEmail.html")), "utf-8");
 			text = new String(Files.readAllBytes(getResourceFilePath("testEmail.txt")), "utf-8");
+			verifiedDomain = System.getenv("MAILOSAUR_VERIFIED_DOMAIN");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -62,8 +64,8 @@ public final class Mailer {
 		
 		message.setSubject(String.format("%s subject", randomString));
 		
-		message.setFrom(new InternetAddress(String.format("%s %s <%s>", randomString, randomString,
-				client.servers().generateEmailAddress(server))));
+		message.setFrom(new InternetAddress(String.format("%s %s <%s@%s>", randomString, randomString,
+				randomString, verifiedDomain)));
 		
 		String randomToAddress = (sendToAddress == null) ? client.servers().generateEmailAddress(server) : sendToAddress;
 		

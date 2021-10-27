@@ -21,20 +21,25 @@ import com.mailosaur.models.SearchCriteria;
 import com.mailosaur.models.SearchMatchOperator;
 import com.mailosaur.models.SpamAssassinRule;
 import com.mailosaur.models.SpamAnalysisResult;
+import com.mailosaur.models.MessageCreateOptions;
+import com.mailosaur.models.MessageForwardOptions;
+import com.mailosaur.models.MessageReplyOptions;
 
 public class EmailsTest {
 	private static MailosaurClient client;
 	private static String server;
+	private static String verifiedDomain;
 	private static List<MessageSummary> emails;
 	private final String isoDateString = Instant.now().toString().substring(0, 10);
 	
 	@BeforeClass
     public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException, MailosaurException {
 		server = System.getenv("MAILOSAUR_SERVER");
+		verifiedDomain = System.getenv("MAILOSAUR_VERIFIED_DOMAIN");
 		String apiKey = System.getenv("MAILOSAUR_API_KEY");
 		String baseUrl = System.getenv("MAILOSAUR_BASE_URL");
 		
-		if (apiKey == null || server == null) {
+		if (apiKey == null || server == null || verifiedDomain == null) {
 			throw new IOException("Missing necessary environment variables - refer to README.md");
 		}
         
@@ -231,6 +236,96 @@ public class EmailsTest {
 			client.messages().delete(targetEmailId);
     		throw new IOException("Should have thrown MailosaurException");
     	} catch (MailosaurException e) { }
+	}
+
+	@Test
+	public void testCreateSendText() throws IOException, MailosaurException {
+		String subject = "New message";
+
+		MessageCreateOptions options = new MessageCreateOptions();
+		options.withTo(String.format("anything@%s", verifiedDomain))
+			.withSend(true)
+			.withSubject(subject)
+			.withText("This is a new email");
+
+		Message message = client.messages().create(server, options);
+
+		assertNotNull(message.id());
+		assertEquals(subject, message.subject());
+	}
+
+	@Test
+	public void testCreateSendHtml() throws IOException, MailosaurException {
+		String subject = "New HTML message";
+
+		MessageCreateOptions options = new MessageCreateOptions();
+		options.withTo(String.format("anything@%s", verifiedDomain))
+				.withSend(true)
+				.withSubject(subject)
+				.withHtml("<p>This is a new email.</p>");
+
+		Message message = client.messages().create(server, options);
+
+		assertNotNull(message.id());
+		assertEquals(subject, message.subject());
+	}
+
+	@Test
+	public void testForwardText() throws IOException, MailosaurException {
+		String body = "Forwarded message";
+		String targetId = emails.get(0).id();
+
+		MessageForwardOptions options = new MessageForwardOptions();
+		options.withTo(String.format("anything@%s", verifiedDomain))
+				.withText(body);
+
+		Message message = client.messages().forward(targetId, options);
+
+		assertNotNull(message.id());
+		assertTrue(message.text().body().contains(body));
+	}
+
+	@Test
+	public void testForwardHtml() throws IOException, MailosaurException {
+		String body = "<p>Forwarded <strong>HTML</strong> message.</p>";
+		String targetId = emails.get(0).id();
+
+		MessageForwardOptions options = new MessageForwardOptions();
+		options.withTo(String.format("anything@%s", verifiedDomain))
+				.withHtml(body);
+
+		Message message = client.messages().forward(targetId, options);
+
+		assertNotNull(message.id());
+		assertTrue(message.html().body().contains(body));
+	}
+
+	@Test
+	public void testReplyText() throws IOException, MailosaurException {
+		String body = "Reply message";
+		String targetId = emails.get(0).id();
+
+		MessageReplyOptions options = new MessageReplyOptions();
+		options.withText(body);
+
+		Message message = client.messages().reply(targetId, options);
+
+		assertNotNull(message.id());
+		assertTrue(message.text().body().contains(body));
+	}
+
+	@Test
+	public void testReplyHtml() throws IOException, MailosaurException {
+		String body = "<p>Reply <strong>HTML</strong> message.</p>";
+		String targetId = emails.get(0).id();
+
+		MessageReplyOptions options = new MessageReplyOptions();
+		options.withHtml(body);
+
+		Message message = client.messages().reply(targetId, options);
+
+		assertNotNull(message.id());
+		assertTrue(message.html().body().contains(body));
 	}
     
     private void validateEmail(Message email) {

@@ -12,6 +12,9 @@ import com.google.api.client.http.HttpResponse;
 import com.mailosaur.models.Message;
 import com.mailosaur.models.MessageListResult;
 import com.mailosaur.models.SearchCriteria;
+import com.mailosaur.models.MessageCreateOptions;
+import com.mailosaur.models.MessageForwardOptions;
+import com.mailosaur.models.MessageReplyOptions;
 
 /**
  * An instance of this class provides access to all the operations defined
@@ -378,6 +381,53 @@ public class Messages {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Create a message.
+     * Creates a new message that can be sent to a verified email address. This is 
+     * useful in scenarios where you want an email to trigger a workflow in your
+     * product.
+     *
+     * @param server The identifier of the server to create the message in.
+     * @param messageCreateOptions The options with which to create the message.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the Message object if successful.
+     */
+    public Message create(String server, MessageCreateOptions messageCreateOptions) throws IOException, MailosaurException {
+        HashMap<String, String> query = new HashMap<String, String>();
+        query.put("server", server);
+    	return client.request("POST", "api/messages", messageCreateOptions, query).parseAs(Message.class);
+    }
+
+    /**
+     * Forward an email.
+     * Forwards the specified email to a verified email address.
+     *
+     * @param id The identifier of the email to forward.
+     * @param messageForwardOptions The options with which to forward the email.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the Message object if successful.
+     */
+    public Message forward(String id, MessageForwardOptions messageForwardOptions) throws IOException, MailosaurException {
+    	return client.request("POST", "api/messages/" + id + "/forward", messageForwardOptions).parseAs(Message.class);
+    }
+
+    /**
+     * Reply to an email.
+     * Sends a reply to the specified email. This is useful for when simulating a user
+     * replying to one of your emails.
+     *
+     * @param id The identifier of the email to reply to.
+     * @param messageReplyOptions The options with which to reply to the email.
+     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws IOException
+     * @return the Message object if successful.
+     */
+    public Message reply(String id, MessageReplyOptions messageReplyOptions) throws IOException, MailosaurException {
+    	return client.request("POST", "api/messages/" + id + "/reply", messageReplyOptions).parseAs(Message.class);
     }
 
 }
