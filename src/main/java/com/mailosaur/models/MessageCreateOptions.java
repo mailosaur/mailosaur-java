@@ -2,6 +2,8 @@ package com.mailosaur.models;
 
 import com.google.api.client.util.Key;
 
+import java.util.List;
+
 /**
  * The MessageCreateOptions model.
  */
@@ -35,6 +37,12 @@ public class MessageCreateOptions {
      */
 	@Key
     private String html;
+
+    /**
+     * Any message attachments.
+     */
+    @Key
+    private List<Attachment> attachments;
 
     /**
      * Get the to value.
@@ -133,6 +141,26 @@ public class MessageCreateOptions {
      */
     public MessageCreateOptions withHtml(String html) {
         this.html = html;
+        return this;
+    }
+
+    /**
+     * Get the attachments value.
+     *
+     * @return the attachments value
+     */
+    public List<Attachment> attachments() {
+        return this.attachments;
+    }
+
+    /**
+     * Set the attachments value.
+     *
+     * @param attachments the attachments value to set
+     * @return the MessageCreateOptions object itself.
+     */
+    public MessageCreateOptions withAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
         return this;
     }
 }

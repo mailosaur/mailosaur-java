@@ -3,10 +3,11 @@ package com.mailosaur;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 import javax.mail.MessagingException;
 
@@ -275,6 +276,36 @@ public class EmailsTest {
 	}
 
 	@Test
+	public void testCreateSendWithAttachment() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
+		String subject = "New message with attachment";
+
+		byte[] data = Files.readAllBytes(getResourceFilePath("cat.png"));
+
+		Attachment attachment = new Attachment();
+		attachment.withFileName("cat.png");
+		attachment.withContent(new String(Base64.getEncoder().encode(data)));
+		attachment.withContentType("image/png");
+
+		MessageCreateOptions options = new MessageCreateOptions();
+		options.withTo(String.format("anything@%s", verifiedDomain))
+				.withSend(true)
+				.withSubject(subject)
+				.withHtml("<p>This is a new email.</p>")
+				.withAttachments(Arrays.asList(new Attachment[] { attachment }));
+
+		Message message = client.messages().create(server, options);
+
+		assertEquals(1, message.attachments().size());
+		Attachment file1 = message.attachments().get(0);
+		assertNotNull(file1.id());
+		assertEquals((Long) 82138L, file1.length());
+		assertEquals("cat.png", file1.fileName());
+		assertEquals("image/png", file1.contentType());
+	}
+
+	@Test
 	public void testForwardText() throws IOException, MailosaurException {
 		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
 
@@ -322,6 +353,34 @@ public class EmailsTest {
 
 		assertNotNull(message.id());
 		assertTrue(message.text().body().contains(body));
+	}
+
+	@Test
+	public void testReplyWithAttachment() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
+		String body = "New reply with attachment";
+		String targetId = emails.get(0).id();
+
+		byte[] data = Files.readAllBytes(getResourceFilePath("cat.png"));
+
+		Attachment attachment = new Attachment();
+		attachment.withFileName("cat.png");
+		attachment.withContent(new String(Base64.getEncoder().encode(data)));
+		attachment.withContentType("image/png");
+
+		MessageReplyOptions options = new MessageReplyOptions();
+		options.withText(body)
+				.withAttachments(Arrays.asList(new Attachment[] { attachment }));
+
+		Message message = client.messages().reply(targetId, options);
+
+		assertEquals(1, message.attachments().size());
+		Attachment file1 = message.attachments().get(0);
+		assertNotNull(file1.id());
+		assertEquals((Long) 82138L, file1.length());
+		assertEquals("cat.png", file1.fileName());
+		assertEquals("image/png", file1.contentType());
 	}
 
 	@Test
@@ -434,5 +493,10 @@ public class EmailsTest {
 		assertEquals((Long) 212080L, file2.length());
 		assertEquals("dog.png", file2.fileName());
 		assertEquals("image/png", file2.contentType());
+	}
+
+	private static Path getResourceFilePath(String relativePath) {
+		String path = EmailsTest.class.getClassLoader().getResource(relativePath).getPath();
+		return Paths.get(path);
 	}
 }
