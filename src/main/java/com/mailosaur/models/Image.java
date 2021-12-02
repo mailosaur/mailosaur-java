@@ -3,59 +3,36 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The Image model.
+ * Data associated with an image found within a message.
  */
 public class Image extends BaseModel {
     /**
-     * The src property.
+     * The value of the `src` attribute of the image.
      */
     @Key
     private String src;
 
     /**
-     * The alt property.
+     * The `alt` text (alternative text), used to describe the image.
      */
     @Key
     private String alt;
 
     /**
-     * Get the src value.
+     * Gets the value of the `src` attribute of the image.
      *
-     * @return the src value
+     * @return The value of the `src` attribute of the image.
      */
     public String src() {
         return nullableString(this.src);
     }
 
     /**
-     * Set the src value.
+     * Gets the `alt` text (alternative text), used to describe the image.
      *
-     * @param src the src value to set
-     * @return the Image object itself.
-     */
-    public Image withSrc(String src) {
-        this.src = src;
-        return this;
-    }
-
-    /**
-     * Get the alt value.
-     *
-     * @return the alt value
+     * @return The `alt` text (alternative text).
      */
     public String alt() {
         return nullableString(this.alt);
     }
-
-    /**
-     * Set the alt value.
-     *
-     * @param alt the alt value to set
-     * @return the Image object itself.
-     */
-    public Image withAlt(String alt) {
-        this.alt = alt;
-        return this;
-    }
-
 }

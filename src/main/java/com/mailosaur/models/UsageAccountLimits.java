@@ -2,62 +2,65 @@ package com.mailosaur.models;
 
 import com.google.api.client.util.Key;
 
+/**
+ * The current limits and usage for your account.
+ */
 public class UsageAccountLimits {
-	/**
-     * The servers property.
+    /**
+     * Server limits.
      */
     @Key
     private UsageAccountLimit servers;
 
     /**
-     * The users property.
+     * User limits.
      */
     @Key
     private UsageAccountLimit users;
 
     /**
-     * The email property.
+     * Emails per day limits.
      */
     @Key
     private UsageAccountLimit email;
 
     /**
-     * The sms property.
+     * SMS message per month limits.
      */
     @Key
     private UsageAccountLimit sms;
 
     /**
-     * Get the servers value.
+     * Gets server limits.
      *
-     * @return the servers value
+     * @return Server limits.
      */
     public UsageAccountLimit servers() {
         return this.servers;
     }
 
     /**
-     * Get the users value.
+     * Gets user limits.
      *
-     * @return the users value
+     * @return User limits.
      */
     public UsageAccountLimit users() {
         return this.users;
     }
 
     /**
-     * Get the email value.
+     * Gets emails per day limits.
      *
-     * @return the email value
+     * @return Emails per day limits.
      */
     public UsageAccountLimit email() {
         return this.email;
     }
 
     /**
-     * Get the sms value.
+     * Gets SMS message per month limits.
      *
-     * @return the sms value
+     * @return SMS message per month limits.
      */
     public UsageAccountLimit sms() {
         return this.sms;

@@ -3,34 +3,36 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The Link model.
+ * Data associated with a hyperlink found within an email or SMS message.
  */
 public class Link extends BaseModel {
     /**
-     * The href property.
+     * The URL for the link.
      */
     @Key
     private String href;
 
     /**
-     * The text property.
+     * The display text of the link. This is particular useful for understanding how a
+     * link was displayed within HTML content.
      */
     @Key
     private String text;
 
     /**
-     * Get the href value.
+     * Gets the URL for the link.
      *
-     * @return the href value
+     * @return The URL for the link.
      */
     public String href() {
         return nullableString(this.href);
     }
 
     /**
-     * Get the text value.
+     * The display text of the link. This is particular useful for understanding how a
+     * link was displayed within HTML content.
      *
-     * @return the text value
+     * @return The display text of the link.
      */
     public String text() {
         return nullableString(this.text);

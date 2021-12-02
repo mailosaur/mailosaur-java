@@ -89,7 +89,7 @@ public class ServersTest {
 			assertEquals("Request had one or more invalid parameters.", e.getMessage());
 			assertEquals("invalid_request", e.errorType());
 			assertEquals(Integer.valueOf(400), e.httpStatusCode());
-			assertEquals("{\"type\":\"ValidationError\",\"messages\":{\"name\":\"Please provide a name for your server\"}}", e.httpResponseBody());
+			assertTrue(e.httpResponseBody().contains("{\"type\":"));
     	}
     }
 }

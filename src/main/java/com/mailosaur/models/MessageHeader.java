@@ -3,37 +3,36 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The MessageHeader model.
+ * Message header key/value pair.
  */
 public class MessageHeader extends BaseModel {
     /**
-     * The field property.
+     * Header key.
      */
 	@Key
     private String field;
 
     /**
-     * The value property.
+     * Header value.
      */
 	@Key
     private String value;
 
     /**
-     * Get the field value.
+     * Gets the header key.
      *
-     * @return the field value
+     * @return The header key.
      */
     public String field() {
         return nullableString(this.field);
     }
 
     /**
-     * Get the value value.
+     * Gets the header value.
      *
-     * @return the value value
+     * @return The header value.
      */
     public String value() {
         return nullableString(this.value);
     }
-
 }

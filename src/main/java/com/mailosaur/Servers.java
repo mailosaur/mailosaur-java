@@ -9,108 +9,98 @@ import com.mailosaur.models.Server;
 import com.mailosaur.models.ServerCreateOptions;
 import com.mailosaur.models.ServerListResult;
 
-/**
- * An instance of this class provides access to all the operations defined
- * in Servers.
- */
 public class Servers {
-    /** The service client containing this operation class. */
     private MailosaurClient client;
     
-    /**
-     * Initializes an instance of Servers.
-     *
-     * @param client the instance of the client containing this operation class.
-     */
     public Servers(MailosaurClient client) {
         this.client = client;
     }
 
     /**
-     * List all servers.
-     * Returns a list of your virtual SMTP servers. Servers are returned sorted in alphabetical order.
+     * Returns a list of your virtual servers. Servers are returned sorted in alphabetical order.
      *
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the List&lt;Server&gt; object if successful.
+     * @return The result of the server listing operation.
      */
     public ServerListResult list() throws IOException, MailosaurException {
         return client.request("GET", "api/servers").parseAs(ServerListResult.class);
     }
 
     /**
-     * Create a server.
-     * Creates a new virtual SMTP server and returns it.
+     * Creates a new virtual server.
      *
-     * @param serverCreateOptions the ServerCreateOptions value
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @param options Options used to create a new Mailosaur server.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the Server object if successful.
+     * @return Mailosaur virtual SMTP/SMS server.
      */
-    public Server create(ServerCreateOptions serverCreateOptions) throws IOException, MailosaurException {
-    	return client.request("POST", "api/servers", serverCreateOptions).parseAs(Server.class);
+    public Server create(ServerCreateOptions options) throws IOException, MailosaurException {
+    	return client.request("POST", "api/servers", options).parseAs(Server.class);
     }
 
     /**
-     * Retrieve a server.
-     * Retrieves the detail for a single server. Simply supply the unique identifier for the required server.
+     * Retrieves the detail for a single server.
      *
-     * @param id The identifier of the server to be retrieved.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @param serverId The unique identifier of the server.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the Server object if successful.
+     * @return Mailosaur virtual SMTP/SMS server.
      */
-    public Server get(String id) throws IOException, MailosaurException {
-    	return client.request("GET", "api/servers/" + id).parseAs(Server.class);
+    public Server get(String serverId) throws IOException, MailosaurException {
+    	return client.request("GET", "api/servers/" + serverId).parseAs(Server.class);
     }
 
     /**
-     * Retrieve server password.
-     * Retrieves the password for use with SMTP and POP3 for a single server. 
-     * Simply supply the unique identifier for the required server.
+     * Retrieves the password for a server. This password can be used for SMTP, POP3, and IMAP connectivity.
      *
-     * @param id The identifier of the server.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @param serverId The unique identifier of the server.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the server password if successful.
+     * @return The password for the server.
      */
-    public String getPassword(String id) throws IOException, MailosaurException {
-    	GenericJson json = client.request("GET", "api/servers/" + id + "/password").parseAs(GenericJson.class);
+    public String getPassword(String serverId) throws IOException, MailosaurException {
+    	GenericJson json = client.request("GET", "api/servers/" + serverId + "/password").parseAs(GenericJson.class);
         return json.get("value").toString();
     }
 
     /**
-     * Update a server.
-     * Updats a single server and returns it.
+     * Updates the attributes of a server.
      *
-     * @param id The identifier of the server to be updated.
-     * @param server the Server value
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @param serverId The unique identifier of the server.
+     * @param server The updated server.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the Server object if successful.
+     * @return Mailosaur virtual SMTP/SMS server.
      */
-    public Server update(String id, Server server) throws IOException, MailosaurException {
-    	return client.request("PUT", "api/servers/" + id, server).parseAs(Server.class);
+    public Server update(String serverId, Server server) throws IOException, MailosaurException {
+    	return client.request("PUT", "api/servers/" + serverId, server).parseAs(Server.class);
     }
 
     /**
-     * Delete a server.
-     * Permanently deletes a server. This operation cannot be undone. Also deletes all emails and associated attachments within the server.
+     * Permanently delete a server. This will also delete all messages, associated attachments, etc. within the server. This operation cannot be undone.
      *
-     * @param id The identifier of the server to be deleted.
-     * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @param serverId The unique identifier of the server.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
+     * @throws IOException
      */
-    public void delete(String id) throws MailosaurException {
-    	client.request("DELETE", "api/servers/" + id);
+    public void delete(String serverId) throws MailosaurException {
+    	client.request("DELETE", "api/servers/" + serverId);
     }
 
     private Random random = new Random();
 
-    public String generateEmailAddress(String server) {
+    /**
+     * Generates a random email address by appending a random string in front of the server's
+     * domain name.
+     *
+     * @param serverId The identifier of the server.
+     * @return A random email address.
+     */
+    public String generateEmailAddress(String serverId) {
         String host = System.getenv("MAILOSAUR_SMTP_HOST");
         host = (host != null) ? host : "mailosaur.net";
         String randomString = String.valueOf(random.nextInt(10000000));
-        return String.format("%s@%s.%s", randomString, server, host);    	
+        return String.format("%s@%s.%s", randomString, serverId, host);
     }
 }

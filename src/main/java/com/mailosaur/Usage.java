@@ -8,42 +8,32 @@ import com.google.api.client.json.GenericJson;
 import com.mailosaur.models.UsageAccountLimits;
 import com.mailosaur.models.UsageTransactionListResult;
 
-/**
- * An instance of this class provides access to all the operations defined
- * in Usage.
- */
 public class Usage {
-    /** The service client containing this operation class. */
     private MailosaurClient client;
     
-    /**
-     * Initializes an instance of Usage.
-     *
-     * @param client the instance of the client containing this operation class.
-     */
     public Usage(MailosaurClient client) {
         this.client = client;
     }
 
     /**
-     * Retrieve account usage limits.
-     * Details the current limits and usage for your account.
+     * Retrieve account usage limits. Details the current limits and usage for your account.
+     * This endpoint requires authentication with an account-level API key.
      *
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the UsageAccountLimits object if successful.
+     * @return The current limits and usage for your account.
      */
     public UsageAccountLimits limits() throws IOException, MailosaurException {
         return client.request("GET", "api/usage/limits").parseAs(UsageAccountLimits.class);
     }
 
     /**
-     * List account transactions.
      * Retrieves the last 31 days of transactional usage.
+     * This endpoint requires authentication with an account-level API key.
      *
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the UsageTransactionListResult object if successful.
+     * @return Usage transactions from your account.
      */
     public UsageTransactionListResult transactions() throws IOException, MailosaurException {
         return client.request("GET", "api/usage/transactions").parseAs(UsageTransactionListResult.class);

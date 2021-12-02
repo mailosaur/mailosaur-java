@@ -6,242 +6,200 @@ import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Key;
 
 /**
- * The Message model.
+ * The email or SMS message processed by Mailosaur.
  */
 public class Message extends BaseModel {
+    public Message() { }
+
     /**
-     * The id property.
+     * This constructor used for Mailosaur library tests only
+     */
+    public Message(List<MessageAddress> from, List<MessageAddress> to, String subject, String server, DateTime received) {
+        this.from = from;
+        this.to = to;
+        this.subject = subject;
+        this.server = server;
+        this.received = received;
+    }
+
+    /**
+     * Unique identifier for the message.
      */
     @Key
     private String id;
 
     /**
-     * The server property.
-     */
-    @Key
-    private String server;
-
-    /**
-     * The from property.
+     * The sender of the message.
      */
     @Key
     private List<MessageAddress> from;
 
     /**
-     * The to property.
+     * The recipients of the message.
      */
     @Key
     private List<MessageAddress> to;
 
     /**
-     * The cc property.
+     * Carbon-copied recipients for email messages.
      */
     @Key
     private List<MessageAddress> cc;
 
     /**
-     * The bcc property.
+     * Blind carbon-copied recipients for email messages.
      */
     @Key
     private List<MessageAddress> bcc;
 
     /**
-     * The received property.
+     * The date/time that this message was received by Mailosaur.
      */
     @Key
     private DateTime received;
 
     /**
-     * The subject property.
+     * The subject of the message.
      */
     @Key
     private String subject;
 
     /**
-     * The html property.
+     * Message content that was sent in HTML format.
      */
     @Key
     private MessageContent html;
 
     /**
-     * The text property.
+     * Message content that was sent in plain text format.
      */
     @Key
     private MessageContent text;
 
     /**
-     * The attachments property.
+     * An array of attachment metadata for any attached files.
      */
     @Key
     private List<Attachment> attachments;
 
     /**
-     * The metadata property.
+     * Further metadata related to the message, including email headers.
      */
     @Key
     private Metadata metadata;
 
     /**
-     * Get the id value.
+     * Identifier for the server in which the message is located.
+     */
+    @Key
+    private String server;
+
+    /**
+     * Gets the unique identifier for the message.
      *
-     * @return the id value
+     * @return The unique identifier for the message.
      */
     public String id() {
         return this.id;
     }
 
     /**
-     * Get the server value.
+     * Gets the sender of the message.
      *
-     * @return the server value
-     */
-    public String server() {
-        return this.server;
-    }
-
-    /**
-     * Get the from value.
-     *
-     * @return the from value
+     * @return The sender of the message.
      */
     public List<MessageAddress> from() {
         return this.from;
     }
 
     /**
-     * Get the to value.
+     * Gets the recipients of the message.
      *
-     * @return the to value
+     * @return The recipients of the message.
      */
     public List<MessageAddress> to() {
         return this.to;
     }
 
     /**
-     * Get the cc value.
+     * Gets the carbon-copied recipients for email messages.
      *
-     * @return the cc value
+     * @return Carbon-copied recipients for email messages.
      */
     public List<MessageAddress> cc() {
         return this.cc;
     }
 
     /**
-     * Get the bcc value.
+     * Gets the blind carbon-copied recipients for email messages.
      *
-     * @return the bcc value
+     * @return Blind carbon-copied recipients for email messages.
      */
     public List<MessageAddress> bcc() {
         return this.bcc;
     }
 
     /**
-     * Get the received value.
+     * Gets the date/time that this message was received by Mailosaur.
      *
-     * @return the received value
+     * @return The date/time that this message was received by Mailosaur.
      */
     public DateTime received() {
         return this.received;
     }
 
     /**
-     * Get the subject value.
+     * Gets the subject of the message.
      *
-     * @return the subject value
+     * @return The subject of the message.
      */
     public String subject() {
         return nullableString(this.subject);
     }
 
     /**
-     * Get the html value.
+     * Gets the message content that was sent in HTML format.
      *
-     * @return the html value
+     * @return Message content that was sent in HTML format.
      */
     public MessageContent html() {
         return this.html;
     }
 
     /**
-     * Get the text value.
+     * Gets the message content that was sent in plain text format.
      *
-     * @return the text value
+     * @return Message content that was sent in plain text format.
      */
     public MessageContent text() {
         return this.text;
     }
 
     /**
-     * Get the attachments value.
+     * Gets an array of attachment metadata for any attached files.
      *
-     * @return the attachments value
+     * @return An array of attachment metadata for any attached files.
      */
     public List<Attachment> attachments() {
         return this.attachments;
     }
 
     /**
-     * Get the metadata value.
+     * Gets further metadata related to the message, including email headers.
      *
-     * @return the metadata value
+     * @return Further metadata related to the message, including email headers.
      */
     public Metadata metadata() {
         return this.metadata;
     }
-    
-    /**
-     * Set the from value.
-     *
-     * @param from the from value to set
-     * @return the Message object itself.
-     */
-    public Message withFrom(List<MessageAddress> from) {
-    	this.from = from;
-    	return this;
-    }
-    
-    /**
-     * Set the to value.
-     *
-     * @param to the to value to set
-     * @return the Message object itself.
-     */
-    public Message withTo(List<MessageAddress> to) {
-    	this.to = to;
-    	return this;
-    }
-    
-    /**
-     * Set the subject value.
-     *
-     * @param subject the subject value to set
-     * @return the Message object itself.
-     */
-    public Message withSubject(String subject) {
-    	this.subject = subject;
-    	return this;
-    }
-    
-    /**
-     * Set the server value.
-     *
-     * @param server the server value to set
-     * @return the Message object itself.
-     */
-    public Message withServer(String server) {
-    	this.server = server;
-    	return this;
-    }
-    
-    /**
-     * Set the received value.
-     *
-     * @param received the received value to set
-     * @return the Message object itself.
-     */
-    public Message withReceived(DateTime received) {
-    	this.received = received;
-    	return this;
-    }
 
+    /**
+     * Gets the identifier for the server in which the message is located.
+     *
+     * @return Identifier for the server in which the message is located.
+     */
+    public String server() {
+        return this.server;
+    }
+    
 }

@@ -4,19 +4,23 @@ import java.util.List;
 import com.google.api.client.util.Key;
 
 /**
- * Type serialized down the wire.
+ * The result of a message listing request.
  */
 public class MessageListResult {
     /**
-     * The items property.
+     * The individual summaries of each message forming the
+     * result. Summaries are returned sorted by received date, with the most
+     * recently-received messages appearing first.
      */
 	@Key
     private List<MessageSummary> items;
 
     /**
-     * Get the items value.
+     * Gets the individual summaries of each message forming the
+     * result. Summaries are returned sorted by received date, with the most
+     * recently-received messages appearing first.
      *
-     * @return the items value
+     * @return The individual summaries of each message forming the result.
      */
     public List<MessageSummary> items() {
         return this.items;

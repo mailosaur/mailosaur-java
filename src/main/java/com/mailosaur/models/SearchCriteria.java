@@ -3,54 +3,44 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The SearchCriteria model.
+ * The criteria with which to find messages during a search.
  */
 public class SearchCriteria {
     /**
-     * The full email address from which the target email was sent.
+     * The full email address (or phone number for SMS) from which the target message was sent.
      */
 	@Key
     private String sentFrom;
-    
+
     /**
-     * The full email address to which the target email was sent.
+     * The full email address (or phone number for SMS) to which the target message was sent.
      */
 	@Key
     private String sentTo;
 
     /**
-     * The value to seek within the target email's subject line.
+     * The value to seek within the subject line of a target email.
      */
 	@Key
     private String subject;
 
     /**
-     * The value to seek within the target email's HTML or text body.
+     * The value to seek within the body of the target message.
      */
 	@Key
     private String body;
 
     /**
-     * If set to ALL (default), then only results that match all
-     * specified criteria will be returned. If set to ANY, results that match any of the
-     * specified criteria will be returned.
+     * If set to `ALL` (default), then only results that match all specified criteria will be returned.
+     * If set to `ANY`, results that match any of the specified criteria will be returned.
      */
 	@Key
     private SearchMatchOperator match;
 
     /**
-     * Get the sentFrom value.
+     * Sets the full email address (or phone number for SMS) from which the target message was sent.
      *
-     * @return the sentFrom value
-     */
-    public String sentFrom() {
-        return this.sentFrom;
-    }
-
-    /**
-     * Set the sentFrom value.
-     *
-     * @param sentFrom the sentFrom value to set
+     * @param sentFrom Email address (or phone number for SMS).
      * @return the SearchCriteria object itself.
      */
     public SearchCriteria withSentFrom(String sentFrom) {
@@ -59,18 +49,9 @@ public class SearchCriteria {
     }
 
     /**
-     * Get the sentTo value.
+     * Sets the full email address (or phone number for SMS) to which the target message was sent.
      *
-     * @return the sentTo value
-     */
-    public String sentTo() {
-        return this.sentTo;
-    }
-
-    /**
-     * Set the sentTo value.
-     *
-     * @param sentTo the sentTo value to set
+     * @param sentTo Email address (or phone number for SMS).
      * @return the SearchCriteria object itself.
      */
     public SearchCriteria withSentTo(String sentTo) {
@@ -79,18 +60,9 @@ public class SearchCriteria {
     }
 
     /**
-     * Get the subject value.
+     * Sets the value to seek within the subject line of a target email.
      *
-     * @return the subject value
-     */
-    public String subject() {
-        return this.subject;
-    }
-
-    /**
-     * Set the subject value.
-     *
-     * @param subject the subject value to set
+     * @param subject The value to seek within the subject line of a target email.
      * @return the SearchCriteria object itself.
      */
     public SearchCriteria withSubject(String subject) {
@@ -99,18 +71,9 @@ public class SearchCriteria {
     }
 
     /**
-     * Get the body value.
+     * Sets the value to seek within the body of the target message.
      *
-     * @return the body value
-     */
-    public String body() {
-        return this.body;
-    }
-
-    /**
-     * Set the body value.
-     *
-     * @param body the body value to set
+     * @param body The value to seek within the body of the target message.
      * @return the SearchCriteria object itself.
      */
     public SearchCriteria withBody(String body) {
@@ -119,18 +82,10 @@ public class SearchCriteria {
     }
 
     /**
-     * Get the match value.
+     * If set to `ALL` (default), then only results that match all specified criteria will be returned.
+     * If set to `ANY`, results that match any of the specified criteria will be returned.
      *
-     * @return the match value
-     */
-    public SearchMatchOperator match() {
-        return this.match;
-    }
-
-    /**
-     * Set the match value.
-     *
-     * @param match the match value to set
+     * @param match Match `ALL` or `ANY` of the specified criteria.
      * @return the SearchCriteria object itself.
      */
     public SearchCriteria withMatch(SearchMatchOperator match) {

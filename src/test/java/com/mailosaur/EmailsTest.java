@@ -404,6 +404,9 @@ public class EmailsTest {
     	validateAttachments(email);
     	validateHtml(email);
     	validateText(email);
+		assertNotNull(email.metadata().mailFrom());
+		assertEquals(1, email.metadata().rcptTo().size());
+		assertNotNull(email.metadata().rcptTo());
     }
     
     private void validateEmailSummary(MessageSummary email) {
@@ -456,12 +459,13 @@ public class EmailsTest {
 	}
 	
 	private void validateMetadata(MessageSummary summary) {
-		Message email = new Message()
-			.withFrom(summary.from())
-			.withTo(summary.to())
-			.withSubject(summary.subject())
-			.withServer(summary.server())
-			.withReceived(summary.received());
+		Message email = new Message(
+			summary.from(),
+			summary.to(),
+			summary.subject(),
+			summary.server(),
+			summary.received()
+		);
 
 		validateMetadata(email);
 	}

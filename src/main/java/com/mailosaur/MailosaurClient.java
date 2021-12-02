@@ -30,19 +30,19 @@ public class MailosaurClient {
             });
 	
 	/**
-     * Initializes an instance of MailosaurClient.
+     * Initializes an instance of the Mailosaur client.
      *
-     * @param apiKey Your account API key
+     * @param apiKey Your Mailosaur API key.
      */
 	public MailosaurClient(String apiKey) {
 		this(apiKey, null);
     }
 	
 	/**
-     * Initializes an instance of MailosaurClient.
+     * Initializes an instance of the Mailosaur client.
      *
-     * @param apiKey Your account API key
-     * @param baseUrl the base URL of the host
+     * @param apiKey Your Mailosaur API key.
+     * @param baseUrl Alternative base URL of the Mailosaur service.
      */
 	public MailosaurClient(String apiKey, String baseUrl) {
 		API_KEY = apiKey;
@@ -56,65 +56,65 @@ public class MailosaurClient {
     }
 	
 	/**
-     * The Analysis object to access its operations.
+     * Message analysis operations
      */
     private Analysis analysis;
 
     /**
-     * Gets the Analysis object to access its operations.
-     * @return the Analysis object.
+     * Gets message analysis operations.
+     * @return Message analysis operations.
      */
     public Analysis analysis() {
         return this.analysis;
     }
 
     /**
-     * The Files object to access its operations.
+     * File operations
      */
     private Files files;
 
     /**
-     * Gets the Files object to access its operations.
-     * @return the Files object.
+     * Gets file operations.
+     * @return File operations.
      */
     public Files files() {
         return this.files;
     }
 
     /**
-     * The Messages object to access its operations.
+     * Message operations
      */
     private Messages messages;
 
     /**
-     * Gets the Messages object to access its operations.
-     * @return the Messages object.
+     * Gets message operations.
+     * @return Message operations.
      */
     public Messages messages() {
         return this.messages;
     }
 
     /**
-     * The Servers object to access its operations.
+     * Server management operations
      */
     private Servers servers;
 
     /**
-     * Gets the Servers object to access its operations.
-     * @return the Servers object.
+     * Gets server management operations.
+     * @return Server management operations.
      */
     public Servers servers() {
         return this.servers;
     }
 
     /**
-     * The Usage object to access its operations.
+     * Account usage operations
      */
     private Usage usage;
 
     /**
-     * Gets the Usage object to access its operations.
-     * @return the Usage object.
+     * Gets account usage operations.
+     * @return Account usage operations.
      */
     public Usage usage() {
         return this.usage;

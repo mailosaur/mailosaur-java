@@ -10,153 +10,153 @@ import com.google.api.client.util.Key;
  */
 public class MessageSummary extends BaseModel {
     /**
-     * The id property.
+     * Unique identifier for the message.
      */
-	@Key
+    @Key
     private String id;
 
     /**
-     * The server property.
+     * The sender of the message.
      */
-	@Key
-    private String server;
-
-    /**
-     * The from property.
-     */
-	@Key
+    @Key
     private List<MessageAddress> from;
 
     /**
-     * The to property.
+     * The recipients of the message.
      */
-	@Key
+    @Key
     private List<MessageAddress> to;
 
     /**
-     * The cc property.
+     * Carbon-copied recipients for email messages.
      */
-	@Key
+    @Key
     private List<MessageAddress> cc;
 
     /**
-     * The bcc property.
+     * Blind carbon-copied recipients for email messages.
      */
-	@Key
+    @Key
     private List<MessageAddress> bcc;
 
     /**
-     * The received property.
+     * The date/time that this message was received by Mailosaur.
      */
-	@Key
+    @Key
     private DateTime received;
 
     /**
-     * The subject property.
+     * The subject of the message.
      */
-	@Key
+    @Key
     private String subject;
 
     /**
-     * The summary property.
+     * A short, summarized version of the message content.
      */
 	@Key
     private String summary;
 
     /**
-     * The attachments property.
+     * The number of attachments associated with the message.
      */
 	@Key
     private Integer attachments;
 
     /**
-     * Get the id value.
+     * Identifier for the server in which the message is located.
+     */
+    @Key
+    private String server;
+
+    /**
+     * Get the unique identifier for the message.
      *
-     * @return the id value
+     * @return Unique identifier for the message.
      */
     public String id() {
         return this.id;
     }
 
     /**
-     * Get the server value.
+     * Gets the sender of the message.
      *
-     * @return the server value
-     */
-    public String server() {
-        return this.server;
-    }
-
-    /**
-     * Get the from value.
-     *
-     * @return the from value
+     * @return The sender of the message.
      */
     public List<MessageAddress> from() {
         return this.from;
     }
 
     /**
-     * Get the to value.
+     * Gets the recipients of the message.
      *
-     * @return the to value
+     * @return The recipients of the message.
      */
     public List<MessageAddress> to() {
         return this.to;
     }
 
     /**
-     * Get the cc value.
+     * Gets the carbon-copied recipients for email messages.
      *
-     * @return the cc value
+     * @return The carbon-copied recipients for email messages.
      */
     public List<MessageAddress> cc() {
         return this.cc;
     }
 
     /**
-     * Get the bcc value.
+     * Gets the blind carbon-copied recipients for email messages.
      *
-     * @return the bcc value
+     * @return The blind carbon-copied recipients for email messages.
      */
     public List<MessageAddress> bcc() {
         return this.bcc;
     }
 
     /**
-     * Get the received value.
+     * Gets the date/time that this message was received by Mailosaur.
      *
-     * @return the received value
+     * @return The date/time that this message was received by Mailosaur.
      */
     public DateTime received() {
         return this.received;
     }
 
     /**
-     * Get the subject value.
+     * Gets the subject of the message.
      *
-     * @return the subject value
+     * @return The subject of the message.
      */
     public String subject() {
         return nullableString(this.subject);
     }
 
     /**
-     * Get the summary value.
+     * Gets a short, summarized version of the message content.
      *
-     * @return the summary value
+     * @return A short, summarized version of the message content.
      */
     public String summary() {
         return nullableString(this.summary);
     }
 
     /**
-     * Get the attachments value.
+     * Gets the number of attachments associated with the message.
      *
-     * @return the attachments value
+     * @return The number of attachments associated with the message.
      */
     public Integer attachments() {
         return this.attachments;
+    }
+
+    /**
+     * Gets the identifier for the server in which the message is located.
+     *
+     * @return Identifier for the server in which the message is located.
+     */
+    public String server() {
+        return this.server;
     }
 
 }

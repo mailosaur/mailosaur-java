@@ -4,17 +4,20 @@ import java.util.List;
 
 import com.google.api.client.util.Key;
 
+/**
+ * Usage transactions from your account.
+ */
 public class UsageTransactionListResult {
-	/**
-     * The items property.
+    /**
+     * The individual transactions that have occurred.
      */
     @Key
     private List<UsageTransaction> items;
 
     /**
-     * Get the items value.
+     * Gets the individual transactions that have occurred.
      *
-     * @return the items value
+     * @return The individual transactions that have occurred.
      */
     public List<UsageTransaction> items() {
         return this.items;

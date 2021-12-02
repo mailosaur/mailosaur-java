@@ -3,49 +3,49 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The MessageAddress model.
+ * Contact information for a message sender or recipient.
  */
 public class MessageAddress extends BaseModel {
     /**
-     * The name property.
+     * Display name, if one is specified.
      */
 	@Key
     private String name;
 
     /**
-     * The email property.
+     * Email address (applicable to email messages).
      */
 	@Key
     private String email;
 
     /**
-     * The phone property.
+     * Phone number (applicable to SMS messages).
      */
 	@Key
     private String phone;
 
     /**
-     * Get the name value.
+     * Gets the display name, if one is specified.
      *
-     * @return the name value
+     * @return The display name.
      */
     public String name() {
         return nullableString(this.name);
     }
 
     /**
-     * Get the email value.
+     * Gets the email address (applicable to email messages).
      *
-     * @return the email value
+     * @return The email address.
      */
     public String email() {
         return nullableString(this.email);
     }
 
     /**
-     * Get the phone value.
+     * Gets the phone number (applicable to SMS messages).
      *
-     * @return the phone value
+     * @return The phone number.
      */
     public String phone() {
         return nullableString(this.phone);

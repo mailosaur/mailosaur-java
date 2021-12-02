@@ -4,49 +4,49 @@ import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Key;
 
 /**
- * The UsageTransaction model.
+ * Usage transaction.
  */
 public class UsageTransaction {
     /**
-     * The timestamp property.
+     * The date/time of the transaction.
      */
 	@Key
     private DateTime timestamp;
 
     /**
-     * The email count.
+     * The number of emails.
      */
     @Key
     private Integer email;
 
     /**
-     * The SMS count.
+     * The number of SMS messages.
      */
     @Key
     private Integer sms;
 
     /**
-     * Get the timestamp value.
+     * Gets the date/time of the transaction.
      *
-     * @return the timestamp value
+     * @return The date/time of the transaction.
      */
     public DateTime timestamp() {
         return this.timestamp;
     }
 
     /**
-     * Get the email value.
+     * Gets the number of emails.
      *
-     * @return the email value
+     * @return The number of emails.
      */
     public Integer email() {
         return this.email;
     }
 
     /**
-     * Get the sms value.
+     * Gets the number of SMS messages.
      *
-     * @return the sms value
+     * @return The number of SMS messages.
      */
     public Integer sms() {
         return this.sms;

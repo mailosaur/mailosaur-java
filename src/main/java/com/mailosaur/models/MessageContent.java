@@ -4,49 +4,49 @@ import java.util.List;
 import com.google.api.client.util.Key;
 
 /**
- * The MessageContent model.
+ * The content of the message.
  */
 public class MessageContent extends BaseModel {
     /**
-     * The links property.
+     * Any hyperlinks found within this content.
      */
 	@Key
     private List<Link> links;
 
     /**
-     * The images property.
+     * Any images found within this content.
      */
 	@Key
     private List<Image> images;
 
     /**
-     * The body property.
+     * The HTML or plain text body of the message.
      */
 	@Key
     private String body;
 
     /**
-     * Get the links value.
+     * Gets any hyperlinks found within this content.
      *
-     * @return the links value
+     * @return Any hyperlinks found within this content.
      */
     public List<Link> links() {
         return this.links;
     }
 
     /**
-     * Get the images value.
+     * Gets any images found within this content.
      *
-     * @return the images value
+     * @return Any images found within this content.
      */
     public List<Image> images() {
         return this.images;
     }
 
     /**
-     * Get the body value.
+     * Gets the HTML or plain text body of the message.
      *
-     * @return the body value
+     * @return The HTML or plain text body of the message.
      */
     public String body() {
         return nullableString(this.body);

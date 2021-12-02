@@ -39,7 +39,7 @@ public class Messages {
      *
      * @param server The identifier of the server hosting the message.
      * @param criteria The search criteria to use in order to find a match.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */
@@ -54,7 +54,7 @@ public class Messages {
      * @param server The identifier of the server hosting the message.
      * @param criteria The search criteria to use in order to find a match.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */
@@ -69,7 +69,7 @@ public class Messages {
      * @param server The identifier of the server hosting the message.
      * @param criteria The search criteria to use in order to find a match.
      * @param receivedAfter Limits results to only messages received after this date/time.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */
@@ -85,7 +85,7 @@ public class Messages {
      * @param criteria The search criteria to use in order to find a match.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this date/time.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */
@@ -107,7 +107,7 @@ public class Messages {
      * Retrieves the detail for a single message. Simply supply the unique identifier for the required message.
      *
      * @param id The identifier of the message to be retrieved.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */
@@ -121,7 +121,7 @@ public class Messages {
      *
      * @param id The identifier of the message to be deleted.
      * @throws IllegalArgumentException thrown if parameters fail the validation
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      */
     public void delete(String id) throws MailosaurException {
     	client.request("DELETE", "api/messages/" + id);
@@ -132,7 +132,7 @@ public class Messages {
      * Permanently deletes all messages held by the specified server. This operation cannot be undone. Also deletes any attachments related to each message.
      *
      * @param server The identifier of the server to be emptied.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      */
     public void deleteAll(String server) throws MailosaurException {
     	HashMap<String, String> query = new HashMap<String, String>();
@@ -145,7 +145,7 @@ public class Messages {
      * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
      * @param server The identifier of the server hosting the messages.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful. 
      */
@@ -159,7 +159,7 @@ public class Messages {
      *
      * @param server The identifier of the server hosting the messages.
      * @param receivedAfter Limits results to only messages received after this date/time.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful. 
      */
@@ -174,7 +174,7 @@ public class Messages {
      * @param server The identifier of the server hosting the messages.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -190,7 +190,7 @@ public class Messages {
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
      * @param receivedAfter Limits results to only messages received after this date/time.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -214,7 +214,7 @@ public class Messages {
      *
      * @param server The identifier of the server hosting the messages.
      * @param criteria The search criteria to match results against.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -230,7 +230,7 @@ public class Messages {
      * @param criteria The search criteria to match results against.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -245,7 +245,7 @@ public class Messages {
      * @param server The identifier of the server hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -261,7 +261,7 @@ public class Messages {
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -276,7 +276,7 @@ public class Messages {
      * @param server The identifier of the server hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param receivedAfter Limits results to only messages received after this date/time.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -292,7 +292,7 @@ public class Messages {
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this date/time.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -309,7 +309,7 @@ public class Messages {
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
      * @param receivedAfter Limits results to only messages received after this date/time.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -328,7 +328,7 @@ public class Messages {
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this date/time.
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the MessageListResult object if successful.
      */
@@ -391,7 +391,7 @@ public class Messages {
      *
      * @param server The identifier of the server to create the message in.
      * @param messageCreateOptions The options with which to create the message.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */
@@ -407,7 +407,7 @@ public class Messages {
      *
      * @param id The identifier of the email to forward.
      * @param messageForwardOptions The options with which to forward the email.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */
@@ -422,7 +422,7 @@ public class Messages {
      *
      * @param id The identifier of the email to reply to.
      * @param messageReplyOptions The options with which to reply to the email.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
      * @return the Message object if successful.
      */

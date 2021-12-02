@@ -5,7 +5,7 @@ import com.google.api.client.util.Key;
 import java.util.List;
 
 /**
- * The MessageReplyOptions model.
+ * Options to use when replying to a message.
  */
 public class MessageReplyOptions {
     /**
@@ -27,18 +27,9 @@ public class MessageReplyOptions {
     private List<Attachment> attachments;
 
     /**
-     * Get the text value.
+     * Sets any additional plain text content to include in the reply. Note that only text or html can be supplied, not both.
      *
-     * @return the text value
-     */
-    public String text() {
-        return this.text;
-    }
-
-    /**
-     * Set the text value.
-     *
-     * @param text the text value to set
+     * @param text Plain text content to include in the reply.
      * @return the MessageReplyOptions object itself.
      */
     public MessageReplyOptions withText(String text) {
@@ -47,18 +38,9 @@ public class MessageReplyOptions {
     }
 
     /**
-     * Get the html value.
+     * Sets any additional HTML content to include in the reply. Note that only html or text can be supplied, not both.
      *
-     * @return the html value
-     */
-    public String html() {
-        return this.html;
-    }
-
-    /**
-     * Set the html value.
-     *
-     * @param html the html value to set
+     * @param html HTML content to include in the reply.
      * @return the MessageReplyOptions object itself.
      */
     public MessageReplyOptions withHtml(String html) {
@@ -67,18 +49,9 @@ public class MessageReplyOptions {
     }
 
     /**
-     * Get the attachments value.
+     * Sets any message attachments.
      *
-     * @return the attachments value
-     */
-    public List<Attachment> attachments() {
-        return this.attachments;
-    }
-
-    /**
-     * Set the attachments value.
-     *
-     * @param attachments the attachments value to set
+     * @param attachments Any message attachments.
      * @return the MessageReplyOptions object itself.
      */
     public MessageReplyOptions withAttachments(List<Attachment> attachments) {

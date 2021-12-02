@@ -4,7 +4,7 @@ import java.util.List;
 import com.google.api.client.util.Key;
 
 /**
- * The Server model.
+ * Mailosaur virtual SMTP/SMS server.
  */
 public class Server {
     /**
@@ -14,45 +14,45 @@ public class Server {
     private String id;
 
     /**
-     * A name used to identify the server.
+     * The name of the server.
      */
     @Key
     private String name;
 
     /**
-     * The users property.
+     * Users (excluding administrators) who have access to the server (if it is restricted).
      */
     @Key
     private List<String> users;
 
     /**
-     * The current count of messages held within the server.
+     * The number of messages currently in the server.
      */
     @Key
     private Integer messages;
 
     /**
-     * Get the id value.
+     * Gets the unique identifier of the server.
      *
-     * @return the id value
+     * @return The server ID.
      */
     public String id() {
         return this.id;
     }
 
     /**
-     * Get the name value.
+     * Gets the name of the server.
      *
-     * @return the name value
+     * @return The name of the server.
      */
     public String name() {
         return this.name;
     }
 
     /**
-     * Set the name value.
+     * Sets the name of the server.
      *
-     * @param name the name value to set
+     * @param name The name of the server.
      * @return the Server object itself.
      */
     public Server withName(String name) {
@@ -61,18 +61,29 @@ public class Server {
     }
 
     /**
-     * Get the users value.
+     * Gets the IDs of users who have access to the server (if it is restricted).
      *
-     * @return the users value
+     * @return The IDs of users who have access to the server (if it is restricted).
      */
     public List<String> users() {
         return this.users;
     }
 
     /**
-     * Get the messages value.
+     * Sets the IDs of users who have access to the server (if it is restricted).
      *
-     * @return the messages value
+     * @param users The IDs of users who have access to the server (if it is restricted).
+     * @return the Server object itself.
+     */
+    public Server withUsers(List<String> users) {
+        this.users = users;
+        return this;
+    }
+
+    /**
+     * Gets the number of messages currently in the server.
+     *
+     * @return The number of messages currently in the server.
      */
     public Integer messages() {
         return this.messages;

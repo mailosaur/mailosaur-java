@@ -3,7 +3,7 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The ServerCreateOptions model.
+ * Options used to create a new Mailosaur server.
  */
 public class ServerCreateOptions {
     /**
@@ -13,18 +13,9 @@ public class ServerCreateOptions {
     private String name;
 
     /**
-     * Get the name value.
+     * Sets a name used to identify the server.
      *
-     * @return the name value
-     */
-    public String name() {
-        return this.name;
-    }
-
-    /**
-     * Set the name value.
-     *
-     * @param name the name value to set
+     * @param name A name used to identify the server.
      * @return the ServerCreateOptions object itself.
      */
     public ServerCreateOptions withName(String name) {

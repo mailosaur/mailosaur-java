@@ -3,67 +3,66 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The Attachment model.
+ * Describes a message attachment.
  */
 public class Attachment extends BaseModel {
     /**
-     * The id property.
+     * Unique identifier for the attachment.
      */
     @Key
     private String id;
 
     /**
-     * The contentType property.
+     * The MIME type of the attachment.
      */
     @Key
     private String contentType;
 
     /**
-     * The fileName property.
+     * The filename of the attachment.
      */
     @Key
     private String fileName;
 
     /**
-     * The content property.
+     * The base64-encoded content of the attachment. Note: This is only populated when sending attachments.
      */
     @Key
     private String content;
 
     /**
-     * The contentId property.
+     * The content identifier (for attachments that are embedded within the body of the message).
      */
     @Key
     private String contentId;
 
     /**
-     * The length property.
+     * The file size, in bytes.
      */
     @Key
     private Long length;
 
     /**
-     * Get the id value.
+     * Gets the unique identifier for the attachment.
      *
-     * @return the id value
+     * @return Attachment ID.
      */
     public String id() {
         return this.id;
     }
 
     /**
-     * Get the contentType value.
-     *
-     * @return the contentType value
+     * Gets the MIME type of the attachment.
+     * @return Attachment MIME type.
      */
     public String contentType() {
         return nullableString(this.contentType);
     }
 
     /**
-     * Set the contentType value.
+     * Sets the MIME type of the attachment.
      *
-     * @param contentType the contentType value to set
+     * @param contentType MIME type.
      * @return the Attachment object itself.
      */
     public Attachment withContentType(String contentType) {
@@ -72,18 +71,16 @@ public class Attachment extends BaseModel {
     }
 
     /**
-     * Get the fileName value.
-     *
-     * @return the fileName value
+     * Gets the filename of the attachment.
      */
     public String fileName() {
         return nullableString(this.fileName);
     }
 
     /**
-     * Set the fileName value.
+     * Sets the filename of the attachment.
      *
-     * @param fileName the fileName value to set
+     * @param fileName Attachment filename.
      * @return the Attachment object itself.
      */
     public Attachment withFileName(String fileName) {
@@ -92,18 +89,18 @@ public class Attachment extends BaseModel {
     }
 
     /**
-     * Get the content value.
+     * Gets the base64-encoded content of the attachment. Note: This is only populated when sending attachments.
      *
-     * @return the content value
+     * @return The base64-encoded content of the attachment.
      */
     public String content() {
         return nullableString(this.content);
     }
 
     /**
-     * Set the content value.
+     * Sets the base64-encoded content of the attachment.
      *
-     * @param content the content value to set
+     * @param content Base64-encoded content of the attachment.
      * @return the Attachment object itself.
      */
     public Attachment withContent(String content) {
@@ -112,18 +109,18 @@ public class Attachment extends BaseModel {
     }
 
     /**
-     * Get the contentId value.
+     * Gets the content identifier (for attachments that are embedded within the body of the message).
      *
-     * @return the contentId value
+     * @return The content identifier
      */
     public String contentId() {
         return nullableString(this.contentId);
     }
 
     /**
-     * Set the contentId value.
+     * Sets the content identifier (for attachments that are embedded within the body of the message).
      *
-     * @param contentId the contentId value to set
+     * @param contentId The content identifier.
      * @return the Attachment object itself.
      */
     public Attachment withContentId(String contentId) {
@@ -132,9 +129,9 @@ public class Attachment extends BaseModel {
     }
 
     /**
-     * Get the length value.
+     * Gets the file size, in bytes.
      *
-     * @return the length value
+     * @return The file size, in bytes.
      */
     public Long length() {
         return this.length;

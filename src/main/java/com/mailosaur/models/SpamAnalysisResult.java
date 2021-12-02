@@ -3,34 +3,34 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The SpamCheckResult model.
+ * The results of spam analysis performed by Mailosaur.
  */
 public class SpamAnalysisResult {
     /**
-     * The spamFilterResults property.
+     * Spam filter results.
      */
     @Key
     private SpamFilterResults spamFilterResults;
 
     /**
-     * The score property.
+     * Overall Mailosaur spam score.
      */
     @Key
     private Double score;
 
     /**
-     * Get the spamFilterResults value.
+     * Gets the Spam filter results.
      *
-     * @return the spamFilterResults value
+     * @return Spam filter results.
      */
     public SpamFilterResults spamFilterResults() {
         return this.spamFilterResults;
     }
     
     /**
-     * Get the score value.
+     * Gets the overall Mailosaur spam score.
      *
-     * @return the score value
+     * @return The overall Mailosaur spam score.
      */
     public Double score() {
         return this.score;

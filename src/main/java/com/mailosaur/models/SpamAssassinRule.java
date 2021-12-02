@@ -3,49 +3,49 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The SpamAssassinRule model.
+ * The result of an individual Spam Assassin rule
  */
 public class SpamAssassinRule {
     /**
-     * The score property.
+     * Spam Assassin rule score.
      */
 	@Key
     private Double score;
 
     /**
-     * The rule property.
+     * Spam Assassin rule name.
      */
 	@Key
     private String rule;
 
     /**
-     * The description property.
+     * Spam Assassin rule description.
      */
 	@Key
     private String description;
 
     /**
-     * Get the score value.
+     * Gets the Spam Assassin rule score.
      *
-     * @return the score value
+     * @return The Spam Assassin rule score.
      */
     public Double score() {
         return this.score;
     }
 
     /**
-     * Get the rule value.
+     * Gets the Spam Assassin rule name.
      *
-     * @return the rule value
+     * @return The Spam Assassin rule name.
      */
     public String rule() {
         return this.rule;
     }
 
     /**
-     * Get the description value.
+     * Gets the Spam Assassin rule description.
      *
-     * @return the description value
+     * @return The Spam Assassin rule description.
      */
     public String description() {
         return this.description;

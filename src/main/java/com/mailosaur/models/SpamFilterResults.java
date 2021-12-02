@@ -5,19 +5,19 @@ import java.util.List;
 import com.google.api.client.util.Key;
 
 /**
- * The SpamCheckResult model.
+ * Results for this email against various spam filters.
  */
 public class SpamFilterResults {
     /**
-     * The spamAssassin property.
+     * Spam Assassin filter results.
      */
     @Key
     private List<SpamAssassinRule> spamAssassin;
 
     /**
-     * Get the spamAssassin value.
+     * Gets the Spam Assassin filter results.
      *
-     * @return the spamAssassin value
+     * @return The Spam Assassin filter results.
      */
     public List<SpamAssassinRule> spamAssassin() {
         return this.spamAssassin;

@@ -1,8 +1,5 @@
 package com.mailosaur;
 
-/**
- * Exception thrown for an invalid response.
- */
 public class MailosaurException extends Exception {
 	private static final long serialVersionUID = 2L;
 

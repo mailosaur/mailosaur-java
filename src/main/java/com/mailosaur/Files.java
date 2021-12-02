@@ -3,46 +3,37 @@ package com.mailosaur;
 import java.io.IOException;
 
 /**
- * An instance of this class provides access to all the operations defined
- * in Files.
+ * File operations.
  */
 public class Files {
-	/** The service client containing this operation class. */
     private MailosaurClient client;
     
-    /**
-     * Initializes an instance of Files.
-     *
-     * @param client the instance of the client containing this operation class.
-     */
     public Files(MailosaurClient client) {
         this.client = client;
     }
 
     /**
-     * Download an attachment.
-     * Downloads a single attachment. Simply supply the unique identifier for the required attachment.
+     * Downloads a single attachment.
      *
-     * @param id The identifier of the file to be retrieved.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @param attachmentId The identifier for the required attachment.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the byte array if successful.
+     * @return The byte array if successful.
      */
-    public byte[] getAttachment(String id) throws MailosaurException, IOException {
-    	return client.requestFile("GET", "api/files/attachments/" + id).toByteArray();
+    public byte[] getAttachment(String attachmentId) throws MailosaurException, IOException {
+    	return client.requestFile("GET", "api/files/attachments/" + attachmentId).toByteArray();
     }
 
     /**
-     * Download raw.
-     * Downloads an EML file representing the specified email. Simply supply the unique identifier for the required email.
+     * Downloads an EML file representing the specified email.
      *
-     * @param id The identifier of the file to be retrieved.
-     * @throws MailosaurException thrown if the request is rejected by server
+     * @param messageId The identifier for the required message.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException
-     * @return the byte array if successful.
+     * @return The byte array if successful.
      */
-    public byte[] getEmail(String id) throws MailosaurException, IOException {
-    	return client.requestFile("GET", "api/files/email/" + id).toByteArray();
+    public byte[] getEmail(String messageId) throws MailosaurException, IOException {
+    	return client.requestFile("GET", "api/files/email/" + messageId).toByteArray();
     }
 
 }

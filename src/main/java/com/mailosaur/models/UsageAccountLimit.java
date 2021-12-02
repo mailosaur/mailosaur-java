@@ -3,34 +3,34 @@ package com.mailosaur.models;
 import com.google.api.client.util.Key;
 
 /**
- * The UsageAccountLimit model.
+ * The detail of an individual account limit.
  */
 public class UsageAccountLimit {
     /**
-     * The limit.
+     * The limit for your account.
      */
     @Key
     private Integer limit;
 
     /**
-     * The current value.
+     * Your account usage so far.
      */
     @Key
     private Integer current;
 
     /**
-     * Get the limit value.
+     * Gets the limit for your account.
      *
-     * @return the limit value
+     * @return The limit for your account.
      */
     public Integer limit() {
         return this.limit;
     }
 
     /**
-     * Get the current value.
+     * Gets your account usage so far.
      *
-     * @return the current value
+     * @return Your account usage so far.
      */
     public Integer current() {
         return this.current;

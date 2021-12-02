@@ -5,15 +5,15 @@ import com.google.api.client.util.Key;
 import java.util.List;
 
 /**
- * The MessageCreateOptions model.
+ * Options to use when creating a new message.
  */
 public class MessageCreateOptions {
     /**
-     * The email address to which the email will be sent.
+     * The email address to which the email will be sent. Must be a verified email address.
      */
 	@Key
     private String to;
-    
+
     /**
      * If true, email will be sent upon creation.
      */
@@ -27,13 +27,13 @@ public class MessageCreateOptions {
     private String subject;
 
     /**
-     * The plain text body of the email. Note that only text or html can be supplied, not both.
+     * The plain text body of the message. Note that only text or html can be supplied, not both.
      */
 	@Key
     private String text;
 
     /**
-     * The HTML body of the email. Note that only text or html can be supplied, not both.
+     * The HTML body of the message. Note that only text or html can be supplied, not both.
      */
 	@Key
     private String html;
@@ -45,18 +45,9 @@ public class MessageCreateOptions {
     private List<Attachment> attachments;
 
     /**
-     * Get the to value.
+     * Sets the email address to which the email will be sent. Must be a verified email address.
      *
-     * @return the to value
-     */
-    public String to() {
-        return this.to;
-    }
-
-    /**
-     * Set the to value.
-     *
-     * @param to the to value to set
+     * @param to The email address.
      * @return the MessageCreateOptions object itself.
      */
     public MessageCreateOptions withTo(String to) {
@@ -65,18 +56,9 @@ public class MessageCreateOptions {
     }
 
     /**
-     * Get the send value.
+     * Sets whether the email should be sent upon creation.
      *
-     * @return the send value
-     */
-    public Boolean send() {
-        return this.send;
-    }
-
-    /**
-     * Set the send value.
-     *
-     * @param send the send value to set
+     * @param send If true, email will be sent upon creation.
      * @return the MessageCreateOptions object itself.
      */
     public MessageCreateOptions withSend(Boolean send) {
@@ -85,18 +67,9 @@ public class MessageCreateOptions {
     }
 
     /**
-     * Get the subject value.
+     * Sets the email subject line.
      *
-     * @return the subject value
-     */
-    public String subject() {
-        return this.subject;
-    }
-
-    /**
-     * Set the subject value.
-     *
-     * @param subject the subject value to set
+     * @param subject The email subject line.
      * @return the MessageCreateOptions object itself.
      */
     public MessageCreateOptions withSubject(String subject) {
@@ -105,18 +78,9 @@ public class MessageCreateOptions {
     }
 
     /**
-     * Get the text value.
+     * Sets any plain text to include when forwarding the message. Note that only text or html can be supplied, not both.
      *
-     * @return the text value
-     */
-    public String text() {
-        return this.text;
-    }
-
-    /**
-     * Set the text value.
-     *
-     * @param text the text value to set
+     * @param text Plain text content to include when forwarding the message.
      * @return the MessageCreateOptions object itself.
      */
     public MessageCreateOptions withText(String text) {
@@ -125,18 +89,9 @@ public class MessageCreateOptions {
     }
 
     /**
-     * Get the html value.
+     * Sets any HTML content to include when forwarding the message. Note that only text or html can be supplied, not both.
      *
-     * @return the html value
-     */
-    public String html() {
-        return this.html;
-    }
-
-    /**
-     * Set the html value.
-     *
-     * @param html the html value to set
+     * @param html HTML content to include when forwarding the message.
      * @return the MessageCreateOptions object itself.
      */
     public MessageCreateOptions withHtml(String html) {
@@ -145,18 +100,9 @@ public class MessageCreateOptions {
     }
 
     /**
-     * Get the attachments value.
+     * Sets any message attachments.
      *
-     * @return the attachments value
-     */
-    public List<Attachment> attachments() {
-        return this.attachments;
-    }
-
-    /**
-     * Set the attachments value.
-     *
-     * @param attachments the attachments value to set
+     * @param attachments Any message attachments.
      * @return the MessageCreateOptions object itself.
      */
     public MessageCreateOptions withAttachments(List<Attachment> attachments) {
