@@ -20,7 +20,7 @@ public class Servers {
      * Returns a list of your virtual servers. Servers are returned sorted in alphabetical order.
      *
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return The result of the server listing operation.
      */
     public ServerListResult list() throws IOException, MailosaurException {
@@ -32,7 +32,7 @@ public class Servers {
      *
      * @param options Options used to create a new Mailosaur server.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return Mailosaur virtual SMTP/SMS server.
      */
     public Server create(ServerCreateOptions options) throws IOException, MailosaurException {
@@ -44,7 +44,7 @@ public class Servers {
      *
      * @param serverId The unique identifier of the server.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return Mailosaur virtual SMTP/SMS server.
      */
     public Server get(String serverId) throws IOException, MailosaurException {
@@ -56,7 +56,7 @@ public class Servers {
      *
      * @param serverId The unique identifier of the server.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return The password for the server.
      */
     public String getPassword(String serverId) throws IOException, MailosaurException {
@@ -70,7 +70,7 @@ public class Servers {
      * @param serverId The unique identifier of the server.
      * @param server The updated server.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return Mailosaur virtual SMTP/SMS server.
      */
     public Server update(String serverId, Server server) throws IOException, MailosaurException {
@@ -82,7 +82,7 @@ public class Servers {
      *
      * @param serverId The unique identifier of the server.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      */
     public void delete(String serverId) throws MailosaurException {
     	client.request("DELETE", "api/servers/" + serverId);

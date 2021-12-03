@@ -19,7 +19,7 @@ public class Analysis {
      *
      * @param messageId The identifier of the message to be analyzed.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return The results of spam analysis performed by Mailosaur.
      */
     public SpamAnalysisResult spam(String messageId) throws IOException, MailosaurException {

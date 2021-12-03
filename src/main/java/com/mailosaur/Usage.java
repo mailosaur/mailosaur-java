@@ -20,7 +20,7 @@ public class Usage {
      * This endpoint requires authentication with an account-level API key.
      *
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return The current limits and usage for your account.
      */
     public UsageAccountLimits limits() throws IOException, MailosaurException {
@@ -32,7 +32,7 @@ public class Usage {
      * This endpoint requires authentication with an account-level API key.
      *
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return Usage transactions from your account.
      */
     public UsageTransactionListResult transactions() throws IOException, MailosaurException {

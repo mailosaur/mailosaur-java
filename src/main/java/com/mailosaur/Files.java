@@ -17,7 +17,7 @@ public class Files {
      *
      * @param attachmentId The identifier for the required attachment.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return The byte array if successful.
      */
     public byte[] getAttachment(String attachmentId) throws MailosaurException, IOException {
@@ -29,7 +29,7 @@ public class Files {
      *
      * @param messageId The identifier for the required message.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException
+     * @throws IOException Unexpected exception.
      * @return The byte array if successful.
      */
     public byte[] getEmail(String messageId) throws MailosaurException, IOException {
