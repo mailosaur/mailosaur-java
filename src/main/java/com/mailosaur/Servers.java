@@ -82,7 +82,6 @@ public class Servers {
      *
      * @param serverId The unique identifier of the server.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
-     * @throws IOException Unexpected exception.
      */
     public void delete(String serverId) throws MailosaurException {
     	client.request("DELETE", "api/servers/" + serverId);
