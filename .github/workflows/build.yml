@@ -10,7 +10,9 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
-concurrency: mailosaur-java
+concurrency: 
+  group: mailosaur-java
+  cancel-in-progress: true
 
 jobs:
   build:
