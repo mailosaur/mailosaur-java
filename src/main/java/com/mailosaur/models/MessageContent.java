@@ -14,6 +14,12 @@ public class MessageContent extends BaseModel {
     private List<Link> links;
 
     /**
+     * Any verification codes found within this content.
+     */
+	@Key
+    private List<Code> codes;
+
+    /**
      * Any images found within this content.
      */
 	@Key
@@ -32,6 +38,15 @@ public class MessageContent extends BaseModel {
      */
     public List<Link> links() {
         return this.links;
+    }
+
+    /**
+     * Gets any verification codes found within this content.
+     *
+     * @return Any verification codes found within this content.
+     */
+    public List<Code> codes() {
+        return this.codes;
     }
 
     /**

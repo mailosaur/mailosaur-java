@@ -61,7 +61,7 @@ public final class Mailer {
 		Session session = Session.getInstance(props);
 		MimeMessage message = new MimeMessage(session);
 		
-		String randomString = String.valueOf(random.nextInt(10000000));
+		String randomString = getRandomString(10);
 		
 		message.setSubject(String.format("%s subject", randomString));
 		
@@ -106,5 +106,18 @@ public final class Mailer {
 	private static Path getResourceFilePath(String relativePath) {
 		String path = Mailer.class.getClassLoader().getResource(relativePath).getPath();
 		return Paths.get(path);
+	}
+
+	private static String getRandomString(int length) {
+    	int leftLimit = 97; // letter 'a'
+    	int rightLimit = 122; // letter 'z'
+    	Random random = new Random();
+
+		String generatedString = random.ints(leftLimit, rightLimit + 1)
+			.limit(length)
+			.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+			.toString();
+
+    	return generatedString;
 	}
 }

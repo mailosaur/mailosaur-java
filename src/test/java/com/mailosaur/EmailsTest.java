@@ -428,6 +428,11 @@ public class EmailsTest {
 		assertEquals("http://invalid/", email.html().links().get(2).href());
 		assertEquals("invalid", email.html().links().get(2).text());
 
+		// HTML.Codes
+    	assertEquals(2, email.html().codes().size());
+		assertEquals("123456", email.html().codes().get(0).value());
+		assertEquals("G3H1Y2", email.html().codes().get(1).value());
+
 		// HTML.Images
 		assertTrue(email.html().images().get(1).src().startsWith("cid"));
 		assertEquals("Inline image 1", email.html().images().get(1).alt());
@@ -443,6 +448,11 @@ public class EmailsTest {
 		assertEquals(email.text().links().get(0).href(), email.text().links().get(0).text());
 		assertEquals("https://mailosaur.com/", email.text().links().get(1).href());
 		assertEquals(email.text().links().get(1).href(), email.text().links().get(1).text());
+
+		// Text.Codes
+    	assertEquals(2, email.text().codes().size());
+		assertEquals("654321", email.text().codes().get(0).value());
+		assertEquals("5H0Y2", email.text().codes().get(1).value());
 	}
     
     private void validateHeaders(Message email) {
