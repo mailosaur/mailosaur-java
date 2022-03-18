@@ -129,16 +129,6 @@ public class EmailsTest {
     }
     
     @Test
-    public void testSearchBySentFromInvalidEmail() throws IOException {
-    	try {
-	    	SearchCriteria criteria = new SearchCriteria();
-	    	criteria.withSentFrom(".not_an_email_address");
-	    	client.messages().search(server, criteria);
-	    	throw new IOException("Should have thrown MailosaurException");
-    	} catch (MailosaurException e) { }
-    }
-    
-    @Test
     public void testSearchBySentTo() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
     	SearchCriteria criteria = new SearchCriteria();
@@ -147,16 +137,6 @@ public class EmailsTest {
     	assertEquals(1, results.size());
     	assertEquals(targetEmail.to().get(0).email(), results.get(0).to().get(0).email());
     	assertEquals(targetEmail.subject(), results.get(0).subject());
-    }
-    
-    @Test
-    public void testSearchBySentToInvalidEmail() throws IOException {
-    	try {
-	    	SearchCriteria criteria = new SearchCriteria();
-	    	criteria.withSentTo(".not_an_email_address");
-	    	client.messages().search(server, criteria);
-	    	throw new IOException("Should have thrown MailosaurException");
-    	} catch (MailosaurException e) { }
     }
     
     @Test
