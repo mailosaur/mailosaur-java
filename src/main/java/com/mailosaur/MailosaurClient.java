@@ -53,6 +53,7 @@ public class MailosaurClient {
         this.messages = new Messages(this);
         this.servers = new Servers(this);
         this.usage = new Usage(this);
+        this.devices = new Devices(this);
     }
 	
 	/**
@@ -118,6 +119,19 @@ public class MailosaurClient {
      */
     public Usage usage() {
         return this.usage;
+    }
+
+    /**
+     * Device management operations
+     */
+    private Devices devices;
+
+    /**
+     * Gets device management operations.
+     * @return Device management operations.
+     */
+    public Devices devices() {
+        return this.devices;
     }
     
     public HttpResponse request(String method, String url) throws MailosaurException {
