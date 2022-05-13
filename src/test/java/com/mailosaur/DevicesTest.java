@@ -44,9 +44,13 @@ public class DevicesTest {
 		OtpResult otpResult = client.devices().otp(createdDevice.id());
 		assertEquals(6, otpResult.code().length());
 
-		assertEquals(1, client.devices().list().items().size());
+		DeviceListResult before = client.devices().list();
+		assertTrue(before.items().stream().anyMatch(x -> x.id().equals(createdDevice.id())));
+
     	client.devices().delete(createdDevice.id());
-		assertEquals(0, client.devices().list().items().size());
+
+		DeviceListResult after = client.devices().list();
+		assertFalse(after.items().stream().anyMatch(x -> x.id().equals(createdDevice.id())));
     }
     
     @Test
