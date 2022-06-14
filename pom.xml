@@ -1,155 +1,156 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mailosaur</groupId>
-    <artifactId>mailosaur-java</artifactId>
-    <version>7.0.0</version>
-    <packaging>jar</packaging>
+  <groupId>com.mailosaur</groupId>
+  <artifactId>mailosaur-java</artifactId>
+  <version>7.0.0</version>
+  <packaging>jar</packaging>
 
-    <name>Mailosaur Java library</name>
-    <url>https://mailosaur.com/docs/email-testing/java/</url>
-    <description>The Mailosaur Java library lets you integrate email and SMS testing into your continuous integration process.</description>
+  <name>Mailosaur Java library</name>
+  <url>https://mailosaur.com/docs/email-testing/java/</url>
+  <description>The Mailosaur Java library lets you integrate email and SMS testing into your continuous integration process.</description>
 
-    <organization>
-        <name>Mailosaur Ltd</name>
-        <url>https://mailosaur.com/</url>
-    </organization>
+  <organization>
+    <name>Mailosaur Ltd</name>
+    <url>https://mailosaur.com/</url>
+  </organization>
 
-    <scm>
-        <connection>scm:git:git@github.com:mailosaur/mailosaur-java.git</connection>
-        <developerConnection>scm:git:git@github.com:mailosaur/mailosaur-java.git</developerConnection>
-        <url>git@github.com:mailosaur/mailosaur-java.git</url>
-    </scm>
+  <scm>
+    <connection>scm:git:git@github.com:mailosaur/mailosaur-java.git</connection>
+    <developerConnection>scm:git:git@github.com:mailosaur/mailosaur-java.git</developerConnection>
+    <url>git@github.com:mailosaur/mailosaur-java.git</url>
+  </scm>
 
-    <licenses>
-        <license>
-            <name>MIT license</name>
-            <url>https://github.com/mailosaur/mailosaur-java/blob/master/LICENSE</url>
-        </license>
-    </licenses>
+  <licenses>
+    <license>
+      <name>MIT license</name>
+      <url>https://github.com/mailosaur/mailosaur-java/blob/master/LICENSE</url>
+    </license>
+  </licenses>
 
-    <issueManagement>
-      <system>GitHub Issues</system>
-      <url>https://github.com/mailosaur/mailosaur-java/issues</url>
-    </issueManagement>
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/mailosaur/mailosaur-java/issues</url>
+  </issueManagement>
 
-    <developers>
-        <developer>
-            <id>mailosaur</id>
-            <name>Mailosaur</name>
-            <email>code@mailosaur.com</email>
-            <organization>Mailosaur Ltd</organization>
-            <organizationUrl>https://mailosaur.com/</organizationUrl>
-            <timezone>0</timezone>
-        </developer>
-    </developers>
+  <developers>
+    <developer>
+      <id>mailosaur</id>
+      <name>Mailosaur</name>
+      <email>code@mailosaur.com</email>
+      <organization>Mailosaur Ltd</organization>
+      <organizationUrl>https://mailosaur.com/</organizationUrl>
+      <timezone>0</timezone>
+    </developer>
+  </developers>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-   		<maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.google.http-client</groupId>
-            <artifactId>google-http-client</artifactId>
-            <version>[1.0.0,2.0.0)</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.http-client</groupId>
-            <artifactId>google-http-client-gson</artifactId>
-            <version>[1.0.0,2.0.0)</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>[19.0,)</version>
-        </dependency>
-    	<dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-    		<version>4.13.1</version>
-    		<scope>test</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>com.sun.mail</groupId>
-    		<artifactId>javax.mail</artifactId>
-    		<version>1.6.0</version>
-    	</dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client</artifactId>
+      <version>[1.0.0,2.0.0)</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client-gson</artifactId>
+      <version>[1.0.0,2.0.0)</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>[19.0,)</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.0</version>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>2.2.1</version>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar-no-fork</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.9.1</version>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-                <configuration>
-                  <!-- Prevent gpg from using pinentry programs -->
-                  <gpgArguments>
-                    <arg>--pinentry-mode</arg>
-                    <arg>loopback</arg>
-                  </gpgArguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.7</version>
-            <extensions>true</extensions>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.4.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
             <configuration>
-               <serverId>ossrh</serverId>
-               <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-               <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <!-- Prevent gpg from using pinentry programs -->
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
             </configuration>
-          </plugin>
-        </plugins>
-      </build>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
-    <distributionManagement>
-        <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-      </distributionManagement>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 </project>
