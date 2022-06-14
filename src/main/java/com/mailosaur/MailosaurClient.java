@@ -14,6 +14,10 @@ import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.mailosaur.models.MessageSummary;
 
 public class MailosaurClient {
     final String VERSION = "7.0.0";
@@ -158,16 +162,25 @@ public class MailosaurClient {
             } catch (HttpResponseException ex) {
                 Integer httpStatusCode = ex.getStatusCode();
                 String httpResponseBody = ex.getContent();
+                String message = "";
 
                 switch (httpStatusCode) {
                     case 400:
-                        throw new MailosaurException("Request had one or more invalid parameters.", "invalid_request", httpStatusCode, httpResponseBody);
+                        try {
+                            JsonObject json = new JsonParser().parse(httpResponseBody).getAsJsonObject();
+                            for (JsonElement el : json.get("errors").getAsJsonArray()) {
+                                message += String.format("(%s) %s\r\n", el.getAsJsonObject().get("field").getAsString(), el.getAsJsonObject().get("detail").getAsJsonArray().get(0).getAsJsonObject().get("description").getAsString());
+                            }
+                        } catch (Exception ex1) {
+                            message = "Request had one or more invalid parameters.";
+                        }
+                        throw new MailosaurException(message, "invalid_request", httpStatusCode, httpResponseBody);
                     case 401:
                         throw new MailosaurException("Authentication failed, check your API key.", "authentication_error", httpStatusCode, httpResponseBody);
                     case 403:
                         throw new MailosaurException("Insufficient permission to perform that task.", "permission_error", httpStatusCode, httpResponseBody);
                     case 404:
-                        throw new MailosaurException("Request did not find any matching resources.", "invalid_request", httpStatusCode, httpResponseBody);
+                        throw new MailosaurException("Not found, check input parameters.", "invalid_request", httpStatusCode, httpResponseBody);
                     default:
                         throw new MailosaurException("An API error occurred, see httpResponse for further information.", "api_error", httpStatusCode, httpResponseBody);
                 }
