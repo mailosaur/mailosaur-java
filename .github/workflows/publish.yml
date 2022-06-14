@@ -36,7 +36,7 @@ jobs:
           mvn versions:set -DnewVersion=$version
       - name: Publish
         run: |
-          mvn deploy
+          mvn --batch-mode deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
