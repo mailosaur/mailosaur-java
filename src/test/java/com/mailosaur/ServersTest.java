@@ -86,7 +86,7 @@ public class ServersTest {
     		client.servers().create(options);
     		throw new IOException("Should have thrown MailosaurException");
     	} catch (MailosaurException e) {
-			assertEquals("(name) Please provide a name for your server\r\n", e.getMessage());
+			assertEquals("(name) Servers need a name\r\n", e.getMessage());
 			assertEquals("invalid_request", e.errorType());
 			assertEquals(Integer.valueOf(400), e.httpStatusCode());
 			assertTrue(e.httpResponseBody().contains("{\"type\":"));

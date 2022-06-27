@@ -35,7 +35,7 @@ public class ErrorsTest {
 			ServerCreateOptions options = new ServerCreateOptions();
 			client.servers().create(options);
 		} catch (MailosaurException ex) {
-			assertEquals("com.mailosaur.MailosaurException: (name) Please provide a name for your server\r\n", ex.toString());
+			assertEquals("com.mailosaur.MailosaurException: (name) Servers need a name\r\n", ex.toString());
 		}
 	}
 }
