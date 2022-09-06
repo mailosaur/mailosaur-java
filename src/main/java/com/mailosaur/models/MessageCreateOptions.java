@@ -15,6 +15,13 @@ public class MessageCreateOptions {
     private String to;
 
     /**
+     * Allows for the partial override of the message's 'from' address. This **must** be
+     * an address ending with `YOUR_SERVER.mailosaur.net`, such as `my-emails@a1bcdef2.mailosaur.net`.
+     */
+	@Key
+    private String from;
+
+    /**
      * If true, email will be sent upon creation.
      */
 	@Key
@@ -52,6 +59,18 @@ public class MessageCreateOptions {
      */
     public MessageCreateOptions withTo(String to) {
         this.to = to;
+        return this;
+    }
+
+    /**
+     * Partially overrides of the message's 'from' address. This **must** be an address ending 
+     * with `YOUR_SERVER.mailosaur.net`, such as `my-emails@a1bcdef2.mailosaur.net`.
+     *
+     * @param from The email address.
+     * @return the MessageCreateOptions object itself.
+     */
+    public MessageCreateOptions withFrom(String from) {
+        this.from = from;
         return this;
     }
 
