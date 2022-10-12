@@ -461,6 +461,7 @@ public class EmailsTest {
 	}
     
     private void validateMetadata(Message email) {
+		assertEquals("Email", email.type());
     	assertEquals(1, email.from().size());
         assertEquals(1, email.to().size());
         assertNotNull(email.from().get(0).email());

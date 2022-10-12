@@ -16,6 +16,12 @@ public class MessageSummary extends BaseModel {
     private String id;
 
     /**
+     * The type of message.
+     */
+    @Key
+    private String type;
+
+    /**
      * The sender of the message.
      */
     @Key
@@ -76,6 +82,15 @@ public class MessageSummary extends BaseModel {
      */
     public String id() {
         return this.id;
+    }
+
+    /**
+     * Gets the type of message.
+     *
+     * @return The type of message.
+     */
+    public String type() {
+        return this.type;
     }
 
     /**
