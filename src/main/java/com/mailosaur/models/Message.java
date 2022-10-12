@@ -14,7 +14,8 @@ public class Message extends BaseModel {
     /**
      * This constructor used for Mailosaur library tests only
      */
-    public Message(List<MessageAddress> from, List<MessageAddress> to, String subject, String server, DateTime received) {
+    public Message(String type, List<MessageAddress> from, List<MessageAddress> to, String subject, String server, DateTime received) {
+        this.type = type;
         this.from = from;
         this.to = to;
         this.subject = subject;

@@ -450,6 +450,7 @@ public class EmailsTest {
 	
 	private void validateMetadata(MessageSummary summary) {
 		Message email = new Message(
+			summary.type(),
 			summary.from(),
 			summary.to(),
 			summary.subject(),
