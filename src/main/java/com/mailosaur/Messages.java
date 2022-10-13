@@ -197,6 +197,7 @@ public class Messages {
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             query.put("receivedAfter", dateFormat.format(params.receivedAfter()));
         }
+        if (params.dir() != null) { query.put("dir", params.dir()); }
 
         return client.request("GET", "api/messages", query).parseAs(MessageListResult.class);
     }
@@ -305,6 +306,7 @@ public class Messages {
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             query.put("receivedAfter", dateFormat.format(params.receivedAfter()));
         }
+        if (params.dir() != null) { query.put("dir", params.dir()); }
 
         // Default value for errorOnTimeout
         if (params.errorOnTimeout() == null) {
