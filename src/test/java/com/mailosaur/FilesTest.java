@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.mail.MessagingException;
 
+import com.mailosaur.models.MessageSearchParams;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -39,10 +40,14 @@ public class FilesTest {
 		String testEmailAddress = String.format("files_test@%s.%s", server, host);
 		
 		Mailer.sendEmail(client,  server, testEmailAddress);
-		
+
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+
 		SearchCriteria criteria = new SearchCriteria();
     	criteria.withSentTo(testEmailAddress);
-		email = client.messages().get(server, criteria);
+
+		email = client.messages().get(params, criteria);
 	}
 
     @Test

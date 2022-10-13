@@ -11,20 +11,9 @@ import java.util.*;
 import java.util.stream.Stream;
 import javax.mail.MessagingException;
 
+import com.mailosaur.models.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.mailosaur.models.Attachment;
-import com.mailosaur.models.MessageHeader;
-import com.mailosaur.models.Message;
-import com.mailosaur.models.MessageSummary;
-import com.mailosaur.models.SearchCriteria;
-import com.mailosaur.models.SearchMatchOperator;
-import com.mailosaur.models.SpamAssassinRule;
-import com.mailosaur.models.SpamAnalysisResult;
-import com.mailosaur.models.MessageCreateOptions;
-import com.mailosaur.models.MessageForwardOptions;
-import com.mailosaur.models.MessageReplyOptions;
 
 public class EmailsTest {
 	private static MailosaurClient client;
@@ -49,8 +38,10 @@ public class EmailsTest {
         client.messages().deleteAll(server);
         
         Mailer.sendEmails(client, server, 5);
-        
-        emails = client.messages().list(server).items();
+
+		MessageListParams params = new MessageListParams();
+		params.withServer(server);
+        emails = client.messages().list(params).items();
 	}
 
     @Test
@@ -66,10 +57,15 @@ public class EmailsTest {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.MINUTE, -10);
 		Date pastDate = calendar.getTime();
-    	List<MessageSummary> pastEmails = client.messages().list(server, pastDate).items();
+
+		MessageListParams pastParams = new MessageListParams();
+		pastParams.withServer(server).withReceivedAfter(pastDate);
+    	List<MessageSummary> pastEmails = client.messages().list(pastParams).items();
     	assertTrue(pastEmails.size() > 0);
 
-		List<MessageSummary> futureEmails = client.messages().list(server, new Date()).items();
+		MessageListParams futureParams = new MessageListParams();
+		futureParams.withServer(server).withReceivedAfter(new Date());
+		List<MessageSummary> futureEmails = client.messages().list(futureParams).items();
     	assertEquals(0, futureEmails.size());
     }
 
@@ -84,7 +80,10 @@ public class EmailsTest {
 
 		SearchCriteria criteria = new SearchCriteria();
 		criteria.withSentTo(testEmailAddress);
-		Message email = client.messages().get(server, criteria);
+
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		Message email = client.messages().get(params, criteria);
 
 		validateEmail(email);
 	}
@@ -105,24 +104,32 @@ public class EmailsTest {
     @Test
     public void testSearchNoCriteria() throws IOException {
     	try {
-			client.messages().search(server, new SearchCriteria());
+			MessageSearchParams params = new MessageSearchParams();
+			params.withServer(server);
+			client.messages().search(params, new SearchCriteria());
     		throw new IOException("Should have thrown MailosaurException");
     	} catch (MailosaurException e) { }
 	}
 
 	@Test
     public void testSearchTimeoutErrorSuppressed() throws IOException, MailosaurException {
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server)
+			.withTimeout(1)
+			.withErrorOnTimeout(false);
     	SearchCriteria criteria = new SearchCriteria();
     	criteria.withSentFrom("neverfound@example.com");
-    	List<MessageSummary> results = client.messages().search(server, criteria, 1, false).items();
+    	List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(0, results.size());
 	}
 	
 	public void testSearchBySentFrom() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
-    	SearchCriteria criteria = new SearchCriteria();
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		SearchCriteria criteria = new SearchCriteria();
     	criteria.withSentFrom(targetEmail.from().get(0).email());
-    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+		List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(1, results.size());
     	assertEquals(targetEmail.from().get(0).email(), results.get(0).from().get(0).email());
     	assertEquals(targetEmail.subject(), results.get(0).subject());
@@ -131,9 +138,11 @@ public class EmailsTest {
     @Test
     public void testSearchBySentTo() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
-    	SearchCriteria criteria = new SearchCriteria();
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		SearchCriteria criteria = new SearchCriteria();
     	criteria.withSentTo(targetEmail.to().get(0).email());
-    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+		List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(1, results.size());
     	assertEquals(targetEmail.to().get(0).email(), results.get(0).to().get(0).email());
     	assertEquals(targetEmail.subject(), results.get(0).subject());
@@ -143,9 +152,11 @@ public class EmailsTest {
     public void testSearchByBody() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
     	String uniqueString = targetEmail.subject().substring(0, targetEmail.subject().indexOf(" subject"));
-    	SearchCriteria criteria = new SearchCriteria();
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		SearchCriteria criteria = new SearchCriteria();
     	criteria.withBody(uniqueString += " html");
-    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+		List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(1, results.size());
     	assertEquals(targetEmail.to().get(0).email(), results.get(0).to().get(0).email());
     	assertEquals(targetEmail.subject(), results.get(0).subject());
@@ -155,9 +166,11 @@ public class EmailsTest {
     public void testSearchBySubject() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
     	String uniqueString = targetEmail.subject().substring(0, targetEmail.subject().indexOf(" subject"));
-    	SearchCriteria criteria = new SearchCriteria();
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		SearchCriteria criteria = new SearchCriteria();
     	criteria.withSubject(uniqueString);
-    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+		List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(1, results.size());
     	assertEquals(targetEmail.to().get(0).email(), results.get(0).to().get(0).email());
     	assertEquals(targetEmail.subject(), results.get(0).subject());
@@ -167,11 +180,13 @@ public class EmailsTest {
     public void testSearchWithMatchAll() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
     	String uniqueString = targetEmail.subject().substring(0, targetEmail.subject().indexOf(" subject"));
-    	SearchCriteria criteria = new SearchCriteria();
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		SearchCriteria criteria = new SearchCriteria();
 		criteria.withSubject(uniqueString)
 			.withBody("this is a link")
 			.withMatch(SearchMatchOperator.ALL);
-    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+    	List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(1, results.size());
 	}
 
@@ -179,19 +194,23 @@ public class EmailsTest {
 	public void testSearchWithMatchAny() throws IOException, MailosaurException {
     	MessageSummary targetEmail = emails.get(1);
     	String uniqueString = targetEmail.subject().substring(0, targetEmail.subject().indexOf(" subject"));
-    	SearchCriteria criteria = new SearchCriteria();
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		SearchCriteria criteria = new SearchCriteria();
 		criteria.withSubject(uniqueString)
 			.withBody("this is a link")
 			.withMatch(SearchMatchOperator.ANY);
-    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+    	List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(6, results.size());
 	}
 	
 	@Test
     public void testSearchWithSpecialCharacters() throws IOException, MailosaurException {
-    	SearchCriteria criteria = new SearchCriteria();
+		MessageSearchParams params = new MessageSearchParams();
+		params.withServer(server);
+		SearchCriteria criteria = new SearchCriteria();
     	criteria.withSubject("Search with ellipsis … and emoji 👨🏿‍🚒");
-    	List<MessageSummary> results = client.messages().search(server, criteria).items();
+    	List<MessageSummary> results = client.messages().search(params, criteria).items();
     	assertEquals(0, results.size());
     }
     
