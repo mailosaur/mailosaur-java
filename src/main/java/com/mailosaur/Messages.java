@@ -101,6 +101,32 @@ public class Messages {
         MessageListResult result = search(server, criteria, 0, 1, timeout, receivedAfter, true);
         return getById(result.items().get(0).id());
     }
+
+    /**
+     * Retrieve a message using search criteria.
+     * Returns as soon as an message matching the specified search criteria is found.
+     *
+     * @param server The identifier of the server hosting the message.
+     * @param criteria The search criteria to use in order to find a match.
+     * @param timeout Specify how long to wait for a matching result (in milliseconds).
+     * @param receivedAfter Limits results to only messages received after this date/time.
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
+     * @throws IOException Unexpected exception.
+     * @return the Message object if successful.
+     */
+    public Message get(String server, SearchCriteria criteria, Integer timeout, Date receivedAfter, String dir) throws IOException, MailosaurException {
+        // Timeout defaulted to 10s, receivedAfter to 1h
+        timeout = timeout != null ? timeout : 10000;
+        receivedAfter = receivedAfter != null ? receivedAfter : new Date(System.currentTimeMillis() - 3600 * 1000);
+
+        if (server.length() != 8) {
+            throw new MailosaurException("Must provide a valid Server ID.", "invalid_request");
+        }
+
+        MessageListResult result = search(server, criteria, 0, 1, timeout, receivedAfter, true, dir);
+        return getById(result.items().get(0).id());
+    }
     
     /**
      * Retrieve an message.
@@ -174,12 +200,13 @@ public class Messages {
      * @param server The identifier of the server hosting the messages.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult list(String server, int page, int itemsPerPage) throws IOException, MailosaurException {
-        return list(server, page, itemsPerPage, null);
+    public MessageListResult list(String server, int page, int itemsPerPage, String dir) throws IOException, MailosaurException {
+        return list(server, page, itemsPerPage, null, dir);
     }
 
     /**
@@ -190,11 +217,12 @@ public class Messages {
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
      * @param receivedAfter Limits results to only messages received after this date/time.
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult list(String server, Integer page, Integer itemsPerPage, Date receivedAfter) throws IOException, MailosaurException {
+    public MessageListResult list(String server, Integer page, Integer itemsPerPage, Date receivedAfter, String dir) throws IOException, MailosaurException {
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("server", server);
         if (page != null) { query.put("page", page.toString()); }
@@ -204,6 +232,7 @@ public class Messages {
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             query.put("receivedAfter", dateFormat.format(receivedAfter));
         }
+        if (dir != null) { query.put("dir", dir); }
 
         return client.request("GET", "api/messages", query).parseAs(MessageListResult.class);
     }
@@ -230,12 +259,13 @@ public class Messages {
      * @param criteria The search criteria to match results against.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, int page, int itemsPerPage) throws IOException, MailosaurException {
-        return search(server, criteria, page, itemsPerPage, null, null, true);
+    public MessageListResult search(String server, SearchCriteria criteria, int page, int itemsPerPage, String dir) throws IOException, MailosaurException {
+        return search(server, criteria, page, itemsPerPage, null, null, true, dir);
     }
 
     /**
@@ -245,12 +275,13 @@ public class Messages {
      * @param server The identifier of the server hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, int timeout) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, timeout, null, true);
+    public MessageListResult search(String server, SearchCriteria criteria, int timeout, String dir) throws IOException, MailosaurException {
+        return search(server, criteria, null, null, timeout, null, true, dir);
     }
 
     /**
@@ -261,11 +292,12 @@ public class Messages {
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, int timeout, boolean errorOnTimeout) throws IOException, MailosaurException {
+    public MessageListResult search(String server, SearchCriteria criteria, int timeout, boolean errorOnTimeout, String dir) throws IOException, MailosaurException {
         return search(server, criteria, null, null, timeout, null, errorOnTimeout);
     }
 
@@ -276,12 +308,13 @@ public class Messages {
      * @param server The identifier of the server hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param receivedAfter Limits results to only messages received after this date/time.
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, Date receivedAfter) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, null, receivedAfter, true);
+    public MessageListResult search(String server, SearchCriteria criteria, Date receivedAfter, String dir) throws IOException, MailosaurException {
+        return search(server, criteria, null, null, null, receivedAfter, true, dir);
     }
 
     /**
@@ -292,12 +325,13 @@ public class Messages {
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this date/time.
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, int timeout, Date receivedAfter) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, timeout, receivedAfter, true);
+    public MessageListResult search(String server, SearchCriteria criteria, int timeout, Date receivedAfter, String dir) throws IOException, MailosaurException {
+        return search(server, criteria, null, null, timeout, receivedAfter, true, dir);
     }
 
     /**
@@ -309,12 +343,13 @@ public class Messages {
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
      * @param receivedAfter Limits results to only messages received after this date/time.
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, int timeout, boolean errorOnTimeout, Date receivedAfter) throws IOException, MailosaurException {
-        return search(server, criteria, null, null, timeout, receivedAfter, errorOnTimeout);
+    public MessageListResult search(String server, SearchCriteria criteria, int timeout, boolean errorOnTimeout, Date receivedAfter, String dir) throws IOException, MailosaurException {
+        return search(server, criteria, null, null, timeout, receivedAfter, errorOnTimeout, dir);
     }
 
     /**
@@ -328,11 +363,12 @@ public class Messages {
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this date/time.
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
+     * @param dir Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
      */
-    public MessageListResult search(String server, SearchCriteria criteria, Integer page, Integer itemsPerPage, Integer timeout, Date receivedAfter, boolean errorOnTimeout) throws IOException, MailosaurException {
+    public MessageListResult search(String server, SearchCriteria criteria, Integer page, Integer itemsPerPage, Integer timeout, Date receivedAfter, boolean errorOnTimeout, String dir) throws IOException, MailosaurException {
         HashMap<String, String> query = new HashMap<String, String>();
         query.put("server", server);
         if (page != null) { query.put("page", page.toString()); }
@@ -342,6 +378,7 @@ public class Messages {
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             query.put("receivedAfter", dateFormat.format(receivedAfter));
         }
+        if (dir != null) { query.put("dir", dir); }
 
         int pollCount = 0;
         long startTime = new Date().getTime();
