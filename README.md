@@ -112,10 +112,13 @@ public class AppTest {
     String serverId = "abc123";
     String serverDomain = "abc123.mailosaur.net";
 
+    MessageSearchParams params = new MessageSearchParams();
+    params.withServer(serverId);
+
     SearchCriteria criteria = new SearchCriteria();
     criteria.withSentTo("anything@" + serverDomain);
 
-    Message message = mailosaur.messages().get(serverId, criteria);
+    Message message = mailosaur.messages().get(params, criteria);
 
     assertEquals("My email subject", message.subject());
   }
@@ -135,8 +138,12 @@ First, check that the email you sent is visible in the [Mailosaur Dashboard](htt
 If it is, the likely reason is that by default, `messages.get` only searches emails received by Mailosaur in the last 1 hour. You can override this behavior (see the `receivedAfter` option below), however we only recommend doing this during setup, as your tests will generally run faster with the default settings:
 
 ```java
+MessageSearchParams params = new MessageSearchParams();
+params.withServer("SERVER_ID")
+  .withReceivedAfter(new Date(2020, 1, 1));
+
 // Override receivedAfter to search all messages since Jan 1st
-Message email = mailosaur.messages().get(server, criteria, new Date(2021, 1, 1));
+Message email = mailosaur.messages().get(params, criteria);
 ```
 
 ## Find an SMS message
@@ -151,10 +158,13 @@ If your account has [SMS testing](https://mailosaur.com/sms-testing/) enabled, y
 
     String serverId = "abc123";
 
+    MessageSearchParams params = new MessageSearchParams();
+    params.withServer(serverId);
+
     SearchCriteria criteria = new SearchCriteria();
     criteria.withSentTo("4471235554444");
 
-    Message sms = mailosaur.messages().get(serverId, criteria);
+    Message sms = mailosaur.messages().get(params, criteria);
 
     System.out.println(sms.text().body());
 }
