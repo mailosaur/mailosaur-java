@@ -42,7 +42,7 @@ public class MessageSearchParams {
      * When set to false, an error will not be throw if timeout is reached (default: true).
      */
 	@Key
-    private boolean errorOnTimeout;
+    private Boolean errorOnTimeout;
 
     /**
      * Optionally limits results based on the direction (`Sent` or `Received`), with the default being `Received`.
