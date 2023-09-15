@@ -36,4 +36,17 @@ public class Files {
     	return client.requestFile("GET", "api/files/email/" + messageId).toByteArray();
     }
 
+    /**
+     * Downloads a screenshot of your email rendered in a real email client. Simply supply
+     * the unique identifier for the required preview.
+     *
+     * @param previewId The identifier of the email preview to be downloaded.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
+     * @throws IOException Unexpected exception.
+     * @return The byte array if successful.
+     */
+    public byte[] getPreview(String previewId) throws MailosaurException, IOException {
+        return client.requestFile("GET", "api/files/previews/" + previewId).toByteArray();
+    }
+
 }

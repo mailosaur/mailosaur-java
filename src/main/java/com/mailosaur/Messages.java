@@ -586,7 +586,20 @@ public class Messages {
      * @return the Message object if successful.
      */
     public Message reply(String id, MessageReplyOptions messageReplyOptions) throws IOException, MailosaurException {
-    	return client.request("POST", "api/messages/" + id + "/reply", messageReplyOptions).parseAs(Message.class);
+        return client.request("POST", "api/messages/" + id + "/reply", messageReplyOptions).parseAs(Message.class);
+    }
+
+    /**
+     * Generates screenshots of an email rendered in the specified email clients.
+     *
+     * @param id The identifier of the email to preview.
+     * @param options The options with which to generate previews.
+     * @throws MailosaurException Thrown if Mailosaur responds with an error.
+     * @throws IOException Unexpected exception.
+     * @return the PreviewListResult object if successful.
+     */
+    public PreviewListResult generatePreviews(String id, PreviewRequestOptions options) throws IOException, MailosaurException {
+        return client.request("POST", "api/messages/" + id + "/previews", options).parseAs(PreviewListResult.class);
     }
 
 }

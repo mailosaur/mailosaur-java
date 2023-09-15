@@ -108,7 +108,7 @@ public final class Mailer {
 		return Paths.get(path);
 	}
 
-	private static String getRandomString(int length) {
+	public static String getRandomString(int length) {
     	int leftLimit = 97; // letter 'a'
     	int rightLimit = 122; // letter 'z'
     	Random random = new Random();

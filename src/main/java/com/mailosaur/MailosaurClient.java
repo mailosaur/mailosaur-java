@@ -58,6 +58,7 @@ public class MailosaurClient {
         this.servers = new Servers(this);
         this.usage = new Usage(this);
         this.devices = new Devices(this);
+        this.previews = new Previews(this);
     }
 	
 	/**
@@ -136,6 +137,19 @@ public class MailosaurClient {
      */
     public Devices devices() {
         return this.devices;
+    }
+
+    /**
+     * Email Previews operations
+     */
+    private Previews previews;
+
+    /**
+     * Gets Email Previews operations.
+     * @return Email Previews operations.
+     */
+    public Previews previews() {
+        return this.previews;
     }
     
     public HttpResponse request(String method, String url) throws MailosaurException {
