@@ -1,8 +1,8 @@
-# [Mailosaur - Java library](https://mailosaur.com/) &middot; [![](https://github.com/mailosaur/mailosaur-java/workflows/CI/badge.svg)](https://github.com/mailosaur/mailosaur-java/actions) 
+# [Mailosaur - Java library](https://mailosaur.com/) &middot; [![](https://github.com/mailosaur/mailosaur-java/workflows/CI/badge.svg)](https://github.com/mailosaur/mailosaur-java/actions)
 
 Mailosaur lets you automate email and SMS tests as part of software development and QA.
 
-- **Unlimited test email addresses for all**  - every account gives users an unlimited number of test email addresses to test with.
+- **Unlimited test email addresses for all** - every account gives users an unlimited number of test email addresses to test with.
 - **End-to-end (e2e) email and SMS testing** Allowing you to set up end-to-end tests for password reset emails, account verification processes and MFA/one-time passcodes sent via text message.
 - **Fake SMTP servers** Mailosaur also provides dummy SMTP servers to test with; allowing you to catch email in staging environments - preventing email being sent to customers by mistake.
 
@@ -10,17 +10,32 @@ Mailosaur lets you automate email and SMS tests as part of software development 
 
 This guide provides several key sections:
 
+- [Mailosaur - Java library · ](#mailosaur---java-library--)
   - [Get Started](#get-started)
+    - [Installation](#installation)
+      - [Gradle users](#gradle-users)
+      - [Maven users](#maven-users)
+      - [Others](#others)
+    - [API Reference](#api-reference)
   - [Creating an account](#creating-an-account)
   - [Test email addresses with Mailosaur](#test-email-addresses-with-mailosaur)
   - [Find an email](#find-an-email)
+    - [What is this code doing?](#what-is-this-code-doing)
+    - [My email wasn't found](#my-email-wasnt-found)
   - [Find an SMS message](#find-an-sms-message)
   - [Testing plain text content](#testing-plain-text-content)
+    - [Extracting verification codes from plain text](#extracting-verification-codes-from-plain-text)
   - [Testing HTML content](#testing-html-content)
+    - [Working with HTML using jsoup](#working-with-html-using-jsoup)
   - [Working with hyperlinks](#working-with-hyperlinks)
+    - [Links in plain text (including SMS messages)](#links-in-plain-text-including-sms-messages)
   - [Working with attachments](#working-with-attachments)
   - [Working with images and web beacons](#working-with-images-and-web-beacons)
+    - [Remotely-hosted images](#remotely-hosted-images)
+    - [Triggering web beacons](#triggering-web-beacons)
   - [Spam checking](#spam-checking)
+  - [Development](#development)
+  - [Contacting us](#contacting-us)
 
 You can find the full [Mailosaur documentation](https://mailosaur.com/docs/) on the website.
 
@@ -52,17 +67,17 @@ Add this dependency to your project's POM:
 
 You'll need to manually install the following JARs:
 
-* The Mailosaur JAR from https://repo1.maven.org/maven2/com/mailosaur/mailosaur-java/
-* [Google Guava](https://github.com/google/guava) from https://repo1.maven.org/maven2/com/google/guava/guava/.
-* [Google HTTP Client (Gson)](https://github.com/googleapis/google-http-java-client) from https://repo1.maven.org/maven2/com/google/http-client/google-http-client-gson/.
-* [Google Gson](https://github.com/google/gson) from https://repo1.maven.org/maven2/com/google/code/gson/gson/.
+- The Mailosaur JAR from https://repo1.maven.org/maven2/com/mailosaur/mailosaur-java/
+- [Google Guava](https://github.com/google/guava) from https://repo1.maven.org/maven2/com/google/guava/guava/.
+- [Google HTTP Client (Gson)](https://github.com/googleapis/google-http-java-client) from https://repo1.maven.org/maven2/com/google/http-client/google-http-client-gson/.
+- [Google Gson](https://github.com/google/gson) from https://repo1.maven.org/maven2/com/google/code/gson/gson/.
 
 ### API Reference
 
 This library is powered by the Mailosaur [email & SMS testing API](https://mailosaur.com/docs/api/). You can easily check out the API itself by looking at our [API reference documentation](https://mailosaur.com/docs/api/) or via our Postman or Insomnia collections:
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6961255-6cc72dff-f576-451a-9023-b82dec84f95d?action=collection%2Ffork&collection-url=entityId%3D6961255-6cc72dff-f576-451a-9023-b82dec84f95d%26entityType%3Dcollection%26workspaceId%3D386a4af1-4293-4197-8f40-0eb49f831325)
- [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Mailosaur&uri=https%3A%2F%2Fmailosaur.com%2Finsomnia.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Mailosaur&uri=https%3A%2F%2Fmailosaur.com%2Finsomnia.json)
 
 ## Creating an account
 
@@ -80,15 +95,15 @@ Mailosaur gives you an **unlimited number of test email addresses** - with no se
 
 Here's how it works:
 
-* When you create an account, you are given a server.
-* Every server has its own **Server Domain** name (e.g. `abc123.mailosaur.net`)
-* Any email address that ends with `@{YOUR_SERVER_DOMAIN}` will work with Mailosaur without any special setup. For example:
-  * `build-423@abc123.mailosaur.net`
-  * `john.smith@abc123.mailosaur.net`
-  * `rAnDoM63423@abc123.mailosaur.net`
-* You can create more servers when you need them. Each one will have its own domain name.
+- When you create an account, you are given a server.
+- Every server has its own **Server Domain** name (e.g. `abc123.mailosaur.net`)
+- Any email address that ends with `@{YOUR_SERVER_DOMAIN}` will work with Mailosaur without any special setup. For example:
+  - `build-423@abc123.mailosaur.net`
+  - `john.smith@abc123.mailosaur.net`
+  - `rAnDoM63423@abc123.mailosaur.net`
+- You can create more servers when you need them. Each one will have its own domain name.
 
-***Can't use test email addresses?** You can also [use SMTP to test email](https://mailosaur.com/docs/email-testing/sending-to-mailosaur/#sending-via-smtp). By connecting your product or website to Mailosaur via SMTP, Mailosaur will catch all email your application sends, regardless of the email address.*
+**\*Can't use test email addresses?** You can also [use SMTP to test email](https://mailosaur.com/docs/email-testing/sending-to-mailosaur/#sending-via-smtp). By connecting your product or website to Mailosaur via SMTP, Mailosaur will catch all email your application sends, regardless of the email address.\*
 
 ## Find an email
 
@@ -133,14 +148,14 @@ public class AppTest {
 
 ### My email wasn't found
 
-First, check that the email you sent is visible in the [Mailosaur Dashboard](https://mailosaur.com/api/project/messages). 
+First, check that the email you sent is visible in the [Mailosaur Dashboard](https://mailosaur.com/api/project/messages).
 
 If it is, the likely reason is that by default, `messages.get` only searches emails received by Mailosaur in the last 1 hour. You can override this behavior (see the `receivedAfter` option below), however we only recommend doing this during setup, as your tests will generally run faster with the default settings:
 
 ```java
 MessageSearchParams params = new MessageSearchParams();
 params.withServer("SERVER_ID")
-  .withReceivedAfter(new Date(2020, 1, 1));
+  .withReceivedAfter(1577836800000);
 
 // Override receivedAfter to search all messages since Jan 1st
 Message email = mailosaur.messages().get(params, criteria);

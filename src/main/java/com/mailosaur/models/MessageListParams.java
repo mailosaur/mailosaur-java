@@ -2,8 +2,6 @@ package com.mailosaur.models;
 
 import com.google.api.client.util.Key;
 
-import java.util.Date;
-
 /**
  * Parameters for message listing.
  */
@@ -15,10 +13,10 @@ public class MessageListParams {
     private String server;
 
     /**
-     * Limits results to only messages received after this date/time.
+     * Limits results to only messages received after this timestamp.
      */
 	@Key
-    private Date receivedAfter;
+    private Long receivedAfter;
 
     /**
      * Used in conjunction with `itemsPerPage` to support pagination.
@@ -48,11 +46,11 @@ public class MessageListParams {
     }
 
     /**
-     * Gets the receivedAfter date/time.
+     * Gets the receivedAfter timestamp.
      *
-     * @return The receivedAfter date/time.
+     * @return The receivedAfter timestamp.
      */
-    public Date receivedAfter() {
+    public Long receivedAfter() {
         return this.receivedAfter;
     }
 
@@ -95,12 +93,12 @@ public class MessageListParams {
     }
 
     /**
-     * Limits results to only messages received after this date/time.
+     * Limits results to only messages received after this timestamp.
      *
-     * @param receivedAfter Limits results to only messages received after this date/time.
+     * @param receivedAfter Limits results to only messages received after this timestamp.
      * @return the MessageSearchParams object itself.
      */
-    public MessageListParams withReceivedAfter(Date receivedAfter) {
+    public MessageListParams withReceivedAfter(long receivedAfter) {
         this.receivedAfter = receivedAfter;
         return this;
     }

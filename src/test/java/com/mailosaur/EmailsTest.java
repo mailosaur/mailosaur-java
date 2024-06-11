@@ -1,5 +1,6 @@
 package com.mailosaur;
 
+import static java.lang.System.currentTimeMillis;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -54,9 +55,7 @@ public class EmailsTest {
 
 	@Test
 	public void testListReceivedAfter() throws IOException, MailosaurException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE, -10);
-		Date pastDate = calendar.getTime();
+		long pastDate = currentTimeMillis() - 600000; // now less 10 minutes
 
 		MessageListParams pastParams = new MessageListParams();
 		pastParams.withServer(server).withReceivedAfter(pastDate);
@@ -64,7 +63,7 @@ public class EmailsTest {
     	assertTrue(pastEmails.size() > 0);
 
 		MessageListParams futureParams = new MessageListParams();
-		futureParams.withServer(server).withReceivedAfter(new Date());
+		futureParams.withServer(server).withReceivedAfter(currentTimeMillis());
 		List<MessageSummary> futureEmails = client.messages().list(futureParams).items();
     	assertEquals(0, futureEmails.size());
     }
