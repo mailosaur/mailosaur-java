@@ -48,7 +48,7 @@ If you get stuck, just contact us at support@mailosaur.com.
 Add this dependency to your project's build file:
 
 ```
-implementation "com.mailosaur:mailosaur-java:7.X.X"
+implementation "com.mailosaur:mailosaur-java:8.X.X"
 ```
 
 #### Maven users
@@ -59,7 +59,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.mailosaur</groupId>
   <artifactId>mailosaur-java</artifactId>
-  <version>7.X.X</version>
+  <version>8.X.X</version>
 </dependency>
 ```
 

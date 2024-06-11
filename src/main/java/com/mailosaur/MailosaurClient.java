@@ -20,7 +20,7 @@ import com.google.gson.JsonParser;
 import com.mailosaur.models.MessageSummary;
 
 public class MailosaurClient {
-    final String VERSION = "7.0.0";
+    final String VERSION = "8.0.0";
 	final String API_KEY;
 	final String BASE_URL;
 	final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();

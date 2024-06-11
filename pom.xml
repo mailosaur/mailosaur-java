@@ -4,7 +4,7 @@
 
   <groupId>com.mailosaur</groupId>
   <artifactId>mailosaur-java</artifactId>
-  <version>7.0.0</version>
+  <version>8.0.0</version>
   <packaging>jar</packaging>
 
   <name>Mailosaur Java library</name>
