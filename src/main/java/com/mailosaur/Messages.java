@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.api.client.http.HttpResponse;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSerializer;
 import com.mailosaur.models.*;
 
 /**
@@ -335,7 +339,9 @@ public class Messages {
                 if (params.errorOnTimeout() == false) {
                     return result;
                 }
-                throw new MailosaurException("No matching messages found in time. By default, only messages received in the last hour are checked (use receivedAfter to override this).", "search_timeout");
+
+                String criteriaJson = new Gson().toJson(criteria);
+                throw new MailosaurException("No matching messages found in time. By default, only messages received in the last hour are checked (use receivedAfter to override this). The search criteria used for this query was ["+criteriaJson+"] which timed out after "+params.timeout()+"ms", "search_timeout");
             }
 
             try {
