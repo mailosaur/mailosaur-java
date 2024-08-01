@@ -24,7 +24,7 @@ public class EmailsTest {
 	private final String isoDateString = Instant.now().toString().substring(0, 10);
 	
 	@BeforeClass
-    public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException, MailosaurException {
+    public static void setUpBeforeClass() throws IOException, MessagingException, MailosaurException {
 		server = System.getenv("MAILOSAUR_SERVER");
 		verifiedDomain = System.getenv("MAILOSAUR_VERIFIED_DOMAIN");
 		String apiKey = System.getenv("MAILOSAUR_API_KEY");

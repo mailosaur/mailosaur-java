@@ -38,17 +38,17 @@ public final class Mailer {
 		}
 	}
 	
-	public static void sendEmails(MailosaurClient client, String server, int quantity) throws IOException, InterruptedException, MessagingException {
+	public static void sendEmails(MailosaurClient client, String server, int quantity) throws MessagingException {
 		for (int i = 0; i < quantity; i++)
 			sendEmail(client, server);
 	}
 	
-	public static void sendEmail(MailosaurClient client, String server) throws UnsupportedEncodingException, MessagingException
+	public static void sendEmail(MailosaurClient client, String server) throws MessagingException
 	{
 		sendEmail(client, server, null);
 	}
 	
-	public static void sendEmail(MailosaurClient client, String server, String sendToAddress) throws MessagingException, UnsupportedEncodingException {
+	public static void sendEmail(MailosaurClient client, String server, String sendToAddress) throws MessagingException {
 		String host = System.getenv("MAILOSAUR_SMTP_HOST");
 		String port = System.getenv("MAILOSAUR_SMTP_PORT");
 		

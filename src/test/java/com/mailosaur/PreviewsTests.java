@@ -15,7 +15,7 @@ public class PreviewsTests {
 	private static String server;
 
 	@BeforeClass
-    public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException, MailosaurException {
+    public static void setUpBeforeClass() throws IOException {
 		String baseUrl = System.getenv("MAILOSAUR_BASE_URL");
 		String apiKey = System.getenv("MAILOSAUR_API_KEY");
 		server = System.getenv("MAILOSAUR_PREVIEWS_SERVER");

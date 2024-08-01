@@ -16,7 +16,7 @@ public class DevicesTest {
 	private static MailosaurClient client;
 	
 	@BeforeClass
-    public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException {
+    public static void setUpBeforeClass() throws IOException {
 		String apiKey = System.getenv("MAILOSAUR_API_KEY");
 		String baseUrl = System.getenv("MAILOSAUR_BASE_URL");
 

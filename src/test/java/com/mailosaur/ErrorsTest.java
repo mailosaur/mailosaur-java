@@ -1,8 +1,10 @@
 package com.mailosaur;
 
 import com.mailosaur.models.*;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -12,7 +14,7 @@ public class ErrorsTest {
 	private static String baseUrl;
 	
 	@BeforeClass
-    public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException {
+    public static void setUpBeforeClass() throws IOException {
 		apiKey = System.getenv("MAILOSAUR_API_KEY");
 		baseUrl = System.getenv("MAILOSAUR_BASE_URL");
 
