@@ -8,9 +8,22 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class ErrorsTest {
+	private static String apiKey;
+	private static String baseUrl;
+	
+	@BeforeClass
+    public static void setUpBeforeClass() throws IOException, InterruptedException, MessagingException {
+		apiKey = System.getenv("MAILOSAUR_API_KEY");
+		baseUrl = System.getenv("MAILOSAUR_BASE_URL");
+
+		if (apiKey == null) {
+			throw new IOException("Missing necessary environment variables - refer to README.md");
+		}
+	}
+
     @Test
     public void testUnauthorized() throws IOException {
-    	MailosaurClient client = new MailosaurClient("invalid_key");
+    	MailosaurClient client = new MailosaurClient("invalid_key", baseUrl);
 		try {
 			client.servers().list();
 		} catch (MailosaurException ex) {
@@ -20,7 +33,7 @@ public class ErrorsTest {
 
 	@Test
 	public void testNotFound() throws IOException {
-		MailosaurClient client = new MailosaurClient(System.getenv("MAILOSAUR_API_KEY"));
+		MailosaurClient client = new MailosaurClient(apiKey, baseUrl);
 		try {
 			client.servers().get("not_found");
 		} catch (MailosaurException ex) {
@@ -30,7 +43,7 @@ public class ErrorsTest {
 
 	@Test
 	public void testBadRequest() throws IOException {
-		MailosaurClient client = new MailosaurClient(System.getenv("MAILOSAUR_API_KEY"));
+		MailosaurClient client = new MailosaurClient(apiKey, baseUrl);
 		try {
 			ServerCreateOptions options = new ServerCreateOptions();
 			client.servers().create(options);
