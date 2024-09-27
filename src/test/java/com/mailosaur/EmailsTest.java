@@ -223,6 +223,43 @@ public class EmailsTest {
     		assertNotNull(rule.description());
     	}
     }
+
+	@Test
+    public void testDeliverabilityReport() throws IOException, MailosaurException {
+    	String targetId = emails.get(0).id();
+    	DeliverabilityReport result = client.analysis().deliverability(targetId);
+    	
+		assertNotNull(result);
+
+		assertNotNull(result.spf());
+
+		assertNotNull(result.dkim());
+		for (EmailAuthenticationResult dkim : result.dkim()) {
+			assertNotNull(dkim);
+    	}
+
+		assertNotNull(result.dmarc());
+
+		assertNotNull(result.blockLists());
+		for (BlockListResult blockList : result.blockLists()) {
+			assertNotNull(blockList);
+    		assertNotNull(blockList.id());
+    		assertNotNull(blockList.name());
+    	}
+
+		assertNotNull(result.content());
+
+		assertNotNull(result.dnsRecords());
+		assertNotNull(result.dnsRecords().a());
+		assertNotNull(result.dnsRecords().mx());
+		assertNotNull(result.dnsRecords().ptr());
+
+		assertNotNull(result.spamAssassin());
+    	for (SpamAssassinRule rule : result.spamAssassin().rules()) {
+    		assertNotNull(rule.rule());
+    		assertNotNull(rule.description());
+    	}
+    }
     
     @Test
 	public void testDelete() throws IOException, MailosaurException {
