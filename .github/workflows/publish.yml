@@ -37,7 +37,7 @@ jobs:
           mvn versions:set -DnewVersion=$version
       - name: Publish
         run: |
-          mvn --batch-mode deploy
+          mvn deploy
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
       - name: Notify on Failure
