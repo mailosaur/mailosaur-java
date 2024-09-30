@@ -5,18 +5,18 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
-concurrency: 
+concurrency:
   group: mailosaur-java
   cancel-in-progress: true
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.LINUX }}
     timeout-minutes: 10
 
     env:
@@ -29,27 +29,27 @@ jobs:
       MAILOSAUR_PREVIEWS_SERVER: ${{ secrets.MAILOSAUR_PREVIEWS_SERVER }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v3
-      with:
-        java-version: '8.0.332+9'
-        distribution: temurin
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    - name: Notify on Failure
-      uses: skitionek/notify-microsoft-teams@master
-      if: ${{ failure() }}
-      with:
-        webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
-        needs: ${{ toJson(needs) }}
-        job: ${{ toJson(job) }}
-        overwrite: "{ title: `${workflow} failed for ${repository.name}` }"
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: temurin
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - name: Notify on Failure
+        uses: skitionek/notify-microsoft-teams@master
+        if: ${{ failure() }}
+        with:
+          webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          overwrite: "{ title: `${workflow} failed for ${repository.name}` }"
 
   build-next:
     if: ${{ always() }}
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.LINUX }}
     timeout-minutes: 10
 
     env:
@@ -62,19 +62,19 @@ jobs:
       MAILOSAUR_PREVIEWS_SERVER: ${{ secrets.MAILOSAUR_PREVIEWS_SERVER }}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v3
-      with:
-        java-version: '8.0.332+9'
-        distribution: temurin
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    - name: Notify on Failure
-      uses: skitionek/notify-microsoft-teams@master
-      if: ${{ failure() }}
-      with:
-        webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
-        needs: ${{ toJson(needs) }}
-        job: ${{ toJson(job) }}
-        overwrite: "{ title: `${workflow} failed for ${repository.name}` }"
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: temurin
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - name: Notify on Failure
+        uses: skitionek/notify-microsoft-teams@master
+        if: ${{ failure() }}
+        with:
+          webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          overwrite: "{ title: `${workflow} failed for ${repository.name}` }"
