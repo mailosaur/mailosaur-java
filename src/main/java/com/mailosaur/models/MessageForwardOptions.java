@@ -13,6 +13,12 @@ public class MessageForwardOptions {
     private String to;
 
     /**
+     * The email address to which the email will be CC'd. Must be a verified email address.
+     */
+	@Key
+    private String cc;
+
+    /**
      * Any plain text to include when forwarding the message. Note that only text or html can be supplied, not both.
      */
 	@Key
@@ -32,6 +38,17 @@ public class MessageForwardOptions {
      */
     public MessageForwardOptions withTo(String to) {
         this.to = to;
+        return this;
+    }
+
+    /**
+     * Sets the email address to which the email will be CC'd. Must be a verified email address.
+     *
+     * @param cc The email address.
+     * @return the MessageCreateOptions object itself.
+     */
+    public MessageForwardOptions withCc(String cc) {
+        this.cc = cc;
         return this;
     }
 
