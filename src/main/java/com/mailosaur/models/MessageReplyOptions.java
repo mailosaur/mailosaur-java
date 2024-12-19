@@ -21,6 +21,12 @@ public class MessageReplyOptions {
     private String html;
 
     /**
+     * The email address to which the email will be CC'd. Must be a verified email address.
+     */
+	@Key
+    private String cc;
+
+    /**
      * Any message attachments.
      */
     @Key
@@ -45,6 +51,17 @@ public class MessageReplyOptions {
      */
     public MessageReplyOptions withHtml(String html) {
         this.html = html;
+        return this;
+    }
+
+    /**
+     * Sets the email address to which the email will be CC'd. Must be a verified email address.
+     *
+     * @param cc The email address.
+     * @return the MessageCreateOptions object itself.
+     */
+    public MessageReplyOptions withCc(String cc) {
+        this.cc = cc;
         return this;
     }
 

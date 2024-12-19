@@ -311,6 +311,27 @@ public class EmailsTest {
 	}
 
 	@Test
+	public void testCreateSendCc() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+
+		String subject = "CC message";
+		String ccRecipient = String.format("someoneelse@%s", verifiedDomain);
+		MessageCreateOptions options = new MessageCreateOptions();
+		options.withTo(String.format("anything@%s", verifiedDomain))
+				.withCc(ccRecipient)
+				.withSend(true)
+				.withSubject(subject)
+				.withHtml("<p>This is a new email.</p>");
+
+		Message message = client.messages().create(server, options);
+
+		assertNotNull(message.id());
+		assertEquals(subject, message.subject());
+		assertEquals(1, message.cc().size());
+		assertEquals(ccRecipient, message.cc().get(0).email());
+	}
+
+	@Test
 	public void testCreateSendWithAttachment() throws IOException, MailosaurException {
 		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
 
@@ -375,6 +396,27 @@ public class EmailsTest {
 	}
 
 	@Test
+	public void testForwardCc() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+		
+		String body = "<p>Forwarded <strong>HTML</strong> message.</p>";
+		String targetId = emails.get(0).id();
+		String ccRecipient = String.format("someoneelse@%s", verifiedDomain);
+
+		MessageForwardOptions options = new MessageForwardOptions();
+		options.withTo(String.format("forwardcc@%s", verifiedDomain))
+				.withCc(ccRecipient)
+				.withHtml(body);
+
+		Message message = client.messages().forward(targetId, options);
+
+		assertNotNull(message.id());
+		assertTrue(message.html().body().contains(body));
+		assertEquals(1, message.cc().size());
+		assertEquals(ccRecipient, message.cc().get(0).email());
+	}
+
+	@Test
 	public void testReplyText() throws IOException, MailosaurException {
 		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
 
@@ -432,6 +474,25 @@ public class EmailsTest {
 
 		assertNotNull(message.id());
 		assertTrue(message.html().body().contains(body));
+	}
+
+	@Test
+	public void testReplyCc() throws IOException, MailosaurException {
+		org.junit.Assume.assumeTrue(verifiedDomain != null && !verifiedDomain.isEmpty());
+		
+		String body = "<p>Reply <strong>HTML</strong> message.</p>";
+		String targetId = emails.get(0).id();
+		String ccRecipient = String.format("someoneelse@%s", verifiedDomain);
+		MessageReplyOptions options = new MessageReplyOptions();
+		options.withCc(ccRecipient)
+				.withHtml(body);
+
+		Message message = client.messages().reply(targetId, options);
+
+		assertNotNull(message.id());
+		assertTrue(message.html().body().contains(body));
+		assertEquals(1, message.cc().size());
+		assertEquals(ccRecipient, message.cc().get(0).email());
 	}
     
     private void validateEmail(Message email) {
