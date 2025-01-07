@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class PreviewsTests {
+public class PreviewsTest {
 	private static MailosaurClient client;
 	private static String server;
 
