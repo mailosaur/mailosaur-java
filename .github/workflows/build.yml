@@ -30,11 +30,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 1.8
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: ${{ vars.JAVA_VERSION }}
-          distribution: temurin
+          distribution: oracle
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Notify on Failure
