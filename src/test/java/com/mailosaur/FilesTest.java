@@ -26,12 +26,12 @@ public class FilesTest {
 		String baseUrl = System.getenv("MAILOSAUR_BASE_URL");
 		String apiKey = System.getenv("MAILOSAUR_API_KEY");
 		server = System.getenv("MAILOSAUR_SERVER");
-		
+
 		if (apiKey == null || server == null) {
 			throw new IOException("Missing necessary environment variables - refer to README.md");
 		}
-        
-        client = new MailosaurClient(apiKey, baseUrl);
+
+		client = new MailosaurClient(apiKey, baseUrl);
         
         client.messages().deleteAll(server);
 		

@@ -598,7 +598,7 @@ public class Messages {
      * @return the PreviewListResult object if successful.
      */
     public PreviewListResult generatePreviews(String id, PreviewRequestOptions options) throws IOException, MailosaurException {
-        return client.request("POST", "api/messages/" + id + "/previews", options).parseAs(PreviewListResult.class);
+        return client.request("POST", "api/messages/" + id + "/screenshots", options).parseAs(PreviewListResult.class);
     }
 
 }
