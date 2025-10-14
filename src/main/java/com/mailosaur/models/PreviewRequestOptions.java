@@ -9,19 +9,19 @@ import java.util.List;
  */
 public class PreviewRequestOptions {
     /**
-     * The list of email preview requests.
+     * The list email clients to generate previews with.
      */
     @Key
-    private List<PreviewRequest> previews;
+    private List<String> emailClients;
 
     /**
-     * Sets the list of email preview requests.
+     * Sets the list email clients to generate previews with.
      *
-     * @param previews The list of email preview requests.
+     * @param emailClients The list email clients to generate previews with.
      * @return the PreviewRequestOptions object itself.
      */
-    public PreviewRequestOptions withPreviews(List<PreviewRequest> previews) {
-        this.previews = previews;
+    public PreviewRequestOptions withEmailClients(List<String> emailClients) {
+        this.emailClients = emailClients;
         return this;
     }
 }

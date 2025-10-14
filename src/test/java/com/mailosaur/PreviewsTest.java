@@ -18,25 +18,23 @@ public class PreviewsTest {
     public static void setUpBeforeClass() throws IOException {
 		String baseUrl = System.getenv("MAILOSAUR_BASE_URL");
 		String apiKey = System.getenv("MAILOSAUR_API_KEY");
-		server = System.getenv("MAILOSAUR_PREVIEWS_SERVER");
-		
-		if (apiKey == null) {
+		server = System.getenv("MAILOSAUR_SERVER");
+
+		if (apiKey == null || server == null) {
 			throw new IOException("Missing necessary environment variables - refer to README.md");
 		}
-        
-        client = new MailosaurClient(apiKey, baseUrl);
+
+		client = new MailosaurClient(apiKey, baseUrl);
 	}
 
     @Test
 	public void testListEmailClients() throws IOException, MailosaurException {
-		PreviewEmailClientListResult result = client.previews().listEmailClients();
+		EmailClientListResult result = client.previews().listEmailClients();
 		assertTrue(result.items().size() > 1);
     }
     
     @Test
 	public void testGeneratePreviews() throws IOException, MailosaurException, MessagingException {
-		org.junit.Assume.assumeTrue(server != null && !server.isEmpty());
-
 		String randomString = Mailer.getRandomString(7);
 		String host = System.getenv("MAILOSAUR_SMTP_HOST");
 		host = (host == null) ? "mailosaur.net" : host;
@@ -52,9 +50,8 @@ public class PreviewsTest {
 		params.withServer(server);
 		Message email = client.messages().get(params, criteria);
 
-		PreviewRequest request = new PreviewRequest("OL2021");
 		PreviewRequestOptions options = new PreviewRequestOptions();
-		options.withPreviews(Arrays.asList(request));
+		options.withEmailClients(Arrays.asList("iphone-16plus-applemail-lightmode-portrait"));
 
 		PreviewListResult result = client.messages().generatePreviews(email.id(), options);
 		assertTrue(result.items().size() > 0);

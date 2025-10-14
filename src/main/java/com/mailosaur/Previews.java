@@ -1,6 +1,6 @@
 package com.mailosaur;
 
-import com.mailosaur.models.PreviewEmailClientListResult;
+import com.mailosaur.models.EmailClientListResult;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class Previews {
      * @throws IOException Unexpected exception.
      * @return The result of the email client listing operation.
      */
-    public PreviewEmailClientListResult listEmailClients() throws IOException, MailosaurException {
-        return client.request("GET", "api/previews/clients").parseAs(PreviewEmailClientListResult.class);
+    public EmailClientListResult listEmailClients() throws IOException, MailosaurException {
+        return client.request("GET", "api/screenshots/clients").parseAs(EmailClientListResult.class);
     }
 }

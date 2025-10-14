@@ -7,19 +7,19 @@ import java.util.List;
 /**
  * A list of available email clients with which to generate email previews.
  */
-public class PreviewEmailClientListResult {
+public class EmailClientListResult {
     /**
      * A list of available email clients with which to generate email previews.
      */
     @Key
-    private List<PreviewEmailClient> items;
+    private List<EmailClient> items;
 
     /**
      * Gets a list of available email clients.
      *
      * @return A list of available email clients.
      */
-    public List<PreviewEmailClient> items() {
+    public List<EmailClient> items() {
         return this.items;
     }
 }
