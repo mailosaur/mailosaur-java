@@ -195,6 +195,8 @@ public class MailosaurClient {
                         throw new MailosaurException("Insufficient permission to perform that task.", "permission_error", httpStatusCode, httpResponseBody);
                     case 404:
                         throw new MailosaurException("Not found, check input parameters.", "invalid_request", httpStatusCode, httpResponseBody);
+                    case 410:
+                        throw new MailosaurException("Permanently expired or deleted.", "gone", httpStatusCode, httpResponseBody);
                     default:
                         throw new MailosaurException("An API error occurred, see httpResponse for further information.", "api_error", httpStatusCode, httpResponseBody);
                 }
