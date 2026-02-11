@@ -14,6 +14,9 @@ concurrency:
   group: mailosaur-java
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ${{ vars.LINUX }}
@@ -28,7 +31,14 @@ jobs:
       MAILOSAUR_VERIFIED_DOMAIN: ${{ secrets.MAILOSAUR_VERIFIED_DOMAIN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v4
+      - name: Checkout custom actions
+        uses: actions/checkout@v4
+        with:
+          repository: mailosaur/actions
+          token: ${{ secrets.CUSTOM_ACTIONS_TOKEN }}
+          path: .github/actions
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -36,14 +46,11 @@ jobs:
           distribution: jetbrains
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Notify on Failure
-        uses: skitionek/notify-microsoft-teams@master
-        if: ${{ failure() }}
+      - name: Send notifications
+        if: ${{ always() }}
+        uses: ./.github/actions/notify
         with:
-          webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
-          needs: ${{ toJson(needs) }}
-          job: ${{ toJson(job) }}
-          overwrite: "{ title: `${workflow} failed for ${repository.name}` }"
+          webhook-url: ${{ secrets.NOTIFICATION_URL }}
 
   build-next:
     if: ${{ always() }}
@@ -60,19 +67,23 @@ jobs:
       MAILOSAUR_VERIFIED_DOMAIN: ${{ secrets.MAILOSAUR_VERIFIED_DOMAIN }}
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 1.8
+      - name: Checkout source code
+        uses: actions/checkout@v4
+      - name: Checkout custom actions
+        uses: actions/checkout@v4
+        with:
+          repository: mailosaur/actions
+          token: ${{ secrets.CUSTOM_ACTIONS_TOKEN }}
+          path: .github/actions
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: ${{ vars.JAVA_VERSION }}
-          distribution: temurin
+          distribution: jetbrains
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Notify on Failure
-        uses: skitionek/notify-microsoft-teams@master
-        if: ${{ failure() }}
+      - name: Send notifications
+        if: ${{ always() }}
+        uses: ./.github/actions/notify
         with:
-          webhook_url: ${{ secrets.TEAMS_BUILDS_WEBHOOK }}
-          needs: ${{ toJson(needs) }}
-          job: ${{ toJson(job) }}
-          overwrite: "{ title: `${workflow} failed for ${repository.name}` }"
+          webhook-url: ${{ secrets.NOTIFICATION_URL }}
