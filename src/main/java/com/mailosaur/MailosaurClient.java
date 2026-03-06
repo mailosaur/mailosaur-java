@@ -34,6 +34,16 @@ public class MailosaurClient {
             });
 	
 	/**
+     * Initializes an instance of the Mailosaur client using the
+     * MAILOSAUR_API_KEY environment variable.
+     *
+     * @throws MailosaurException if the MAILOSAUR_API_KEY environment variable is not set.
+     */
+	public MailosaurClient() throws MailosaurException {
+		this(resolveApiKeyFromEnv(), null);
+    }
+
+	/**
      * Initializes an instance of the Mailosaur client.
      *
      * @param apiKey Your Mailosaur API key.
@@ -60,6 +70,16 @@ public class MailosaurClient {
         this.devices = new Devices(this);
         this.previews = new Previews(this);
     }
+
+	private static String resolveApiKeyFromEnv() throws MailosaurException {
+		String apiKey = System.getenv("MAILOSAUR_API_KEY");
+		if (apiKey == null || apiKey.isEmpty()) {
+			throw new MailosaurException(
+				"'apiKey' must be set via the MAILOSAUR_API_KEY environment variable, or passed to the MailosaurClient constructor.",
+				"authentication_error");
+		}
+		return apiKey;
+	}
 	
 	/**
      * Message analysis operations

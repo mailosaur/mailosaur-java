@@ -16,6 +16,8 @@ This guide provides several key sections:
       - [Gradle users](#gradle-users)
       - [Maven users](#maven-users)
       - [Others](#others)
+    - [Set your API key](#set-your-api-key)
+    - [Create your code](#create-your-code)
     - [API Reference](#api-reference)
   - [Creating an account](#creating-an-account)
   - [Test email addresses with Mailosaur](#test-email-addresses-with-mailosaur)
@@ -72,6 +74,24 @@ You'll need to manually install the following JARs:
 - [Google HTTP Client (Gson)](https://github.com/googleapis/google-http-java-client) from https://repo1.maven.org/maven2/com/google/http-client/google-http-client-gson/.
 - [Google Gson](https://github.com/google/gson) from https://repo1.maven.org/maven2/com/google/code/gson/gson/.
 
+### Set your API key
+
+Get your API key from the Mailosaur Dashboard and set it as an environment variable:
+
+```sh
+export MAILOSAUR_API_KEY='your-api-key-here'
+```
+
+### Create your code
+
+Then import the library and create a client:
+
+```java
+import com.mailosaur.MailosaurClient;
+
+MailosaurClient mailosaur = new MailosaurClient();
+```
+
 ### API Reference
 
 This library is powered by the Mailosaur [email & SMS testing API](https://mailosaur.com/docs/api/). You can easily check out the API itself by looking at our [API reference documentation](https://mailosaur.com/docs/api/) or via our Postman or Insomnia collections:
@@ -121,7 +141,7 @@ import java.io.IOException;
 
 public class AppTest {
   @Test public void testExample() throws IOException, MailosaurException {
-    MailosaurClient mailosaur = new MailosaurClient("API_KEY");
+    MailosaurClient mailosaur = new MailosaurClient();
 
     // See https://mailosaur.com/app/project/api
     String serverId = "abc123";
@@ -142,7 +162,7 @@ public class AppTest {
 
 ### What is this code doing?
 
-1. Sets up an instance of `MailosaurClient` with your API key.
+1. Sets up an instance of `MailosaurClient` using the `MAILOSAUR_API_KEY` environment variable.
 2. Waits for an email to arrive at the server with ID `abc123`.
 3. Asserts the subject line of the email equals the expected value.
 
@@ -169,7 +189,7 @@ If your account has [SMS testing](https://mailosaur.com/sms-testing/) enabled, y
 
 ```java
 @Test public void testSmsExample() throws IOException, MailosaurException {
-    MailosaurClient mailosaur = new MailosaurClient("API_KEY");
+    MailosaurClient mailosaur = new MailosaurClient();
 
     String serverId = "abc123";
 
