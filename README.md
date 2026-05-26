@@ -32,6 +32,7 @@ This guide provides several key sections:
   - [Working with hyperlinks](#working-with-hyperlinks)
     - [Links in plain text (including SMS messages)](#links-in-plain-text-including-sms-messages)
   - [Working with attachments](#working-with-attachments)
+    - [Writing an attachment to disk](#writing-an-attachment-to-disk)
   - [Working with images and web beacons](#working-with-images-and-web-beacons)
     - [Remotely-hosted images](#remotely-hosted-images)
     - [Triggering web beacons](#triggering-web-beacons)
@@ -97,7 +98,7 @@ MailosaurClient mailosaur = new MailosaurClient();
 This library is powered by the Mailosaur [email & SMS testing API](https://mailosaur.com/docs/api/). You can easily check out the API itself by looking at our [API reference documentation](https://mailosaur.com/docs/api/) or via our Postman or Insomnia collections:
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6961255-6cc72dff-f576-451a-9023-b82dec84f95d?action=collection%2Ffork&collection-url=entityId%3D6961255-6cc72dff-f576-451a-9023-b82dec84f95d%26entityType%3Dcollection%26workspaceId%3D386a4af1-4293-4197-8f40-0eb49f831325)
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Mailosaur&uri=https%3A%2F%2Fmailosaur.com%2Finsomnia.json)
+ [![Run in Insomnia](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Mailosaur&uri=https%3A%2F%2Fmailosaur.com%2Finsomnia.json)
 
 ## Creating an account
 
@@ -123,7 +124,7 @@ Here's how it works:
   - `rAnDoM63423@abc123.mailosaur.net`
 - You can create more servers when you need them. Each one will have its own domain name.
 
-**\*Can't use test email addresses?** You can also [use SMTP to test email](https://mailosaur.com/docs/email-testing/sending-to-mailosaur/#sending-via-smtp). By connecting your product or website to Mailosaur via SMTP, Mailosaur will catch all email your application sends, regardless of the email address.\*
+***Can't use test email addresses?** You can also [use SMTP to test email](https://mailosaur.com/docs/email-testing/sending-to-mailosaur/#sending-via-smtp). By connecting your product or website to Mailosaur via SMTP, Mailosaur will catch all email your application sends, regardless of the email address.*
 
 ## Find an email
 
@@ -162,22 +163,27 @@ public class AppTest {
 
 ### What is this code doing?
 
-1. Sets up an instance of `MailosaurClient` using the `MAILOSAUR_API_KEY` environment variable.
+1. Sets up an instance of `MailosaurClient`, reading the API key from the `MAILOSAUR_API_KEY` environment variable.
 2. Waits for an email to arrive at the server with ID `abc123`.
 3. Asserts the subject line of the email equals the expected value.
 
 ### My email wasn't found
 
-First, check that the email you sent is visible in the [Mailosaur Dashboard](https://mailosaur.com/api/project/messages).
+First, check that the email you sent is visible in the [Mailosaur Dashboard](https://mailosaur.com/app/project/messages).
 
 If it is, the likely reason is that by default, `messages.get` only searches emails received by Mailosaur in the last 1 hour. You can override this behavior (see the `receivedAfter` option below), however we only recommend doing this during setup, as your tests will generally run faster with the default settings:
 
 ```java
-MessageSearchParams params = new MessageSearchParams();
-params.withServer("SERVER_ID")
-  .withReceivedAfter(1577836800000);
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 
-// Override receivedAfter to search all messages since Jan 1st
+// ...
+
+MessageSearchParams params = new MessageSearchParams();
+params.withServer(serverId)
+  // Override receivedAfter to search all messages since Jan 1st
+  .withReceivedAfter(LocalDate.of(2021, 1, 1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli());
+
 Message email = mailosaur.messages().get(params, criteria);
 ```
 
@@ -213,7 +219,7 @@ Most emails, and all SMS messages, should have a plain text body. Mailosaur expo
 System.out.println(message.text().body()); // "Hi Jason, ..."
 
 if (message.text().body().contains("Jason")) {
-  System.out.println('Email contains "Jason"');
+  System.out.println("Email contains \"Jason\"");
 }
 ```
 
@@ -245,7 +251,7 @@ System.out.println(message.html().body()); // "<html><head ..."
 
 ### Working with HTML using jsoup
 
-If you need to traverse the HTML content of an email. For example, finding an element via a CSS selector, you can use the [jsoup](https://jsoup.org/) library.
+If you need to traverse the HTML content of an email — for example, finding an element via a CSS selector — you can use the [jsoup](https://jsoup.org/) library.
 
 ```xml
 <dependency>
@@ -264,7 +270,7 @@ import org.jsoup.select.Elements;
 
 Document doc = Jsoup.parse(message.html().body());
 
-Elements elements = doc.getElementsByTag(".verification-code");
+Elements elements = doc.select(".verification-code");
 String verificationCode = elements.get(0).text();
 
 System.out.println(verificationCode); // "542163"
@@ -287,7 +293,7 @@ System.out.println(firstLink.text()); // "Google Search"
 System.out.println(firstLink.href()); // "https://www.google.com/"
 ```
 
-**Important:** To ensure you always have valid emails. Mailosaur only extracts links that have been correctly marked up with `<a>` or `<area>` tags.
+**Important:** To ensure you always have valid emails, Mailosaur only extracts links that have been correctly marked up with `<a>` or `<area>` tags.
 
 ### Links in plain text (including SMS messages)
 
@@ -326,6 +332,20 @@ Attachment firstAttachment = message.attachments().get(0);
 System.out.println(firstAttachment.length()); // 4028
 ```
 
+### Writing an attachment to disk
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+// ...
+
+Attachment firstAttachment = message.attachments().get(1);
+
+byte[] fileBytes = mailosaur.files().getAttachment(firstAttachment.id());
+Files.write(Paths.get(firstAttachment.fileName()), fileBytes);
+```
+
 ## Working with images and web beacons
 
 The `html.images` property of a message contains an array of images found within the HTML content of an email. The length of this array corresponds to the number of images found within an email:
@@ -353,13 +373,20 @@ A web beacon is a small image that can be used to track whether an email has bee
 Because a web beacon is simply another form of remotely-hosted image, you can use the `src` attribute to perform an HTTP request to that address:
 
 ```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+// ...
+
 Image image = message.html().images().get(0);
 System.out.println(image.src()); // "https://example.com/s.png?abc123"
 
 // Make an HTTP call to trigger the web beacon
-var client = HttpClient.newHttpClient();
-var request = HttpRequest.newBuilder(URI.create(image.src())).build();
-var response = client.send(request, null);
+HttpClient client = HttpClient.newHttpClient();
+HttpRequest request = HttpRequest.newBuilder(URI.create(image.src())).build();
+HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 System.out.println(response.statusCode()); // 200
 ```
 
@@ -381,6 +408,8 @@ result.spamFilterResults().spamAssassin().forEach(r ->
 ```
 
 ## Development
+
+If you'd like to contribute to this library, here is how to set it up locally.
 
 The test suite requires the following environment variables to be set:
 
