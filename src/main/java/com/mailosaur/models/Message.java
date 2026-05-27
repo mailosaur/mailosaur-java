@@ -96,7 +96,7 @@ public class Message extends BaseModel {
     private Metadata metadata;
 
     /**
-     * Identifier for the server in which the message is located.
+     * Identifier for the inbox (server) in which the message is located.
      */
     @Key
     private String server;
@@ -210,9 +210,9 @@ public class Message extends BaseModel {
     }
 
     /**
-     * Gets the identifier for the server in which the message is located.
+     * Gets the identifier for the inbox (server) in which the message is located.
      *
-     * @return Identifier for the server in which the message is located.
+     * @return Identifier for the inbox (server) in which the message is located.
      */
     public String server() {
         return this.server;

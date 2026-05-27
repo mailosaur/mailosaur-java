@@ -14,7 +14,7 @@ import com.mailosaur.models.*;
 
 /**
  * Operations for finding, retrieving, creating, forwarding, replying to, and deleting the
- * email and SMS messages received by your Mailosaur servers. Accessed via
+ * email and SMS messages received by your Mailosaur inboxes (servers). Accessed via
  * {@link MailosaurClient#messages()}.
  */
 public class Messages {
@@ -64,7 +64,7 @@ public class Messages {
      * Retrieve a message using search criteria.
      * Returns as soon as an message matching the specified search criteria is found.
      *
-     * @param server The identifier of the server hosting the message.
+     * @param server The identifier of the inbox (server) hosting the message.
      * @param criteria The search criteria to use in order to find a match.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
@@ -83,7 +83,7 @@ public class Messages {
      * Retrieve a message using search criteria.
      * Returns as soon as an message matching the specified search criteria is found.
      *
-     * @param server The identifier of the server hosting the message.
+     * @param server The identifier of the inbox (server) hosting the message.
      * @param criteria The search criteria to use in order to find a match.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
@@ -104,7 +104,7 @@ public class Messages {
      * Retrieve a message using search criteria.
      * Returns as soon as an message matching the specified search criteria is found.
      *
-     * @param server The identifier of the server hosting the message.
+     * @param server The identifier of the inbox (server) hosting the message.
      * @param criteria The search criteria to use in order to find a match.
      * @param receivedAfter Limits results to only messages received after this timestamp.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
@@ -125,7 +125,7 @@ public class Messages {
      * Retrieve a message using search criteria.
      * Returns as soon as an message matching the specified search criteria is found.
      *
-     * @param server The identifier of the server hosting the message.
+     * @param server The identifier of the inbox (server) hosting the message.
      * @param criteria The search criteria to use in order to find a match.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this timestamp.
@@ -171,9 +171,9 @@ public class Messages {
     
     /**
      * Delete all messages.
-     * Permanently deletes all messages held by the specified server. This operation cannot be undone. Also deletes any attachments related to each message.
+     * Permanently deletes all messages held by the specified inbox (server). This operation cannot be undone. Also deletes any attachments related to each message.
      *
-     * @param server The identifier of the server to be emptied.
+     * @param server The identifier of the inbox (server) to be emptied.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      */
     public void deleteAll(String server) throws MailosaurException {
@@ -208,7 +208,7 @@ public class Messages {
      * List all messages.
      * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
      * @return the MessageListResult object if successful.
@@ -226,7 +226,7 @@ public class Messages {
      * List all messages.
      * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param receivedAfter Limits results to only messages received after this timestamp.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
@@ -246,7 +246,7 @@ public class Messages {
      * List all messages.
      * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
@@ -268,7 +268,7 @@ public class Messages {
      * List all messages.
      * Returns a list of your messages. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
      * @param receivedAfter Limits results to only messages received after this timestamp.
@@ -360,7 +360,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
@@ -380,7 +380,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
@@ -404,7 +404,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
@@ -426,7 +426,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
@@ -449,7 +449,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param receivedAfter Limits results to only messages received after this timestamp.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
@@ -471,7 +471,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param receivedAfter Limits results to only messages received after this timestamp.
@@ -495,7 +495,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param timeout Specify how long to wait for a matching result (in milliseconds).
      * @param errorOnTimeout When set to false, an error will not be throw if timeout is reached (default: true).
@@ -520,7 +520,7 @@ public class Messages {
      * Search for messages.
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @param criteria The search criteria to match results against.
      * @param page Used in conjunction with `itemsPerPage` to support pagination.
      * @param itemsPerPage A limit on the number of results to be returned per page. Can be set between 1 and 1000 items, the default is 50.
@@ -551,7 +551,7 @@ public class Messages {
      * useful in scenarios where you want an email to trigger a workflow in your
      * product.
      *
-     * @param server The identifier of the server to create the message in.
+     * @param server The identifier of the inbox (server) to create the message in.
      * @param messageCreateOptions The options with which to create the message.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.

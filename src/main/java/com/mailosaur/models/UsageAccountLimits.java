@@ -7,7 +7,7 @@ import com.google.api.client.util.Key;
  */
 public class UsageAccountLimits {
     /**
-     * Server limits.
+     * Inbox (server) limits.
      */
     @Key
     private UsageAccountLimit servers;
@@ -31,9 +31,9 @@ public class UsageAccountLimits {
     private UsageAccountLimit sms;
 
     /**
-     * Gets server limits.
+     * Gets inbox (server) limits.
      *
-     * @return Server limits.
+     * @return Inbox (server) limits.
      */
     public UsageAccountLimit servers() {
         return this.servers;
