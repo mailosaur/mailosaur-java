@@ -9,6 +9,11 @@ import com.mailosaur.models.Server;
 import com.mailosaur.models.ServerCreateOptions;
 import com.mailosaur.models.ServerListResult;
 
+/**
+ * Operations for creating and managing your Mailosaur servers &mdash; the virtual inboxes that
+ * group your tests together, each with its own domain and SMTP/POP3/IMAP credentials. Accessed
+ * via {@link MailosaurClient#servers()}.
+ */
 public class Servers {
     private MailosaurClient client;
     

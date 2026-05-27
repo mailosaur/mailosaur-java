@@ -4,6 +4,11 @@ import com.mailosaur.models.EmailClientListResult;
 
 import java.io.IOException;
 
+/**
+ * Operations for discovering the email clients available for generating email previews
+ * (screenshots of an email rendered in real clients). Accessed via
+ * {@link MailosaurClient#previews()}.
+ */
 public class Previews {
     private MailosaurClient client;
 

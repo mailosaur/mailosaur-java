@@ -8,6 +8,11 @@ import com.mailosaur.models.OtpResult;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Operations for managing virtual security devices and retrieving their current one-time
+ * passwords (OTPs), used to automate testing of app-based multi-factor authentication.
+ * Accessed via {@link MailosaurClient#devices()}.
+ */
 public class Devices {
     private MailosaurClient client;
 
@@ -39,12 +44,13 @@ public class Devices {
     }
 
     /**
-     * Retrieve the current one-time password.
+     * Retrieves the current one-time password for a saved device, or given a base32-encoded
+     * shared secret.
      *
      * @param query Either the unique identifier of the device, or a base32-encoded shared secret.
      * @throws MailosaurException Thrown if Mailosaur responds with an error.
      * @throws IOException Unexpected exception.
-     * @return The current one-time password.
+     * @return An {@link OtpResult} containing the current one-time password.
      */
     public OtpResult otp(String query) throws IOException, MailosaurException {
         if (query.contains("-")) {

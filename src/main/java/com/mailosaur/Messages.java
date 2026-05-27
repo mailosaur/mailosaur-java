@@ -13,8 +13,9 @@ import com.google.gson.JsonSerializer;
 import com.mailosaur.models.*;
 
 /**
- * An instance of this class provides access to all the operations defined
- * in Messages.
+ * Operations for finding, retrieving, creating, forwarding, replying to, and deleting the
+ * email and SMS messages received by your Mailosaur servers. Accessed via
+ * {@link MailosaurClient#messages()}.
  */
 public class Messages {
 	/** The service client containing this operation class. */
@@ -30,14 +31,16 @@ public class Messages {
     }
 
     /**
-     * Retrieve a message using search criteria.
-     * Returns as soon as an message matching the specified search criteria is found.
+     * Waits for a message to be found. Returns as soon as a message matching the specified
+     * search criteria is found. This is the most efficient method of looking up a message,
+     * therefore we recommend using it wherever possible.
      *
      * @param params Message searching parameters.
-     * @param criteria The search criteria to match results against.
-     * @throws MailosaurException Thrown if Mailosaur responds with an error.
+     * @param criteria The criteria with which to find messages during a search.
+     * @throws MailosaurException With error code {@code no_messages_found} if no matching message
+     *     exists, or {@code search_timeout} if no matching message arrives before the timeout elapses.
      * @throws IOException Unexpected exception.
-     * @return the Message object if successful.
+     * @return The first {@link Message} matching the criteria.
      */
     public Message get(MessageSearchParams params, SearchCriteria criteria) throws IOException, MailosaurException {
         // Timeout defaulted to 10s, receivedAfter to 1h
@@ -290,10 +293,11 @@ public class Messages {
      * Returns a list of messages matching the specified search criteria. The messages are returned sorted by received date, with the most recently-received messages appearing first.
      *
      * @param params Message searching parameters.
-     * @param criteria The search criteria to match results against.
-     * @throws MailosaurException Thrown if Mailosaur responds with an error.
+     * @param criteria The criteria with which to find messages during a search.
+     * @throws MailosaurException With error code {@code search_timeout} if no matching message is
+     *     found before the timeout elapses, unless {@code errorOnTimeout} is set to false.
      * @throws IOException Unexpected exception.
-     * @return the MessageListResult object if successful.
+     * @return A {@link MessageListResult} containing the matching message summaries.
      */
     public MessageListResult search(MessageSearchParams params, SearchCriteria criteria) throws IOException, MailosaurException {
         HashMap<String, String> query = new HashMap<String, String>();

@@ -19,6 +19,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mailosaur.models.MessageSummary;
 
+/**
+ * The Mailosaur client &mdash; the main entry point to the Mailosaur API. Construct an instance
+ * with your API key (or set the {@code MAILOSAUR_API_KEY} environment variable), then use the
+ * operations namespaces ({@link #messages()}, {@link #servers()}, {@link #files()},
+ * {@link #devices()}, {@link #analysis()}, {@link #previews()}, {@link #usage()}) to automate
+ * email and SMS testing.
+ */
 public class MailosaurClient {
     final String VERSION = "9.0.0";
 	final String API_KEY;
@@ -82,91 +89,98 @@ public class MailosaurClient {
 	}
 	
 	/**
-     * Message analysis operations
+     * Operations for analyzing email content and deliverability, including spam scoring.
      */
     private Analysis analysis;
 
     /**
-     * Gets message analysis operations.
-     * @return Message analysis operations.
+     * Gets the operations for analyzing email content and deliverability, including spam scoring.
+     *
+     * @return The {@link Analysis} operations namespace.
      */
     public Analysis analysis() {
         return this.analysis;
     }
 
     /**
-     * File operations
+     * Operations for downloading attachments, EML source, and email preview screenshots.
      */
     private Files files;
 
     /**
-     * Gets file operations.
-     * @return File operations.
+     * Gets the operations for downloading attachments, EML source, and email preview screenshots.
+     *
+     * @return The {@link Files} operations namespace.
      */
     public Files files() {
         return this.files;
     }
 
     /**
-     * Message operations
+     * Operations for finding, retrieving, creating, and managing email and SMS messages.
      */
     private Messages messages;
 
     /**
-     * Gets message operations.
-     * @return Message operations.
+     * Gets the operations for finding, retrieving, creating, and managing email and SMS messages.
+     *
+     * @return The {@link Messages} operations namespace.
      */
     public Messages messages() {
         return this.messages;
     }
 
     /**
-     * Server management operations
+     * Operations for creating and managing your Mailosaur servers (virtual inboxes).
      */
     private Servers servers;
 
     /**
-     * Gets server management operations.
-     * @return Server management operations.
+     * Gets the operations for creating and managing your Mailosaur servers (virtual inboxes).
+     *
+     * @return The {@link Servers} operations namespace.
      */
     public Servers servers() {
         return this.servers;
     }
 
     /**
-     * Account usage operations
+     * Operations for inspecting account usage limits and recent transactional usage.
      */
     private Usage usage;
 
     /**
-     * Gets account usage operations.
-     * @return Account usage operations.
+     * Gets the operations for inspecting account usage limits and recent transactional usage.
+     *
+     * @return The {@link Usage} operations namespace.
      */
     public Usage usage() {
         return this.usage;
     }
 
     /**
-     * Device management operations
+     * Operations for managing virtual security devices and retrieving their one-time passwords.
      */
     private Devices devices;
 
     /**
-     * Gets device management operations.
-     * @return Device management operations.
+     * Gets the operations for managing virtual security devices and retrieving their one-time passwords.
+     *
+     * @return The {@link Devices} operations namespace.
      */
     public Devices devices() {
         return this.devices;
     }
 
     /**
-     * Email Previews operations
+     * Operations for discovering the email clients available for generating email previews.
      */
     private Previews previews;
 
     /**
-     * Gets Email Previews operations.
-     * @return Email Previews operations.
+     * Gets the operations for discovering the email clients available for generating email previews.
+     *
+     * @return The {@link Previews} operations namespace.
      */
     public Previews previews() {
         return this.previews;
