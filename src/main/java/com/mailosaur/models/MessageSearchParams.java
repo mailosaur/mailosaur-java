@@ -7,7 +7,7 @@ import com.google.api.client.util.Key;
  */
 public class MessageSearchParams {
     /**
-     * The identifier of the server hosting the messages.
+     * The identifier of the inbox (server) hosting the messages.
      */
 	@Key
     private String server;
@@ -49,9 +49,9 @@ public class MessageSearchParams {
     private String dir;
 
     /**
-     * Gets the identifier of the server hosting the messages.
+     * Gets the identifier of the inbox (server) hosting the messages.
      *
-     * @return The identifier of the server hosting the messages.
+     * @return The identifier of the inbox (server) hosting the messages.
      */
     public String server() {
         return this.server;
@@ -112,9 +112,9 @@ public class MessageSearchParams {
     }
 
     /**
-     * Sets the identifier of the server hosting the messages.
+     * Sets the identifier of the inbox (server) hosting the messages.
      *
-     * @param server The identifier of the server hosting the messages.
+     * @param server The identifier of the inbox (server) hosting the messages.
      * @return the MessageSearchParams object itself.
      */
     public MessageSearchParams withServer(String server) {

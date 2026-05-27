@@ -131,12 +131,12 @@ public class MailosaurClient {
     }
 
     /**
-     * Operations for creating and managing your Mailosaur servers (virtual inboxes).
+     * Operations for creating and managing your Mailosaur inboxes (servers).
      */
     private Servers servers;
 
     /**
-     * Gets the operations for creating and managing your Mailosaur servers (virtual inboxes).
+     * Gets the operations for creating and managing your Mailosaur inboxes (servers).
      *
      * @return The {@link Servers} operations namespace.
      */
