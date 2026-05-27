@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * File operations.
+ * Operations for downloading the raw content associated with a message &mdash; file attachments,
+ * the full EML source of an email, and rendered email previews. Accessed via
+ * {@link MailosaurClient#files()}.
  */
 public class Files {
     private MailosaurClient client;
@@ -48,9 +50,10 @@ public class Files {
      * the unique identifier for the required preview.
      *
      * @param previewId The identifier of the email preview to be downloaded.
-     * @throws MailosaurException Thrown if Mailosaur responds with an error.
+     * @throws MailosaurException With error code {@code preview_timeout} if the preview is not
+     *     generated within the time limit.
      * @throws IOException Unexpected exception.
-     * @return The byte array if successful.
+     * @return A byte array containing the preview screenshot image.
      */
     public byte[] getPreview(String previewId) throws MailosaurException, IOException {
         int timeout = 120000;

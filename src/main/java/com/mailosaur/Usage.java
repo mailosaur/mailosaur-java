@@ -8,6 +8,11 @@ import com.google.api.client.json.GenericJson;
 import com.mailosaur.models.UsageAccountLimits;
 import com.mailosaur.models.UsageTransactionListResult;
 
+/**
+ * Operations for inspecting your account's usage limits and recent transactional usage. These
+ * endpoints require authentication with an account-level API key. Accessed via
+ * {@link MailosaurClient#usage()}.
+ */
 public class Usage {
     private MailosaurClient client;
     

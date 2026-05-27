@@ -6,7 +6,8 @@ import com.mailosaur.models.SpamAnalysisResult;
 import com.mailosaur.models.DeliverabilityReport;
 
 /**
- * Message analysis operations.
+ * Operations for analyzing the content and deliverability of an email, including SpamAssassin
+ * scoring and per-provider deliverability reports. Accessed via {@link MailosaurClient#analysis()}.
  */
 public class Analysis {
     private MailosaurClient client;
